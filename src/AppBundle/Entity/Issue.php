@@ -141,6 +141,8 @@ class Issue
     {
         $this->collaborators = new ArrayCollection();
         $this->children = new ArrayCollection();
+        $this->created = new \DateTime();
+        $this->updated = new \DateTime();
     }
 
     /**

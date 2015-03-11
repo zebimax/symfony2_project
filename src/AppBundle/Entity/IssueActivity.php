@@ -48,7 +48,7 @@ class IssueActivity extends AbstractIssueEvent
     /**
      * Get type
      *
-     * @return string 
+     * @return string
      */
     public function getType()
     {
