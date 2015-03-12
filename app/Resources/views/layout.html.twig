@@ -1,12 +1,18 @@
 {% extends 'base.html.twig' %}
-
+{% block title %}{{'app.title' | trans}}{% endblock %}
 {% block stylesheets %}
-    {{ parent() }}
+    {% stylesheets '@bootstrap_css' filter='cssrewrite' %}
+    <link href="{{ asset_url }}"  rel="stylesheet" media="screen">
+    {% endstylesheets %}
 {%  endblock %}
-
 {% block javascripts %}
-    {{ parent() }}
+    {% javascripts
+    '@jquery'
+    '@bootstrap_js' %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 {% endblock %}
 
 {% block body %}
+    {% block page %}{% endblock %}
 {% endblock %}

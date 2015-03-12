@@ -1,12 +1,29 @@
 security:
-    providers:
-        in_memory:
-            memory: ~
-
     firewalls:
-        dev:
-            pattern: ^/(_(profiler|wdt|error)|css|images|js)/
-            security: false
-
-        default:
+        login:
+            pattern: ^/login$
             anonymous: ~
+            security: false
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        secured_area:
+            pattern: ^/
+            form_login:
+                login_path: /login
+                check_path: /login_check
+            logout:
+                path: /logout
+                target: /
+
+    providers:
+        main:
+            entity: { class: AppBundle\Entity\User, property: username }
+
+    encoders:
+        AppBundle\Entity\User:
+            algorithm: bcrypt
+            cost: 12
+    role_hierarchy:
+        ROLE_MANAGER: ROLE_OPERATOR
+        ROLE_ADMINISTRATOR: ROLE_MANAGER

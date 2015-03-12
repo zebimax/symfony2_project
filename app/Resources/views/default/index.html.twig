@@ -1,5 +1,10 @@
-{% extends 'base.html.twig' %}
+{% extends 'layout.html.twig' %}
 
-{% block body %}
-    Homepage.
+{% block page %}
+    {% include 'menu.html.twig' %}
+{%  endblock %}
+
+{% block title %}
+    {{ 'test' }}
 {% endblock %}
+

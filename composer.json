@@ -6,6 +6,19 @@
     "autoload": {
         "psr-0": { "": "src/", "SymfonyStandard": "app/" }
     },
+    "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "jquery/jquery",
+                "version": "1.11.1",
+                "dist": {
+                    "url": "http://code.jquery.com/jquery-1.11.1.js",
+                    "type": "file"
+                }
+         }
+}
+    ],
     "require": {
         "php": ">=5.4",
         "symfony/symfony": "2.6.*",
@@ -20,7 +33,11 @@
         "sensio/framework-extra-bundle": "~3.0,>=3.0.2",
         "incenteev/composer-parameter-handler": "~2.0",
         "doctrine/doctrine-fixtures-bundle": "2.2.*",
-        "ircmaxell/password-compat": "~1.0.3"
+        "ircmaxell/password-compat": "~1.0.3",
+        "braincrafted/bootstrap-bundle": "dev-master",
+        "jquery/jquery": "1.11.*",
+        "knplabs/knp-menu-bundle": "~2",
+        "twbs/bootstrap": "3.0.*"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"

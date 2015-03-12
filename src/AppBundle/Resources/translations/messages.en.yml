@@ -1,0 +1,14 @@
+app:
+    title: 'Simple bug tracker'
+    button:
+        submit: 'Submit'
+main_menu.users: 'Users'
+logout_menu:
+    logout: 'Logout'
+main_menu:
+    users:
+        create: 'Create'
+        list: 'List'
+login_form:
+    username: 'Username'
+    password: 'Password'
