@@ -3,12 +3,24 @@ app:
     button:
         submit: 'Submit'
 main_menu.users: 'Users'
+main_menu.issues: 'Issues'
+main_menu.projects: 'Projects'
+main_menu.profile: 'Profile'
 logout_menu:
     logout: 'Logout'
 main_menu:
     users:
-        create: 'Create'
-        list: 'List'
+        create: 'Create user'
+        list: 'List of users'
+    issues:
+        list: 'List of issues'
+        create: 'Create issue'
+    projects:
+        create: 'Create project'
+        list: 'List of projects'
+    profile:
+        view: 'View profile'
+        edit: 'Edit profile'
 login_form:
     username: 'Username'
     password: 'Password'

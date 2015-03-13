@@ -260,13 +260,14 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Remove roles
-     *
      * @param Role $roles
+     * @return $this
      */
     public function removeRole(Role $roles)
     {
         $this->roles->removeElement($roles);
+
+        return $this;
     }
 
     /**
@@ -293,13 +294,14 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Remove projects
-     *
      * @param Project $projects
+     * @return $this
      */
     public function removeProject(Project $projects)
     {
         $this->projects->removeElement($projects);
+
+        return $this;
     }
 
     /**
@@ -326,13 +328,14 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Remove issues
-     *
      * @param Issue $issues
+     * @return $this
      */
     public function removeIssue(Issue $issues)
     {
         $this->issues->removeElement($issues);
+
+        return $this;
     }
 
     /**

@@ -44,7 +44,7 @@ class Project
 
     public function __construct()
     {
-        $this->users = new ArrayCollection();
+         $this->users = new ArrayCollection();
     }
 
     /**

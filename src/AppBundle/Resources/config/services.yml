@@ -13,7 +13,7 @@ services:
         class: Knp\Menu\MenuItem # the service definition requires setting the class
         factory_service: app.menu_builder
         factory_method: createMainMenu
-        arguments: ["@request_stack"]
+        arguments: ["@request_stack", @security.token_storage]
         tags:
             - { name: knp_menu.menu, alias: main } # The alias is what is used to retrieve the menu
 
@@ -24,3 +24,8 @@ services:
         arguments: ["@request_stack"]
         tags:
             - { name: knp_menu.menu, alias: logout } # The alias is what is used to retrieve the menu
+    security.access.user_voter:
+        class:      AppBundle\Security\Authorization\Voter\UserVoter
+        public:     false
+        tags:
+           - { name: security.voter }
