@@ -12,9 +12,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class UserVoter extends AbstractRoleVoter
 {
     const VIEW = 'view';
-    const USERS_LIST = 'list';
     const EDIT = 'edit';
-    const ADD = 'add';
 
     /**
      * @inheritdoc
@@ -23,9 +21,7 @@ class UserVoter extends AbstractRoleVoter
     {
         return in_array($attribute, array(
             self::VIEW,
-            self::EDIT,
-            self::ADD,
-            self::USERS_LIST
+            self::EDIT
         ));
     }
 
@@ -50,7 +46,7 @@ class UserVoter extends AbstractRoleVoter
 
         if (1 !== count($attributes)) {
             throw new \InvalidArgumentException(
-                'Only one attribute is allowed for ADD, VIEW, EDIT or LIST'
+                'Only one attribute is allowed for VIEW, EDIT'
             );
         }
 

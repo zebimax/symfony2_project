@@ -390,4 +390,21 @@ class User implements UserInterface, \Serializable
             $this->password,
             ) = unserialize($serialized);
     }
+
+    public function getPrimaryRole()
+    {
+        foreach ($this->roles as $role) {
+            /** @var Role $role */
+            if (Role::ADMINISTRATOR === $role->getRole()) {
+                return Role::ADMINISTRATOR;
+            }
+            if (Role::MANAGER === $role->getRole()) {
+                return Role::MANAGER;
+            }
+            if (Role::OPERATOR === $role->getRole()) {
+                return Role::OPERATOR;
+            }
+        }
+        return null;
+    }
 }

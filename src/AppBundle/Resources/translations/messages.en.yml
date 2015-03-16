@@ -19,8 +19,27 @@ app:
             root: 'Profile'
             view: 'View profile'
             edit: 'Edit profile'
+    list:
+        actions: 'Actions'
 logout_menu:
     logout: 'Logout'
 login_form:
     username: 'Username'
     password: 'Password'
+users_list_tile: 'Users list'
+user:
+    users: 'Users'
+    add_user: 'Add user'
+users:
+    user:
+        username: 'username'
+        email: 'user email'
+        fullName: 'user full name'
+        role: 'user role'
+        isActive: 'Active user'
+    empty_list: 'No users found'
+role:
+    undefined: 'Unknown role'
+    administrator: 'Administrator'
+    manager: 'Manager'
+    operator: 'Operator'

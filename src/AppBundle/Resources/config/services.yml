@@ -196,4 +196,9 @@ services:
         class:      AppBundle\Menu\Route\UserIdParameterProvider
         arguments:
             - @security.token_storage
-
+    app.twig.user_extension:
+        class: AppBundle\Twig\UserExtension
+        arguments:
+            - @translator.default
+        tags:
+            - { name: twig.extension }
