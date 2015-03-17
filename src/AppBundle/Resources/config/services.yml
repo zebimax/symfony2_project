@@ -34,7 +34,7 @@ services:
             - { name: form.type, alias: app_login }
     app.menu_builder:
         class: AppBundle\Menu\MenuBuilder
-        arguments: ["@knp_menu.factory", "@translator.default"]
+        arguments: ["@knp_menu.factory", "@translator.default", "@security.authorization_checker"]
 
     app.main_menu:
         class: Knp\Menu\MenuItem # the service definition requires setting the class
@@ -92,8 +92,6 @@ services:
         class:      AppBundle\Menu\MainMenuManager
         public:     true
         arguments:
-            - @security.authorization_checker
-            - @translator.default
             - [@app.main_menu_issue_item, @app.main_menu_project_item, @app.main_menu_user_item, @app.main_menu_profile_item]
     app.main_menu_issue_item:
         class:      AppBundle\Menu\MainMenuItem
