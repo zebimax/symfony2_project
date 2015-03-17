@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Tests\Unit\Menu;
+namespace AppBundle\Tests\Unit\Menu\Route;
 
 use AppBundle\Entity\Role;
 use AppBundle\Menu\Route\UserIdParameterProvider;
