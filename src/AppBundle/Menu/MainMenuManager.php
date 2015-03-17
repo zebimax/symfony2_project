@@ -7,9 +7,10 @@ class MainMenuManager
     private $menuItems = [];
 
     /**
-     * @param array $menuItems
+     * @param MainMenuItemInterface[] $menuItems
      */
-    public function __construct(array $menuItems = []) {
+    public function __construct(array $menuItems = [])
+    {
         $this->setMenuItems($menuItems);
     }
 

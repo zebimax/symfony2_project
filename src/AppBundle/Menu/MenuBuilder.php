@@ -4,7 +4,7 @@ namespace AppBundle\Menu;
 use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
 use Symfony\Bundle\FrameworkBundle\Translation\Translator;
-use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class MenuBuilder
 {
@@ -15,9 +15,9 @@ class MenuBuilder
     /**
      * @param FactoryInterface $factory
      * @param Translator $translator
-     * @param AuthorizationChecker $authorizationChecker
+     * @param AuthorizationCheckerInterface $authorizationChecker
      */
-    public function __construct(FactoryInterface $factory, Translator $translator, AuthorizationChecker $authorizationChecker)
+    public function __construct(FactoryInterface $factory, Translator $translator, AuthorizationCheckerInterface $authorizationChecker)
     {
         $this->factory = $factory;
         $this->translator = $translator;
