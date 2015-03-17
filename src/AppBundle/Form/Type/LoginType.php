@@ -5,18 +5,23 @@ namespace AppBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Translation\Translator;
+use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class LoginType extends AbstractType
 {
+    const MIN_PASSWORD_LENGTH = 3;
+    const MIN_USERNAME_LENGTH = 3;
     /**
      * @var Translator
      */
     protected $translator;
 
     /**
-     * @param Translator $translator
+     * @param TranslatorInterface $translator
      */
-    public function __construct(Translator $translator)
+    public function __construct(TranslatorInterface $translator)
     {
         $this->translator = $translator;
     }
@@ -33,6 +38,10 @@ class LoginType extends AbstractType
                 [
                     'required' => true,
                     'label' => $this->translator->trans('login_form.username'),
+                    'constraints'   => [
+                        new NotBlank(),
+                        new Length(['min' => self::MIN_USERNAME_LENGTH])
+                    ]
                 ]
             )
             ->add(
@@ -41,6 +50,10 @@ class LoginType extends AbstractType
                 [
                     'required' => true,
                     'label' => $this->translator->trans('login_form.password'),
+                    'constraints'   => [
+                        new NotBlank(),
+                        new Length(['min' => self::MIN_PASSWORD_LENGTH])
+                    ]
                 ]
             )
             ->add(
