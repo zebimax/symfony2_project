@@ -1,0 +1,27 @@
+AppBundle\Entity\User:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: email
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: username
+    properties:
+        email:
+            - NotBlank: ~
+            - Email: ~
+        username:
+            - NotBlank: ~
+            - Length:
+                  min: 3
+        fullname:
+            - NotBlank: ~
+        password:
+            - Length: { min: 3, groups: [add] }
+        file:
+            - File:
+                maxSize: 5M
+                mimeTypes: [image/jpeg, image/gif, image/png, image/tiff]
+AppBundle\Entity\Role:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: role
+    properties:
+        role:
+            - NotBlank: ~
+            - Choice: { choices: [ROLE_OPERATOR, ROLE_MANAGER, ROLE_ADMINISTRATOR] }

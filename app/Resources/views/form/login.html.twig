@@ -1,6 +1,9 @@
 {% extends 'layout.html.twig' %}
 {% block page %}
     <div class="container">
+        <div class="row">
+            <h1 class="text-center">{{ 'app.messages.please_login' | trans }}</h1>
+        </div>
     {% if error %}
         <div>{{ error.messageKey | trans(error.messageData) }}</div>
     {% endif %}

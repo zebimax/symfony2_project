@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -12,6 +13,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  *
  * @ORM\Table(name="bt_user")
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks
  */
 class User implements UserInterface, \Serializable
 {
@@ -89,7 +91,14 @@ class User implements UserInterface, \Serializable
      * @ORM\Column(name="is_active", type="boolean")
      */
     private $isActive;
-    
+
+    /**
+     * @var UploadedFile
+     */
+    protected $file;
+
+    private $temp;
+
     public function __construct()
     {
         $this->roles = new ArrayCollection();
@@ -273,7 +282,7 @@ class User implements UserInterface, \Serializable
     /**
      * Get roles
      *
-     * @return Collection
+     * @return Role[]
      */
     public function getRoles()
     {
@@ -393,18 +402,149 @@ class User implements UserInterface, \Serializable
 
     public function getPrimaryRole()
     {
+        $hasRoleAdmin = $hasRoleManager = $hasRoleOperator = false;
         foreach ($this->roles as $role) {
             /** @var Role $role */
             if (Role::ADMINISTRATOR === $role->getRole()) {
-                return Role::ADMINISTRATOR;
+                $hasRoleAdmin = true;
+                break;
             }
             if (Role::MANAGER === $role->getRole()) {
-                return Role::MANAGER;
+                $hasRoleManager = true;
+                continue;
             }
             if (Role::OPERATOR === $role->getRole()) {
-                return Role::OPERATOR;
+                $hasRoleOperator = true;
             }
         }
-        return null;
+        if ($hasRoleAdmin) {
+            return Role::ADMINISTRATOR;
+        } elseif ($hasRoleManager) {
+            return Role::MANAGER;
+        } else {
+            return $hasRoleOperator ? Role::OPERATOR : null;
+        }
+    }
+
+    public function getRolesArray()
+    {
+        return array_reduce($this->getRoles(), function ($carry, $item) {
+            /** @var Role $item */
+            $carry[$item->getRole()] = $item->getId();
+            return $carry;
+        }, []);
+    }
+
+    /**
+     * Sets file.
+     *
+     * @param UploadedFile $file
+     */
+    public function setFile(UploadedFile $file = null)
+    {
+        $this->file = $file;
+        // check if we have an old image path
+        if (is_file($this->getAbsolutePath())) {
+            // store the old name to delete after the update
+            $this->temp = $this->getAbsolutePath();
+        } else {
+            $this->avatar = 'initial';
+        }
+    }
+
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function preUpload()
+    {
+        if (null !== $this->getFile()) {
+            $this->avatar = $this->getFile()->guessExtension();
+        }
+    }
+
+    /**
+     * @ORM\PostPersist()
+     * @ORM\PostUpdate()
+     */
+    public function upload()
+    {
+        if (null === $this->getFile()) {
+            return;
+        }
+
+        // check if we have an old image
+        if (null !== $this->temp) {
+            // delete the old image
+            unlink($this->temp);
+            // clear the temp image path
+            $this->temp = null;
+        }
+
+        // you must throw an exception here if the file cannot be moved
+        // so that the entity is not persisted to the database
+        // which the UploadedFile move() method does
+        $this->getFile()->move(
+            $this->getUploadRootDir(),
+            $this->id.'.'.$this->getFile()->guessExtension()
+        );
+
+        $this->setFile(null);
+    }
+
+    /**
+     * @ORM\PreRemove()
+     */
+    public function storeFilenameForRemove()
+    {
+        $this->temp = $this->getAbsolutePath();
+    }
+
+    /**
+     * @ORM\PostRemove()
+     */
+    public function removeUpload()
+    {
+        if (null !== $this->temp) {
+            unlink($this->temp);
+        }
+    }
+
+    public function getAbsolutePath()
+    {
+        return null === $this->avatar
+            ? null
+            : $this->getUploadRootDir().'/'.$this->id.'.'.$this->avatar;
+    }
+
+    /**
+     * Get file.
+     *
+     * @return UploadedFile
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    public function getWebPath()
+    {
+        return null === $this->avatar
+            ? null
+            : $this->getUploadDir().'/'.$this->id.'.'.$this->avatar;
+    }
+
+    protected function getUploadRootDir()
+    {
+        // the absolute directory path where uploaded
+        // documents should be saved
+        return __DIR__.'/../../../web/'.$this->getUploadDir();
+    }
+
+    protected function getUploadDir()
+    {
+        // get rid of the __DIR__ so it doesn't screw up
+        // when displaying uploaded doc/image in the view.
+        return 'uploads/avatars';
     }
 }

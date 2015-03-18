@@ -32,6 +32,19 @@ services:
             - @translator.default
         tags:
             - { name: form.type, alias: app_login }
+    app.form.type.user_type:
+        class: AppBundle\Form\Type\UserType
+        arguments:
+            - @translator.default
+        tags:
+            - { name: form.type, alias: app_user }
+    app.form.type.role_type:
+        class: AppBundle\Form\Type\RoleType
+        arguments:
+            - @translator.default
+        tags:
+            - { name: form.type, alias: 'app_role' }
+        public: false
     app.menu_builder:
         class: AppBundle\Menu\MenuBuilder
         arguments: ["@knp_menu.factory", "@translator.default", "@security.authorization_checker"]

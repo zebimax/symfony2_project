@@ -1,7 +1,12 @@
 app:
+    messages:
+        please_login: 'Please login'
+        user_edit_success: 'User updated'
+    email: 'Email'
     title: 'Simple bug tracker'
     button:
         submit: 'Submit'
+        cancel: 'Cancel'
     main_menu:
         users:
             root: 'Users'
@@ -21,15 +26,27 @@ app:
             edit: 'Edit profile'
     list:
         actions: 'Actions'
+    username: 'Username'
+    fullName: 'Full name'
+    titles:
+        users_list: 'Users list'
+        user_add: 'Add user'
+        user_edit: 'Edit user'
+    password: 'Password'
+    password_will_be_generated: 'password, If leave empty will be generated'
+    tooltip:
+        user_edit: 'Edit user'
+    avatar: 'Avatar'
 logout_menu:
     logout: 'Logout'
 login_form:
     username: 'Username'
     password: 'Password'
-users_list_tile: 'Users list'
 user:
     users: 'Users'
     add_user: 'Add user'
+    edit_user: 'Edit user'
+    save_user: 'Save user'
 users:
     user:
         username: 'username'

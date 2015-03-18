@@ -1,47 +1,41 @@
-{% extends 'list.html.twig' %}
+{% extends 'default/index.html.twig' %}
 
 {% block title %}
-    {{ 'users_list_tile' | trans }}
+    {{ 'app.titles.users_list' | trans }}
 {% endblock %}
-{% block page %}
-    <h1>{{ 'user.users'|trans }}</h1>
-
+{% block page_header %}{{ 'user.users'|trans }}{%  endblock %}
+{% block page_content %}
     <div class="row">
         <div class="col-md-6">
             <a class="btn btn-primary" href="{{ path('app_user_add') }}">{{ 'user.add_user'|trans }}</a>
         </div>
     </div>
     <br/>
-    <div class="row">
-        <div class="col-md-12">
-            {% if users|length %}
-                <table class="table table-bordered table-condensed table-striped">
-                    <tr>
-                        <th>{{ 'users.user.username' | trans }}</th>
-                        <th>{{ 'users.user.email' | trans }}</th>
-                        <th>{{ 'users.user.fullName' | trans }}</th>
-                        <th>{{ 'users.user.role' | trans }}</th>
-                        <th>{{ 'users.user.isActive' | trans }}</th>
-                        <th>{{ 'app.list.actions' | trans }}</th>
-                    </tr>
-                    {% for user in users %}
-                        <tr>
-                            <td>{{ user.username }}</td>
-                            <td>{{ user.email }}</td>
-                            <td>{{ user.fullName }}</td>
-                            <td>{{ user.getPrimaryRole | renderPrimaryRole }}</td>
-                            <td>{{ user.isActive | renderIsActive}}</td>
-                            <td class="text-center">
-                                <a href="{{ path('app_user_edit', {'id': user.id}) }}">
-                                    <span class="glyphicon glyphicon-pencil"></span>
-                                </a>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </table>
-            {% else %}
-                {{ 'users.empty_list' | trans }}
-            {% endif %}
-        </div>
-    </div>
-{% endblock %}
+    {% if users|length %}
+        <table class="table table-bordered table-condensed table-striped">
+            <tr>
+                <th>{{ 'users.user.username' | trans }}</th>
+                <th>{{ 'users.user.email' | trans }}</th>
+                <th>{{ 'users.user.fullName' | trans }}</th>
+                <th>{{ 'users.user.role' | trans }}</th>
+                <th>{{ 'users.user.isActive' | trans }}</th>
+                <th>{{ 'app.list.actions' | trans }}</th>
+            </tr>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.fullName }}</td>
+                    <td>{{ user.getPrimaryRole | renderPrimaryRole }}</td>
+                    <td>{{ user.isActive | renderIsActive}}</td>
+                    <td class="text-center">
+                        <a href="{{ path('app_user_edit', {'id': user.id}) }}" rel="tooltip" title="{{ 'app.tooltip.user_edit' | trans }}">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        {{ 'users.empty_list' | trans }}
+    {% endif %}{%  endblock %}

@@ -21,6 +21,7 @@ class MainMenuItem implements MainMenuItemInterface
         $this->setConfigs($config);
         $this->setSubItems($subItems);
     }
+
     /**
      * @return MainMenuItemInterface[]
      */
