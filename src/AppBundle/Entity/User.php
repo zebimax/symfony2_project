@@ -517,6 +517,9 @@ class User implements UserInterface, \Serializable
         }
     }
 
+    /**
+     * @return null|string
+     */
     public function getAbsolutePath()
     {
         return null === $this->avatar
@@ -534,6 +537,9 @@ class User implements UserInterface, \Serializable
         return $this->file;
     }
 
+    /**
+     * @return null|string
+     */
     public function getWebPath()
     {
         return null === $this->avatar
@@ -541,6 +547,9 @@ class User implements UserInterface, \Serializable
             : $this->getUploadDir().'/'.$this->id.'.'.$this->avatar;
     }
 
+    /**
+     * @return string
+     */
     protected function getUploadRootDir()
     {
         // the absolute directory path where uploaded
@@ -548,6 +557,9 @@ class User implements UserInterface, \Serializable
         return __DIR__.'/../../../web/'.$this->getUploadDir();
     }
 
+    /**
+     * @return string
+     */
     protected function getUploadDir()
     {
         // get rid of the __DIR__ so it doesn't screw up

@@ -200,7 +200,7 @@ services:
             config:
                 name: %app.main_menu_items_names.profile.edit%
                 label: %app.main_menu_items_labels.profile.edit%
-                route: 'app_profile_edit'
+                route: 'app_user_edit'
                 route_parameters:
                     - @app.main_menu.user_id_parameter_provider
     app.main_menu.user_id_parameter_provider:

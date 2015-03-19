@@ -67,7 +67,6 @@ class UserController extends Controller
      * @param User $user
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/user/edit/{id}", name="app_user_edit")
-     * @Security("is_granted('edit', user)")
      */
     public function editAction(User $user)
     {
