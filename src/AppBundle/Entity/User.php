@@ -400,6 +400,9 @@ class User implements UserInterface, \Serializable
             ) = unserialize($serialized);
     }
 
+    /**
+     * @return null|string
+     */
     public function getPrimaryRole()
     {
         $hasRoleAdmin = $hasRoleManager = $hasRoleOperator = false;
@@ -426,6 +429,9 @@ class User implements UserInterface, \Serializable
         }
     }
 
+    /**
+     * @return mixed
+     */
     public function getRolesArray()
     {
         return array_reduce($this->getRoles(), function ($carry, $item) {
@@ -447,6 +453,7 @@ class User implements UserInterface, \Serializable
         if (is_file($this->getAbsolutePath())) {
             // store the old name to delete after the update
             $this->temp = $this->getAbsolutePath();
+            $this->avatar = null;
         } else {
             $this->avatar = 'initial';
         }

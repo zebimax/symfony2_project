@@ -4,14 +4,14 @@
 {% endblock %}
 {% block page_header %}{{ 'user.edit_user' | trans }}{%  endblock %}
 {% block page_content %}
-        {% for flashMessage in app.session.flashbag.get('flash_user_edit') %}
-            <div class="alert alert-info" role="alert">{{ flashMessage }}</div>
-        {% endfor %}
-    {% image '@AppBundle/Resources/public/images/example.jpg'
-    filter='jpegoptim' output='/images/example.jpg' %}
-    <img src="{{ asset_url }}" alt="Example"/>
-    {% endimage %}
-    {#<img src="{{ asset(user.getWebPath) }}" alt="{{ user.username }}" class="spaced img-responsive img-rounded" />#}
+    {% for flashMessage in app.session.flashbag.get('flash_user_edit') %}
+        <div class="alert alert-info" role="alert">{{ flashMessage }}</div>
+    {% endfor %}
+    {% set avatar_src = 'bundles/app/images/avatar_empty.gif' %}
+    {% if user.getWebPath != false %}
+        {% set avatar_src = user.getWebPath %}
+    {% endif %}
+    <img src="{{ asset(avatar_src) }}" alt="{{ user.username }}" class="spaced img-responsive img-100" />
     <form method="post" {{ form_enctype(form) }}>
         {{ form_widget(form) }}
         <input type="submit" class="btn btn-primary" value="{{ 'user.save_user' | trans }}"/>

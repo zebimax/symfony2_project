@@ -78,6 +78,7 @@ class UserType extends AbstractType
                 'file',
                 'file',
                 [
+                    'required' => false,
                     'label' => $this->translator->trans('app.avatar')
                 ]
             )
