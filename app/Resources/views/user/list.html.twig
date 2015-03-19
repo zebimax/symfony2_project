@@ -3,15 +3,15 @@
 {% block title %}
     {{ 'app.titles.users_list' | trans }}
 {% endblock %}
-{% block page_header %}{{ 'user.users'|trans }}{%  endblock %}
+{% block page_header %}{{ 'user.users' | trans }}{%  endblock %}
 {% block page_content %}
     <div class="row">
         <div class="col-md-6">
-            <a class="btn btn-primary" href="{{ path('app_user_add') }}">{{ 'user.add_user'|trans }}</a>
+            <a class="btn btn-primary" href="{{ path('app_user_add') }}">{{ 'user.add_user' | trans }}</a>
         </div>
     </div>
     <br/>
-    {% if users|length %}
+    {% if users | length %}
         <table class="table table-bordered table-condensed table-striped">
             <tr>
                 <th>{{ 'users.user.username' | trans }}</th>
@@ -38,4 +38,13 @@
         </table>
     {% else %}
         {{ 'users.empty_list' | trans }}
-    {% endif %}{%  endblock %}
+    {% endif %}
+    <div class="count">
+        {{ 'app.messages.total_items' | trans }} : {{ users.getTotalItemCount }}
+    </div>
+    {# display navigation #}
+    <div class="navigation">
+        {{ knp_pagination_render(users) }}
+    </div>
+{%  endblock %}
+

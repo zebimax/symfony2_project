@@ -3,11 +3,11 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\User;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
+use Symfony\Component\HttpFoundation\Request;
 
 class UserController extends Controller
 {
@@ -56,10 +56,22 @@ class UserController extends Controller
     /**
      * @Route("/user/list", name="app_user_list")
      * @Security("is_granted('users_list')")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listAction()
+    public function listAction(Request $request)
     {
-        $users = $this->getDoctrine()->getRepository('AppBundle:User')->findAll();
+        $queryBuilder = $this->getDoctrine()
+            ->getEntityManager()
+            ->createQueryBuilder()
+            ->from('AppBundle:User', 'u')
+            ->select('u');
+        $paginator  = $this->get('knp_paginator');
+        $users = $paginator->paginate(
+            $queryBuilder,
+            $request->query->get('page', 1),
+            10
+        );
         return $this->render('user/list.html.twig', ['users' => $users]);
     }
 

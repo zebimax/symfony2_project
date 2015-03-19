@@ -1,7 +1,9 @@
 app:
+    dashboard: 'System Dashboard'
     messages:
         please_login: 'Please login'
         user_edit_success: 'User updated'
+        total_items: 'Total'
     email: 'Email'
     title: 'Simple bug tracker'
     button:
@@ -32,11 +34,15 @@ app:
         users_list: 'Users list'
         user_add: 'Add user'
         user_edit: 'Edit user'
+        dashboard: 'System dashboard'
     password: 'Password'
     password_will_be_generated: 'password, If leave empty will be generated'
     tooltip:
         user_edit: 'Edit user'
     avatar: 'Avatar'
+    dashboard_items:
+        related_issues: 'Related issues'
+        activities: 'Activities'
 logout_menu:
     logout: 'Logout'
 login_form:

@@ -14,7 +14,8 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="bt_issue")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\Issues")
+ * @ORM\HasLifecycleCallbacks
  */
 class Issue
 {
@@ -92,12 +93,13 @@ class Issue
     /**
      * @var ArrayCollection User[]
      *
-     * @ORM\ManyToMany(targetEntity="User", mappedBy="issues")
+     * @ORM\ManyToMany(targetEntity="User", inversedBy="issues", indexBy="id")
+     * @ORM\JoinTable(name="bt_user_to_issue")
      */
     private $collaborators;
 
     /**
-     * @var User
+     * @var Issue
      *
      * @ORM\ManyToOne(targetEntity="Issue", inversedBy="children")
      * @ORM\JoinColumn(onDelete="CASCADE")
@@ -105,7 +107,7 @@ class Issue
     private $parent;
 
     /**
-     * @var ArrayCollection User[]
+     * @var ArrayCollection Issue[]
      *
      * @ORM\OneToMany(targetEntity="Issue", mappedBy="parent")
      **/
@@ -135,12 +137,28 @@ class Issue
     private $updated;
 
     /**
+     * @var ArrayCollection IssueActivity[]
+     *
+     * @ORM\OneToMany(targetEntity="IssueActivity", mappedBy="issue", indexBy="id", cascade={"persist"})
+     **/
+    private $activities;
+
+    /**
+     * @var ArrayCollection Comment[]
+     *
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="issue", indexBy="id")
+     **/
+    private $comments;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
         $this->collaborators = new ArrayCollection();
         $this->children = new ArrayCollection();
+        $this->activities = new ArrayCollection();
+        $this->comments = new ArrayCollection();
         $this->created = new \DateTime();
         $this->updated = new \DateTime();
     }
@@ -393,7 +411,7 @@ class Issue
      */
     public function addCollaborator(User $collaborators)
     {
-        $this->collaborators[] = $collaborators;
+        $this->collaborators->set($collaborators->getId(), $collaborators);
 
         return $this;
     }
@@ -495,5 +513,73 @@ class Issue
     public function getProject()
     {
         return $this->project;
+    }
+
+    /**
+     * Add activity
+     *
+     * @param IssueActivity $activity
+     * @return Issue
+     */
+    public function addActivity(IssueActivity $activity)
+    {
+        $this->activities->set($activity->getId(), $activity);
+
+        return $this;
+    }
+
+    /**
+     * Remove activity
+     *
+     * @param IssueActivity $activity
+     */
+    public function removeActivity(IssueActivity $activity)
+    {
+        $this->activities->removeElement($activity);
+    }
+
+    /**
+     * @param Comment $comment
+     * @return $this
+     */
+    public function addComment(Comment $comment)
+    {
+        $this->comments->set($comment->getId(), $comment);
+
+        return $this;
+    }
+
+    /**
+     * @param Comment $comment
+     */
+    public function removeComment(Comment $comment)
+    {
+        $this->comments->removeElement($comment);
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function prePersist()
+    {
+        $this->addCollaborator($this->reporter);
+        if ($this->assignee !== null) {
+            $this->addCollaborator($this->assignee);
+        }
+        $this->addActivity(
+            (new IssueActivity())
+            ->setType(IssueActivity::CREATE_ISSUE)
+            ->setIssue($this)
+            ->setUser($this->reporter)
+        );
+    }
+
+    /**
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function beforeSave()
+    {
+        $this->updated = new \DateTime('now', new \DateTimeZone('UTC'));
     }
 }

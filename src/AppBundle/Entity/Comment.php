@@ -10,15 +10,32 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="bt_comment")
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks
  */
 class Comment extends AbstractIssueEvent
 {
+    /**
+     * @var Issue
+     *
+     * @ORM\ManyToOne(targetEntity="Issue")
+     * @ORM\JoinColumn(onDelete="CASCADE")
+     */
+    protected $issue;
+
     /**
      * @var string
      *
      * @ORM\Column(name="body", type="text")
      */
     private $body;
+
+    /**
+     * @var IssueActivity
+     *
+     * @ORM\OneToOne(targetEntity="IssueActivity", cascade={"persist"})
+     * @ORM\JoinColumn(onDelete="CASCADE")
+     */
+    private $activity;
 
     /**
      * Set body
@@ -41,5 +58,44 @@ class Comment extends AbstractIssueEvent
     public function getBody()
     {
         return $this->body;
+    }
+
+    /**
+     * @return IssueActivity
+     */
+    public function getActivity()
+    {
+        return $this->activity;
+    }
+
+    /**
+     * @param IssueActivity $activity
+     */
+    public function setActivity($activity)
+    {
+        $this->activity = $activity;
+    }
+
+    /**
+     * @param Issue $issue
+     * @return $this
+     */
+    public function setIssue(Issue $issue)
+    {
+        $this->issue = $issue;
+
+        return $this;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function prePersist()
+    {
+        $this->activity = (new IssueActivity())
+            ->setType(IssueActivity::COMMENT_ISSUE)
+            ->setUser($this->user)
+            ->setIssue($this->issue);
+        $this->issue->addCollaborator($this->user);
     }
 }

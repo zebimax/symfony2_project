@@ -14,6 +14,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @ORM\Table(name="bt_user")
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks
+ * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */
 class User implements UserInterface, \Serializable
 {
@@ -80,8 +81,7 @@ class User implements UserInterface, \Serializable
     /**
      * @var ArrayCollection Issue[]
      *
-     * @ORM\ManyToMany(targetEntity="Issue", inversedBy="collaborators")
-     * @ORM\JoinTable(name="bt_user_to_issue")
+     * @ORM\ManyToMany(targetEntity="Issue", mappedBy="collaborators")
      */
     private $issues;
 

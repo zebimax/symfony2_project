@@ -28,14 +28,6 @@ class AbstractIssueEvent
     protected $created;
 
     /**
-     * @var Issue
-     *
-     * @ORM\ManyToOne(targetEntity="Issue")
-     * @ORM\JoinColumn(onDelete="CASCADE")
-     */
-    protected $issue;
-
-    /**
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="User")
@@ -62,7 +54,7 @@ class AbstractIssueEvent
      * Set created
      *
      * @param \DateTime $created
-     * @return AbstractIssueEvent
+     * @return $this
      */
     public function setCreated($created)
     {
@@ -82,33 +74,10 @@ class AbstractIssueEvent
     }
 
     /**
-     * Set issue
-     *
-     * @param Issue $issue
-     * @return AbstractIssueEvent
-     */
-    public function setIssue(Issue $issue = null)
-    {
-        $this->issue = $issue;
-
-        return $this;
-    }
-
-    /**
-     * Get issue
-     *
-     * @return Issue
-     */
-    public function getIssue()
-    {
-        return $this->issue;
-    }
-
-    /**
      * Set user
      *
      * @param User $user
-     * @return AbstractIssueEvent
+     * @return $this
      */
     public function setUser(User $user = null)
     {

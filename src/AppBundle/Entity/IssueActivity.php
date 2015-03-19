@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="bt_activity")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\IssueActivities")
  */
 class IssueActivity extends AbstractIssueEvent
 {
@@ -28,6 +28,15 @@ class IssueActivity extends AbstractIssueEvent
      * @ORM\Column(type="json_array", nullable=true)
      */
     private $details;
+
+    /**
+     * @var Issue
+     *
+     * @ORM\ManyToOne(targetEntity="Issue", inversedBy="activities")
+     * @ORM\JoinColumn(onDelete="CASCADE")
+     */
+    protected $issue;
+
     /**
      * @var integer
      */
@@ -76,5 +85,24 @@ class IssueActivity extends AbstractIssueEvent
     public function getDetails()
     {
         return $this->details;
+    }
+
+    /**
+     * @return Issue
+     */
+    public function getIssue()
+    {
+        return $this->issue;
+    }
+
+    /**
+     * @param Issue $issue
+     * @return $this
+     */
+    public function setIssue(Issue $issue)
+    {
+        $this->issue = $issue;
+
+        return $this;
     }
 }

@@ -3,6 +3,7 @@ parameters:
     app.main_menu_items.project: 'main_menu.projects'
     app.main_menu_items.user: 'main_menu.users'
     app.main_menu_items.profile: 'main_menu.profile'
+    app.main_menu_items_labels.home: 'app.main_menu.home'
     app.main_menu_items_labels.issue: 'app.main_menu.issues.root'
     app.main_menu_items_labels.project: 'app.main_menu.projects.root'
     app.main_menu_items_labels.user: 'app.main_menu.users.root'
@@ -14,6 +15,7 @@ parameters:
     app.main_menu_items_labels.project.list: 'app.main_menu.projects.list'
     app.main_menu_items_labels.project.add: 'app.main_menu.projects.add'
     app.main_menu_items_labels.profile.edit: 'app.main_menu.profile.edit'
+    app.main_menu_items_names.home: 'home'
     app.main_menu_items_names.issue: 'issues'
     app.main_menu_items_names.project: 'projects'
     app.main_menu_items_names.user: 'users'
@@ -38,13 +40,6 @@ services:
             - @translator.default
         tags:
             - { name: form.type, alias: app_user }
-    app.form.type.role_type:
-        class: AppBundle\Form\Type\RoleType
-        arguments:
-            - @translator.default
-        tags:
-            - { name: form.type, alias: 'app_role' }
-        public: false
     app.menu_builder:
         class: AppBundle\Menu\MenuBuilder
         arguments: ["@knp_menu.factory", "@translator.default", "@security.authorization_checker"]
@@ -105,7 +100,15 @@ services:
         class:      AppBundle\Menu\MainMenuManager
         public:     true
         arguments:
-            - [@app.main_menu_issue_item, @app.main_menu_project_item, @app.main_menu_user_item, @app.main_menu_profile_item]
+            - [@app.main_menu_home_item, @app.main_menu_issue_item, @app.main_menu_project_item, @app.main_menu_user_item, @app.main_menu_profile_item]
+    app.main_menu_home_item:
+        class:      AppBundle\Menu\MainMenuItem
+        factory: [@app.main_menu_item.factory, createMainMenuItem]
+        arguments:
+            config:
+                name: %app.main_menu_items_names.home%
+                label: %app.main_menu_items_labels.home%
+                route: 'app_home'
     app.main_menu_issue_item:
         class:      AppBundle\Menu\MainMenuItem
         factory: [@app.main_menu_item.factory, createMainMenuItem]

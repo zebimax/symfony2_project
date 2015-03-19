@@ -5,10 +5,17 @@
 {% block page %}
     <div class="container">
         <div class="row">
-            <h1 class="text-center">{% block page_header %}{%  endblock %}</h1>
+            <h1 class="text-center">{% block page_header %}{{ 'app.dashboard' | trans }}{%  endblock %}</h1>
         </div>
         <div class="row">
-            <div class="col-md-12">{% block page_content %}{%  endblock %}</div>
+            <div class="col-md-12">
+                {% block page_content %}
+                    <table class="table">
+                        <td>{% include 'issues.html.twig' %}</td>
+                        <td>{% include 'activities.html.twig' %}</td>
+                    </table>
+                {%  endblock %}
+            </div>
         </div>
     </div>
 {%  endblock %}
