@@ -18,6 +18,7 @@ class UserController extends Controller
      */
     public function addAction()
     {
+        $form = $this->container->get('app.services.user_form')->getAddForm();
         $user = new User();
         $form = $this->createForm('app_user', $user)->add(
             'password',

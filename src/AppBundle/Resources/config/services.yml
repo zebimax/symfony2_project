@@ -250,3 +250,10 @@ services:
         arguments:
             - @doctrine.orm.default_entity_manager
             - @knp_paginator
+    app.services.user_form:
+        class: AppBundle\Service\UserFormService
+        arguments:
+            - @doctrine.orm.default_entity_manager
+            - @form.factory
+            - @translator.default
+
