@@ -15,6 +15,7 @@ parameters:
     app.main_menu_items_labels.project.list: 'app.main_menu.projects.list'
     app.main_menu_items_labels.project.add: 'app.main_menu.projects.add'
     app.main_menu_items_labels.profile.edit: 'app.main_menu.profile.edit'
+    app.main_menu_items_labels.profile.view: 'app.main_menu.profile.view'
     app.main_menu_items_names.home: 'home'
     app.main_menu_items_names.issue: 'issues'
     app.main_menu_items_names.project: 'projects'
@@ -27,6 +28,9 @@ parameters:
     app.main_menu_items_names.project.list: 'projects_list'
     app.main_menu_items_names.project.add: 'projects_add'
     app.main_menu_items_names.profile.edit: 'profile_edit'
+    app.main_menu_items_names.profile.view: 'profile_view'
+    app.services.user.list_limit: 1
+    app.page_name: 'page'
 services:
     app.form.type.login_type:
         class: AppBundle\Form\Type\LoginType
@@ -60,6 +64,12 @@ services:
         arguments: ["@request_stack"]
         tags:
             - { name: knp_menu.menu, alias: logout } # The alias is what is used to retrieve the menu
+    app.twig.abtract_extension:
+        class:      AppBundle\Twig\AbstractExtension
+        abstract: true
+        public: false
+        arguments:
+            - @translator.default
     app.security.access.role_voter:
         class:      AppBundle\Security\Authorization\Voter\AbstractRoleVoter
         abstract: true
@@ -138,6 +148,7 @@ services:
                 label: %app.main_menu_items_labels.profile%
             sub_items:
                 - @app.main_menu_profile_edit_item
+                - @app.main_menu_profile_view_item
     app.main_menu_user_item:
         class:      AppBundle\Menu\MainMenuItem
         factory: [@app.main_menu_item.factory, createMainMenuItem]
@@ -206,13 +217,36 @@ services:
                 route: 'app_user_edit'
                 route_parameters:
                     - @app.main_menu.user_id_parameter_provider
+    app.main_menu_profile_view_item:
+        class:      AppBundle\Menu\MainMenuItem
+        factory: [@app.main_menu_item.factory, createMainMenuItem]
+        arguments:
+            config:
+                name: %app.main_menu_items_names.profile.view%
+                label: %app.main_menu_items_labels.profile.view%
+                route: 'app_user_view'
+                route_parameters:
+                    - @app.main_menu.user_id_parameter_provider
     app.main_menu.user_id_parameter_provider:
         class:      AppBundle\Menu\Route\UserIdParameterProvider
         arguments:
             - @security.token_storage
     app.twig.user_extension:
         class: AppBundle\Twig\UserExtension
+        parent: app.twig.abtract_extension
         arguments:
             - @translator.default
         tags:
             - { name: twig.extension }
+    app.twig.activity_extension:
+        class: AppBundle\Twig\ActivityExtension
+        parent: app.twig.abtract_extension
+        arguments:
+            - @translator.default
+        tags:
+            - { name: twig.extension }
+    app.services.user:
+        class: AppBundle\Service\UserService
+        arguments:
+            - @doctrine.orm.default_entity_manager
+            - @knp_paginator

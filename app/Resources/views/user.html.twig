@@ -1,0 +1,31 @@
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title" id="panel-title">{{ 'app.dashboard_items.user_info' | trans }}</h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-2">
+                {% set avatar_src = 'bundles/app/images/avatar_empty.gif' %}
+                {% if user.getWebPath != false %}
+                    {% set avatar_src = user.getWebPath %}
+                {% endif %}
+                <img src="{{ asset(avatar_src) }}" alt="{{ user.username }}" class="spaced img-responsive img-100" />
+            </div>
+            <div class="col-md-10">
+                <ul class="list-group">
+                    <li class="list-group-item">{{ user.username }}</li>
+                    <li class="list-group-item">{{ user.fullname }}</li>
+                    <li class="list-group-item">{{ user.email }}</li>
+                    <li class="list-group-item">{{ user.getPrimaryRole | renderPrimaryRole }}</li>
+                </ul>
+            </div>
+        </div>
+        {% if app.user and is_granted('edit', user) %}
+        <div class="row">
+            <div class="col-md-2">
+                <a class="btn btn-primary" href="{{ path('app_user_edit', {'id':user.id}) }}">{{'app.button.edit' | trans}}</a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>

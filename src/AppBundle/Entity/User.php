@@ -12,7 +12,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * AppBundle\Entity\User
  *
  * @ORM\Table(name="bt_user")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\Repository\Users")
  * @ORM\HasLifecycleCallbacks
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */

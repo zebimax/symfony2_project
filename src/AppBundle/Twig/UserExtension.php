@@ -3,23 +3,9 @@
 namespace AppBundle\Twig;
 
 use AppBundle\Entity\Role;
-use Symfony\Component\Translation\Translator;
 
-class UserExtension extends \Twig_Extension
+class UserExtension extends AbstractExtension
 {
-    /**
-     * @var Translator
-     */
-    protected $translator;
-
-    /**
-     * @param Translator $translator
-     */
-    public function __construct(Translator $translator)
-    {
-        $this->translator = $translator;
-    }
-
     /**
      * {@inheritdoc}
      */
@@ -39,6 +25,10 @@ class UserExtension extends \Twig_Extension
         ];
     }
 
+    /**
+     * @param $userRole
+     * @return string
+     */
     public function renderPrimaryRole($userRole)
     {
         $role = 'role.undefined';
@@ -58,6 +48,10 @@ class UserExtension extends \Twig_Extension
         return $this->translator->trans($role);
     }
 
+    /**
+     * @param $isActive
+     * @return string
+     */
     public function renderIsActive($isActive)
     {
         return $isActive ? '+' : '-';

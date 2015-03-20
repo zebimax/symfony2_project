@@ -9,6 +9,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 abstract class AbstractSupportedRoleVoter extends AbstractRoleVoter
 {
+    /** @var array */
     protected $supportedAttributes = [];
 
     /**

@@ -4,6 +4,7 @@ namespace AppBundle\Menu;
 
 class MainMenuManager
 {
+    /** @var array */
     private $menuItems = [];
 
     /**

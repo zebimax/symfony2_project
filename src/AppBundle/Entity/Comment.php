@@ -94,8 +94,7 @@ class Comment extends AbstractIssueEvent
     {
         $this->activity = (new IssueActivity())
             ->setType(IssueActivity::COMMENT_ISSUE)
-            ->setUser($this->user)
-            ->setIssue($this->issue);
+            ->setUser($this->user);
         $this->issue->addCollaborator($this->user);
     }
 }

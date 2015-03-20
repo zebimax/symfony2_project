@@ -2,19 +2,13 @@
 
 namespace AppBundle\Entity;
 
-use AppBundle\Entity\IssuePriority;
-use AppBundle\Entity\IssueResolution;
-use AppBundle\Entity\IssueStatus;
-use AppBundle\Entity\IssueType;
-use AppBundle\Entity\Project;
-use AppBundle\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="bt_issue")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\Issues")
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\Repository\Issues")
  * @ORM\HasLifecycleCallbacks
  */
 class Issue
@@ -146,7 +140,7 @@ class Issue
     /**
      * @var ArrayCollection Comment[]
      *
-     * @ORM\OneToMany(targetEntity="Comment", mappedBy="issue", indexBy="id")
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="issue", indexBy="id", cascade={"persist"})
      **/
     private $comments;
 
@@ -404,14 +398,14 @@ class Issue
     }
 
     /**
-     * Add collaborators
+     * Add collaborator
      *
-     * @param User $collaborators
+     * @param User $collaborator
      * @return Issue
      */
-    public function addCollaborator(User $collaborators)
+    public function addCollaborator(User $collaborator)
     {
-        $this->collaborators->set($collaborators->getId(), $collaborators);
+        $this->collaborators->set($collaborator->getId(), $collaborator);
 
         return $this;
     }
@@ -523,6 +517,7 @@ class Issue
      */
     public function addActivity(IssueActivity $activity)
     {
+        $activity->setIssue($this);
         $this->activities->set($activity->getId(), $activity);
 
         return $this;
@@ -544,8 +539,8 @@ class Issue
      */
     public function addComment(Comment $comment)
     {
+        $comment->setIssue($this);
         $this->comments->set($comment->getId(), $comment);
-
         return $this;
     }
 
@@ -555,6 +550,22 @@ class Issue
     public function removeComment(Comment $comment)
     {
         $this->comments->removeElement($comment);
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getComments()
+    {
+        return $this->comments;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCode()
+    {
+        return $this->project->getCode() . '-' . $this->id;
     }
 
     /**
@@ -569,7 +580,6 @@ class Issue
         $this->addActivity(
             (new IssueActivity())
             ->setType(IssueActivity::CREATE_ISSUE)
-            ->setIssue($this)
             ->setUser($this->reporter)
         );
     }

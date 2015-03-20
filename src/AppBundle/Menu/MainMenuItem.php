@@ -6,10 +6,18 @@ use AppBundle\Menu\Route\ParameterProviderInterface;
 
 class MainMenuItem implements MainMenuItemInterface
 {
+    /** @var string */
     protected $name;
+
+    /** @var string */
     protected $label;
+    /** @var string */
     protected $route;
+
+    /** @var array */
     protected $subItems = [];
+
+    /** @var array */
     protected $routeParameters = [];
 
     /**

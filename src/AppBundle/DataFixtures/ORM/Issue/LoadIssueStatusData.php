@@ -3,7 +3,6 @@
 namespace AppBundle\DataFixtures\ORM\Issue;
 
 use AppBundle\DataFixtures\ORM\AbstractOrderedContainerAwareFixture;
-use AppBundle\Entity\IssuePriority;
 use AppBundle\Entity\IssueStatus;
 use Doctrine\Common\Persistence\ObjectManager;
 

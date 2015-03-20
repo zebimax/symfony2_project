@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Table(name="bt_project")
  * @ORM\Entity()
+ * @ORM\HasLifecycleCallbacks
  */
 class Project
 {
@@ -81,19 +82,6 @@ class Project
     }
 
     /**
-     * Set code
-     *
-     * @param string $code
-     * @return Project
-     */
-    public function setCode($code)
-    {
-        $this->code = $code;
-
-        return $this;
-    }
-
-    /**
      * Get code
      *
      * @return string
@@ -134,5 +122,18 @@ class Project
     public function getUsers()
     {
         return $this->users;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function prePersist()
+    {
+        $parts = preg_split("/[\s,_-]+/", $this->label);
+        $this->code = strtoupper(
+            array_reduce($parts, function ($carry, $item) {
+                return $carry . $item[0];
+            }, '')
+        );
     }
 }

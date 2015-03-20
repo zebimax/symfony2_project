@@ -11,8 +11,10 @@
             <div class="col-md-12">
                 {% block page_content %}
                     <table class="table">
-                        <td>{% include 'issues.html.twig' %}</td>
-                        <td>{% include 'activities.html.twig' %}</td>
+                        <tr>
+                            <td>{% include 'issues.html.twig' with {'issues_panel_title': 'app.dashboard_items.related_issues' | trans } %}</td>
+                            <td>{% include 'activities.html.twig' %}</td>
+                        </tr>
                     </table>
                 {%  endblock %}
             </div>

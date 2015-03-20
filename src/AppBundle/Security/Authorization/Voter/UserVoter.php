@@ -3,16 +3,14 @@
 namespace AppBundle\Security\Authorization\Voter;
 
 use AppBundle\Entity\Role;
-use AppBundle\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
-use Symfony\Component\Security\Core\Role\RoleHierarchyInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class UserVoter extends AbstractRoleVoter
 {
-    const VIEW = 'view';
     const EDIT = 'edit';
+    const VIEW = 'view';
 
     /**
      * @inheritdoc
@@ -20,8 +18,8 @@ class UserVoter extends AbstractRoleVoter
     public function supportsAttribute($attribute)
     {
         return in_array($attribute, array(
-            self::VIEW,
-            self::EDIT
+            self::EDIT,
+            self::VIEW
         ));
     }
 
@@ -62,14 +60,12 @@ class UserVoter extends AbstractRoleVoter
             return VoterInterface::ACCESS_DENIED;
         }
 
-        if ($this->hasRole($user, Role::ADMINISTRATOR)) {
+        if ($user === $userObject || $this->hasRole($user, Role::ADMINISTRATOR)) {
             return VoterInterface::ACCESS_GRANTED;
         }
-
-        if ($user === $userObject && in_array($attribute, [self::VIEW, self::EDIT])) {
+        if ($this->hasRole($user, Role::OPERATOR) && $attribute == self::VIEW) {
             return VoterInterface::ACCESS_GRANTED;
         }
-
         return VoterInterface::ACCESS_DENIED;
     }
 }

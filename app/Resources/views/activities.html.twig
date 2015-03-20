@@ -5,7 +5,13 @@
     <div class="panel-body">
         <div class="list-group">
             {% for activity in activities %}
-                <p class="list-group-item"><a href="{{ path('app_issue_view', {'id': activity.issue_id}) }}">{{ activity.message }}</a></p>
+                <p class="list-group-item">
+                    <span class="badge">
+                        <a href="{{ path('app_issue_view', {'id': activity.issue.id}) }}">{{ activity.issue.code }}</a>
+                        <a href="{{ path('app_user_view', {'id': activity.user.id}) }}">{{ activity.user.username }}</a>
+                    </span>
+                    {{ activity | getActivityMessage }}
+                </p>
             {% endfor %}
         </div>
     </div>

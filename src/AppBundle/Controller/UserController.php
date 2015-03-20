@@ -5,8 +5,8 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 
 class UserController extends Controller
@@ -14,6 +14,7 @@ class UserController extends Controller
     /**
      * @Route("/user/add", name="app_user_add")
      * @Security("is_granted('users_add')")
+     * @Template("user/add.html.twig")
      */
     public function addAction()
     {
@@ -47,10 +48,10 @@ class UserController extends Controller
             }
         }
 
-        return $this->render('user/add.html.twig', [
+        return [
             'user' => $user,
             'form' => $form->createView()
-        ]);
+        ];
     }
 
     /**
@@ -58,34 +59,27 @@ class UserController extends Controller
      * @Security("is_granted('users_list')")
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
+     * @Template("user/list.html.twig")
      */
     public function listAction(Request $request)
     {
-        $queryBuilder = $this->getDoctrine()
-            ->getEntityManager()
-            ->createQueryBuilder()
-            ->from('AppBundle:User', 'u')
-            ->select('u');
-        $paginator  = $this->get('knp_paginator');
-        $users = $paginator->paginate(
-            $queryBuilder,
-            $request->query->get('page', 1),
-            10
+        $users = $this->get('app.services.user')->getUsersList(
+            $request->query->get($this->container->getParameter('app.page_name'), 1),
+            $this->container->getParameter('app.services.user.list_limit')
         );
-        return $this->render('user/list.html.twig', ['users' => $users]);
+        return ['users' => $users];
     }
 
     /**
-     * @param User $user
+     * @param User $userObject
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/user/edit/{id}", name="app_user_edit")
+     * @Template("user/edit.html.twig")
+     * @Security("is_granted('edit', userObject)")
      */
-    public function editAction(User $user)
+    public function editAction(User $userObject)
     {
-        if (!$this->container->get('security.authorization_checker')->isGranted('edit', $user)) {
-            throw new AccessDeniedException();
-        }
-        $form = $this->createForm('app_user', $user);
+        $form = $this->createForm('app_user', $userObject);
 
         if ($this->get('request')->getMethod() === 'POST') {
             $form->submit($this->get('request'));
@@ -96,13 +90,31 @@ class UserController extends Controller
                     'flash_user_edit',
                     $this->container->get('translator.default')->trans('app.messages.user_edit_success')
                 );
-                return $this->redirect($this->generateUrl('app_user_edit', ['id' => $user->getId()]));
+                return $this->redirect($this->generateUrl('app_user_edit', ['id' => $userObject->getId()]));
             }
         }
 
-        return $this->render('user/edit.html.twig', [
-            'user' => $user,
+        return [
+            'user' => $userObject,
             'form' => $form->createView()
-        ]);
+        ];
+    }
+
+
+    /**
+     * @param User $userObject
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/user/view/{id}", name="app_user_view")
+     * @Template("user/view.html.twig")
+     * @Security("is_granted('view', userObject)")
+     */
+    public function viewAction(User $userObject)
+    {
+        $service = $this->get('app.services.user');
+        return [
+            'issues' => $service->getUserAssignedIssues($userObject->getId()),
+            'activities' => $service->getUserActivities($userObject->getId()),
+            'user' => $userObject
+        ];
     }
 }

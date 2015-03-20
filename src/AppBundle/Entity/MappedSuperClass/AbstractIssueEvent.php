@@ -2,7 +2,6 @@
 
 namespace AppBundle\Entity\MappedSuperClass;
 
-use AppBundle\Entity\Issue;
 use AppBundle\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
 

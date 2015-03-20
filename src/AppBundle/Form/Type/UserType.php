@@ -16,7 +16,6 @@ class UserType extends AbstractType
 
     /**
      * @param Translator $translator
-     * @param RoleType $roleType
      */
     public function __construct(Translator $translator)
     {

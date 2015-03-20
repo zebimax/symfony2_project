@@ -4,12 +4,19 @@ app:
         please_login: 'Please login'
         user_edit_success: 'User updated'
         total_items: 'Total'
+        activities:
+            templates:
+                create_issue: '%user% create issue %issue%'
+                change_issue_activity: '%user% set status %status% to issue %issue%'
+                comment_issue: '%user% commented on issue %issue%'
     email: 'Email'
     title: 'Simple bug tracker'
     button:
         submit: 'Submit'
         cancel: 'Cancel'
+        edit: 'Edit'
     main_menu:
+        home: 'Home'
         users:
             root: 'Users'
             add: 'Create user'
@@ -35,14 +42,18 @@ app:
         user_add: 'Add user'
         user_edit: 'Edit user'
         dashboard: 'System dashboard'
+        user_view: '%user%'
     password: 'Password'
     password_will_be_generated: 'password, If leave empty will be generated'
     tooltip:
         user_edit: 'Edit user'
+        user_view: 'View user'
     avatar: 'Avatar'
     dashboard_items:
-        related_issues: 'Related issues'
+        related_issues: 'Related Issues'
         activities: 'Activities'
+        user_info: 'User Information'
+        assigned_issues: 'Assigned Issues'
 logout_menu:
     logout: 'Logout'
 login_form:

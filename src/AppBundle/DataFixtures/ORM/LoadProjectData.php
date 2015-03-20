@@ -12,7 +12,7 @@ class LoadProjectData extends AbstractOrderedContainerAwareFixture
      */
     public function load(ObjectManager $manager)
     {
-        $project = (new Project())->setCode('A-1')->setLabel('test_project');
+        $project = (new Project())->setLabel('test_project');
 
         $manager->persist($project);
 
