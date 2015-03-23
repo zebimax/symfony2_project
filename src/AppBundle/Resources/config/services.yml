@@ -29,7 +29,7 @@ parameters:
     app.main_menu_items_names.project.add: 'projects_add'
     app.main_menu_items_names.profile.edit: 'profile_edit'
     app.main_menu_items_names.profile.view: 'profile_view'
-    app.services.user.list_limit: 1
+    app.services.user.list_limit: 10
     app.page_name: 'page'
 services:
     app.form.type.login_type:

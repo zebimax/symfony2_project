@@ -17,7 +17,7 @@ class Comment extends AbstractIssueEvent
     /**
      * @var Issue
      *
-     * @ORM\ManyToOne(targetEntity="Issue")
+     * @ORM\ManyToOne(targetEntity="Issue", inversedBy="comments")
      * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $issue;

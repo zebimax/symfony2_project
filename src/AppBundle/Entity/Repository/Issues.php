@@ -2,7 +2,7 @@
 
 namespace AppBundle\Entity\Repository;
 
-use AppBundle\Entity\IssueStatus;
+use AppBundle\DBAL\IssueStatusEnumType;
 use Doctrine\ORM\EntityRepository;
 
 class Issues extends EntityRepository
@@ -46,9 +46,8 @@ class Issues extends EntityRepository
                 'p.code project_code',
                 'p.id project_id'
             ])
-            ->join('i.status', 's')
             ->join('i.project', 'p')
-            ->where('s.code != :statusClosed')
-            ->setParameters(['userId' => $userId, 'statusClosed' => IssueStatus::CLOSED]);
+            ->where('i.status != :statusClosed')
+            ->setParameters(['userId' => $userId, 'statusClosed' => IssueStatusEnumType::CLOSED]);
     }
 }

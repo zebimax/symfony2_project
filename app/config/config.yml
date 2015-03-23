@@ -82,6 +82,11 @@ doctrine:
         user:     "%database_user%"
         password: "%database_password%"
         charset:  UTF8
+        types:
+            issue_priority_enum: AppBundle\DBAL\IssuePriorityEnumType
+            issue_type_enum: AppBundle\DBAL\IssueTypeEnumType
+            issue_status_enum: AppBundle\DBAL\IssueStatusEnumType
+            issue_resolution_enum: AppBundle\DBAL\IssueResolutionEnumType
         # if using pdo_sqlite as your database driver:
         #   1. add the path in parameters.yml
         #     e.g. database_path: "%kernel.root_dir%/data/data.db3"

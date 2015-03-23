@@ -1,11 +1,9 @@
 <?php
 namespace AppBundle\DataFixtures\ORM;
 
+use AppBundle\DBAL\IssuePriorityEnumType;
+use AppBundle\DBAL\IssueTypeEnumType;
 use AppBundle\Entity\Issue;
-use AppBundle\Entity\IssuePriority;
-use AppBundle\Entity\IssueResolution;
-use AppBundle\Entity\IssueStatus;
-use AppBundle\Entity\IssueType;
 use AppBundle\Entity\Project;
 use AppBundle\Entity\Role;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -21,10 +19,8 @@ class LoadIssueData extends AbstractOrderedContainerAwareFixture
         $bugParams =  [
             'summary' => 'Test bug summary',
             'description' => 'Test description of bug',
-            'status' => 'issue_status_open',
-            'type' => 'issue_type_bug',
+            'type' => IssueTypeEnumType::BUG,
             'reporter' => 'user_manager',
-            'priority' => 'issue_priority_trivial',
             'project' => 'test_project',
             'assignee' => 'user_operator'
         ];
@@ -35,10 +31,9 @@ class LoadIssueData extends AbstractOrderedContainerAwareFixture
         $storyParams = [
             'summary' => 'Test story summary',
             'description' => 'Test description of story',
-            'status' => 'issue_status_open',
-            'type' => 'issue_type_story',
+            'type' => IssueTypeEnumType::STORY,
             'reporter' => 'user_manager',
-            'priority' => 'issue_priority_major',
+            'priority' => IssuePriorityEnumType::MAJOR,
             'project' => 'test_project'
         ];
 
@@ -49,10 +44,9 @@ class LoadIssueData extends AbstractOrderedContainerAwareFixture
         $subTaskParams = [
             'summary' => 'Test sub_task summary',
             'description' => 'Test description of sub_task',
-            'status' => 'issue_status_open',
-            'type' => 'issue_type_sub_task',
+            'type' => IssueTypeEnumType::SUB_TASK,
             'reporter' => 'user_manager',
-            'priority' => 'issue_priority_major',
+            'priority' => IssuePriorityEnumType::MAJOR,
             'project' => 'test_project',
             'parent' => 'issue_story'
         ];
@@ -88,24 +82,15 @@ class LoadIssueData extends AbstractOrderedContainerAwareFixture
      */
     private function createEntityInstance(array $params = [])
     {
-        /** @var IssueStatus $status */
-        $status = $this->getReference($params['status']);
-        /** @var IssueType $type */
-        $type = $this->getReference($params['type']);
         /** @var User $reporter */
         $reporter = $this->getReference($params['reporter']);
-        /** @var IssuePriority $priority */
-        $priority = $this->getReference($params['priority']);
         /** @var Project $project */
         $project = $this->getReference($params['project']);
 
         $issue = (new Issue())
             ->setSummary($params['summary'])
             ->setDescription($params['description'])
-            ->setStatus($status)
-            ->setType($type)
             ->setReporter($reporter)
-            ->setPriority($priority)
             ->setProject($project);
 
         if (array_key_exists('assignee', $params)) {
@@ -115,9 +100,19 @@ class LoadIssueData extends AbstractOrderedContainerAwareFixture
         }
 
         if (array_key_exists('resolution', $params)) {
-            /** @var IssueResolution $resolution */
-            $resolution = $this->getReference($params['resolution']);
-            $issue->setResolution($resolution);
+            $issue->setResolution($params['resolution']);
+        }
+
+        if (array_key_exists('status', $params)) {
+            $issue->setStatus($params['status']);
+        }
+
+        if (array_key_exists('type', $params)) {
+            $issue->setType($params['type']);
+        }
+
+        if (array_key_exists('priority', $params)) {
+            $issue->setPriority($params['priority']);
         }
 
         if (array_key_exists('parent', $params)) {

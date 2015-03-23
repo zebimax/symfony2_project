@@ -2,6 +2,9 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\DBAL\IssuePriorityEnumType;
+use AppBundle\DBAL\IssueStatusEnumType;
+use AppBundle\DBAL\IssueTypeEnumType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -37,34 +40,30 @@ class Issue
     private $description;
 
     /**
-     * @var IssueType
+     * @var string
      *
-     * @ORM\ManyToOne(targetEntity="IssueType")
-     * @ORM\JoinColumn(onDelete="SET NULL")
+     * @ORM\Column(type="issue_type_enum")
      */
     private $type;
 
     /**
-     * @var IssuePriority
+     * @var string
      *
-     * @ORM\ManyToOne(targetEntity="IssuePriority")
-     * @ORM\JoinColumn(onDelete="SET NULL")
+     * @ORM\Column(type="issue_priority_enum")
      */
     private $priority;
 
     /**
-     * @var IssueResolution
+     * @var string
      *
-     * @ORM\ManyToOne(targetEntity="IssueResolution")
-     * @ORM\JoinColumn(onDelete="SET NULL")
+     * @ORM\Column(type="issue_resolution_enum", nullable=true)
      */
     private $resolution;
 
     /**
-     * @var IssueStatus
+     * @var string
      *
-     * @ORM\ManyToOne(targetEntity="IssueStatus")
-     * @ORM\JoinColumn(onDelete="SET NULL")
+     * @ORM\Column(type="issue_status_enum")
      */
     private $status;
 
@@ -155,6 +154,9 @@ class Issue
         $this->comments = new ArrayCollection();
         $this->created = new \DateTime();
         $this->updated = new \DateTime();
+        $this->status = IssueStatusEnumType::OPEN;
+        $this->type = IssueTypeEnumType::TASK;
+        $this->priority = IssuePriorityEnumType::TRIVIAL;
     }
 
     /**
@@ -262,10 +264,10 @@ class Issue
     /**
      * Set type
      *
-     * @param IssueType $type
+     * @param string $type
      * @return Issue
      */
-    public function setType(IssueType $type = null)
+    public function setType($type)
     {
         $this->type = $type;
 
@@ -275,7 +277,7 @@ class Issue
     /**
      * Get type
      *
-     * @return IssueType
+     * @return string
      */
     public function getType()
     {
@@ -285,10 +287,10 @@ class Issue
     /**
      * Set priority
      *
-     * @param IssuePriority $priority
+     * @param string $priority
      * @return Issue
      */
-    public function setPriority(IssuePriority $priority = null)
+    public function setPriority($priority)
     {
         $this->priority = $priority;
 
@@ -298,7 +300,7 @@ class Issue
     /**
      * Get priority
      *
-     * @return IssuePriority
+     * @return string
      */
     public function getPriority()
     {
@@ -308,10 +310,10 @@ class Issue
     /**
      * Set resolution
      *
-     * @param IssueResolution $resolution
+     * @param string $resolution
      * @return Issue
      */
-    public function setResolution(IssueResolution $resolution = null)
+    public function setResolution($resolution)
     {
         $this->resolution = $resolution;
 
@@ -321,7 +323,7 @@ class Issue
     /**
      * Get resolution
      *
-     * @return IssueResolution
+     * @return string
      */
     public function getResolution()
     {
@@ -331,10 +333,10 @@ class Issue
     /**
      * Set status
      *
-     * @param IssueStatus $status
+     * @param string $status
      * @return Issue
      */
-    public function setStatus(IssueStatus $status = null)
+    public function setStatus($status)
     {
         $this->status = $status;
 
@@ -344,7 +346,7 @@ class Issue
     /**
      * Get status
      *
-     * @return IssueStatus
+     * @return string
      */
     public function getStatus()
     {

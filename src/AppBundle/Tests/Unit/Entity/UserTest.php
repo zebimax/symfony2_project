@@ -90,6 +90,9 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $this->assertGreaterThan(0, count(call_user_func([$this->entity, 'get' . $ucFirstProperty. 's'])));
     }
 
+    /**
+     * @return array
+     */
     public function addToCollectionsDataProvider()
     {
         return [

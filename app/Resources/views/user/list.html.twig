@@ -30,10 +30,10 @@
                     <td>{{ user.isActive | renderIsActive}}</td>
                     <td class="text-center">
                         <a href="{{ path('app_user_view', {'id': user.id}) }}" rel="tooltip" title="{{ 'app.tooltip.user_view' | trans }}">
-                            <span class="glyphicon glyphicon-eye-open"></span>
-                        </a>
+                            {{ 'app.tooltip.user_view' | trans }}
+                        </a>|
                         <a href="{{ path('app_user_edit', {'id': user.id}) }}" rel="tooltip" title="{{ 'app.tooltip.user_edit' | trans }}">
-                            <span class="glyphicon glyphicon-pencil"></span>
+                            {{ 'app.tooltip.user_edit' | trans }}
                         </a>
                     </td>
                 </tr>
