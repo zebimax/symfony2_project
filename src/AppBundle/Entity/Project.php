@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="bt_project")
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\Repository\Projects")
  * @ORM\HasLifecycleCallbacks
  */
 class Project
@@ -39,9 +39,17 @@ class Project
     /**
      * @var ArrayCollection User[]
      *
-     * @ORM\ManyToMany(targetEntity="User", mappedBy="projects")
+     * @ORM\ManyToMany(targetEntity="User", inversedBy="projects", indexBy="id", cascade={"persist"})
+     * @ORM\JoinTable(name="bt_project_to_user")
      */
     private $users;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $summary;
 
     public function __construct()
     {
@@ -92,26 +100,27 @@ class Project
     }
 
     /**
-     * Add users
+     * Add user
      *
-     * @param User $users
+     * @param User $user
      * @return Project
      */
-    public function addUser(User $users)
+    public function addUser(User $user)
     {
-        $this->users[] = $users;
+        $this->users->set($user->getId(), $user);
 
         return $this;
     }
 
     /**
-     * Remove users
+     * Remove user
      *
-     * @param User $users
+     * @param User $user
+     * @return bool
      */
-    public function removeUser(User $users)
+    public function removeUser(User $user)
     {
-        $this->users->removeElement($users);
+        return $this->users->removeElement($user);
     }
 
     /**
@@ -122,6 +131,11 @@ class Project
     public function getUsers()
     {
         return $this->users;
+    }
+
+    public function isMember(User $user)
+    {
+        return $this->users->contains($user);
     }
 
     /**
@@ -135,5 +149,21 @@ class Project
                 return $carry . $item[0];
             }, '')
         );
+    }
+
+    /**
+     * @return string
+     */
+    public function getSummary()
+    {
+        return $this->summary;
+    }
+
+    /**
+     * @param string $summary
+     */
+    public function setSummary($summary)
+    {
+        $this->summary = $summary;
     }
 }

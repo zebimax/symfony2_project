@@ -87,6 +87,8 @@ doctrine:
             issue_type_enum: AppBundle\DBAL\IssueTypeEnumType
             issue_status_enum: AppBundle\DBAL\IssueStatusEnumType
             issue_resolution_enum: AppBundle\DBAL\IssueResolutionEnumType
+        mapping_types:
+            enum: string
         # if using pdo_sqlite as your database driver:
         #   1. add the path in parameters.yml
         #     e.g. database_path: "%kernel.root_dir%/data/data.db3"

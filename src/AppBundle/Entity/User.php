@@ -73,8 +73,7 @@ class User implements UserInterface, \Serializable
     /**
      * @var ArrayCollection Project[]
      *
-     * @ORM\ManyToMany(targetEntity="Project", inversedBy="users")
-     * @ORM\JoinTable(name="bt_user_to_project")
+     * @ORM\ManyToMany(targetEntity="Project", mappedBy="users")
      */
     private $projects;
 
@@ -545,6 +544,14 @@ class User implements UserInterface, \Serializable
         return null === $this->avatar
             ? null
             : $this->getUploadDir().'/'.$this->id.'.'.$this->avatar;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isManager()
+    {
+        return in_array($this->getPrimaryRole(), [Role::MANAGER, Role::ADMINISTRATOR]);
     }
 
     /**

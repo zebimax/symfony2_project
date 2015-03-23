@@ -17,7 +17,7 @@ class Issues extends EntityRepository
             ->join('i.collaborators', 'u')
             ->andWhere('u.id = :userId')
             ->getQuery()
-            ->getArrayResult();
+            ->getResult();
     }
 
     /**
@@ -29,7 +29,18 @@ class Issues extends EntityRepository
         return $this->getUserIssuesQueryBuilder($userId)
             ->andWhere('i.assignee = :userId')
             ->getQuery()
-            ->getArrayResult();
+            ->getResult();
+    }
+
+    public function getProjectIssues($projectId)
+    {
+        return $this->createQueryBuilder('i')
+            ->select(['i'])
+            ->join('i.project', 'p')
+            ->where('i.project = :projectId')
+            ->setParameters(['projectId' => $projectId])
+            ->getQuery()
+            ->getResult();
     }
 
     /**
@@ -39,13 +50,7 @@ class Issues extends EntityRepository
     private function getUserIssuesQueryBuilder($userId)
     {
         return $this->createQueryBuilder('i')
-            ->select([
-                'i.id',
-                'i.summary',
-                'i.description',
-                'p.code project_code',
-                'p.id project_id'
-            ])
+            ->select(['i'])
             ->join('i.project', 'p')
             ->where('i.status != :statusClosed')
             ->setParameters(['userId' => $userId, 'statusClosed' => IssueStatusEnumType::CLOSED]);

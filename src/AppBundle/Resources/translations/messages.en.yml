@@ -9,12 +9,18 @@ app:
                 create_issue: '%user% create issue %issue%'
                 change_issue_activity: '%user% set status %status% to issue %issue%'
                 comment_issue: '%user% commented on issue %issue%'
+        project:
+            remove_member:
+                success: 'User was removed from project'
+                fail: 'Unexpected error while removing user from project'
     email: 'Email'
     title: 'Simple bug tracker'
     button:
         submit: 'Submit'
         cancel: 'Cancel'
         edit: 'Edit'
+        add: 'Add'
+        project_members: 'Members'
     main_menu:
         home: 'Home'
         users:
@@ -43,11 +49,18 @@ app:
         user_edit: 'Edit user'
         dashboard: 'System dashboard'
         user_view: '%user%'
+        projects_list: 'Projects list'
+        project_view: '[%project_code%] %project_label%'
+        project_members_list: 'Members of [%project_code%] %project_label% project'
+        project_members_add: 'Add member to project'
     password: 'Password'
     password_will_be_generated: 'password, If leave empty will be generated'
     tooltip:
         user_edit: 'Edit user'
         user_view: 'View user'
+        project_view: 'View project'
+        project_edit: 'Edit project'
+        project_member_remove: 'Remove member'
     avatar: 'Avatar'
     dashboard_items:
         related_issues: 'Related Issues'
@@ -77,3 +90,11 @@ role:
     administrator: 'Administrator'
     manager: 'Manager'
     operator: 'Operator'
+projects:
+    projects: 'Projects'
+    code: 'Code'
+    label: 'Label'
+    empty_list: 'No project found'
+    issues: 'Project issues'
+    info: 'Projects info'
+    add_member: 'Add member'

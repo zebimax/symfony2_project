@@ -3,6 +3,7 @@
 namespace AppBundle\DataFixtures\ORM;
 
 use AppBundle\Entity\Project;
+use AppBundle\Entity\User;
 use Doctrine\Common\Persistence\ObjectManager;
 
 class LoadProjectData extends AbstractOrderedContainerAwareFixture
@@ -13,7 +14,9 @@ class LoadProjectData extends AbstractOrderedContainerAwareFixture
     public function load(ObjectManager $manager)
     {
         $project = (new Project())->setLabel('test_project');
-
+        /** @var User $userOperator */
+        $userOperator = $this->getReference('user_operator');
+        $project->addUser($userOperator);
         $manager->persist($project);
 
         $manager->flush();
@@ -28,6 +31,6 @@ class LoadProjectData extends AbstractOrderedContainerAwareFixture
      */
     public function getOrder()
     {
-        return 13;
+        return 3;
     }
 }

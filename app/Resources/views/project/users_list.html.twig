@@ -1,0 +1,9 @@
+{% extends 'users_list.html.twig' %}
+{% block user_actions %}
+    <a href="{{ path('app_user_view', {'id': user.id}) }}" rel="tooltip" title="{{ 'app.tooltip.user_view' | trans }}">
+        {{ 'app.tooltip.user_view' | trans }}
+    </a>|
+    <a href="{{ path('app_project_remove_member', {'id': project.id, 'user_id': user.id}) }}" rel="tooltip" title="{{ 'app.tooltip.project_member_remove' | trans }}">
+        {{ 'app.tooltip.project_member_remove' | trans }}
+    </a>
+{% endblock %}

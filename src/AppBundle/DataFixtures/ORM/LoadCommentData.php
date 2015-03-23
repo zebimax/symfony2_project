@@ -35,6 +35,6 @@ class LoadCommentData extends AbstractOrderedContainerAwareFixture
      */
     public function getOrder()
     {
-        return 15;
+        return 5;
     }
 }

@@ -51,7 +51,7 @@ class LoadUserData extends AbstractOrderedContainerAwareFixture
      */
     public function getOrder()
     {
-        return 12;
+        return 2;
     }
 
     /**

@@ -33,6 +33,6 @@ class LoadRoleData extends AbstractOrderedContainerAwareFixture
      */
     public function getOrder()
     {
-        return 11;
+        return 1;
     }
 }

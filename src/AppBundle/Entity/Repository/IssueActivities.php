@@ -22,4 +22,17 @@ class IssueActivities extends EntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function getProjectActivities($projectId)
+    {
+        return $this->createQueryBuilder('a')
+            ->select(['a'])
+            ->join('a.issue', 'i')
+            ->join('i.project', 'p')
+            ->where('p.id = :projectId')
+            ->addOrderBy('a.created')
+            ->setParameters(['projectId' => $projectId])
+            ->getQuery()
+            ->getResult();
+    }
 }

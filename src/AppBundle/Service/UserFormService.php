@@ -3,25 +3,13 @@
 namespace AppBundle\Service;
 
 use AppBundle\Entity\User;
+use AppBundle\Service\Form\AbstractFormService;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
-class UserFormService extends AbstractControllerService
+class UserFormService extends AbstractFormService
 {
-    /** @var FormFactoryInterface */
-    protected $factory;
-
-    /** @var TranslatorInterface */
-    protected $translator;
-
-    public function __construct(EntityManager $manager, FormFactoryInterface $factory, TranslatorInterface $translator)
-    {
-        $this->factory = $factory;
-        $this->translator = $translator;
-        parent::__construct($manager);
-    }
-
     public function getAddForm()
     {
         $user = new User();

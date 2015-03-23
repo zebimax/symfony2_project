@@ -30,6 +30,8 @@ parameters:
     app.main_menu_items_names.profile.edit: 'profile_edit'
     app.main_menu_items_names.profile.view: 'profile_view'
     app.services.user.list_limit: 10
+    app.services.project.list_limit: 10
+    app.services.project.members_list_limit: 10
     app.page_name: 'page'
 services:
     app.form.type.login_type:
@@ -44,6 +46,12 @@ services:
             - @translator.default
         tags:
             - { name: form.type, alias: app_user }
+    app.form.type.project_member:
+        class: AppBundle\Form\Type\ProjectMemberType
+        arguments:
+            - @translator.default
+        tags:
+            - { name: form.type, alias: app_project_member }
     app.menu_builder:
         class: AppBundle\Menu\MenuBuilder
         arguments: ["@knp_menu.factory", "@translator.default", "@security.authorization_checker"]
@@ -81,6 +89,11 @@ services:
         parent: app.security.access.role_voter
     app.security.access.user_voter:
         class:      AppBundle\Security\Authorization\Voter\UserVoter
+        parent: app.security.access.role_voter
+        tags:
+           - { name: security.voter }
+    app.security.access.project_voter:
+        class:      AppBundle\Security\Authorization\Voter\ProjectVoter
         parent: app.security.access.role_voter
         tags:
            - { name: security.voter }
@@ -249,11 +262,24 @@ services:
         class: AppBundle\Service\UserService
         arguments:
             - @doctrine.orm.default_entity_manager
+            - @translator.default
             - @knp_paginator
     app.services.user_form:
         class: AppBundle\Service\UserFormService
         arguments:
             - @doctrine.orm.default_entity_manager
-            - @form.factory
             - @translator.default
+            - @form.factory
+    app.services.project:
+        class: AppBundle\Service\ProjectService
+        arguments:
+            - @doctrine.orm.default_entity_manager
+            - @knp_paginator
+            - @translator.default
+    app.services.project_forms:
+        class: AppBundle\Service\ProjectFormsService
+        arguments:
+            - @doctrine.orm.default_entity_manager
+            - @translator.default
+            - @form.factory
 

@@ -64,7 +64,7 @@ class LoadIssueData extends AbstractOrderedContainerAwareFixture
      */
     public function getOrder()
     {
-        return 14;
+        return 4;
     }
 
     /**

@@ -7,25 +7,28 @@ use AppBundle\Entity\Repository\IssueActivities;
 use AppBundle\Entity\Repository\Issues;
 use Doctrine\ORM\EntityManager;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
-class UserService
+class UserService extends AbstractControllerService
 {
     const USERS_LIMIT = 10;
-
-    /** @var EntityManager */
-    protected $manager;
 
     /** @var PaginatorInterface */
     protected $paginator;
 
     /**
      * @param EntityManager $manager
-     * @param PaginatorInterface $paginationInterface
+     * @param TranslatorInterface $translator
+     * @param PaginatorInterface $paginatorInterface
+     * @internal param PaginatorInterface $paginationInterface
      */
-    public function __construct(EntityManager $manager, PaginatorInterface $paginationInterface)
-    {
-        $this->manager = $manager;
-        $this->paginator = $paginationInterface;
+    public function __construct(
+        EntityManager $manager,
+        TranslatorInterface $translator,
+        PaginatorInterface $paginatorInterface
+    ) {
+        $this->paginator = $paginatorInterface;
+        parent::__construct($manager, $translator);
     }
 
     public function getUsersList($page, $limit)
@@ -62,26 +65,5 @@ class UserService
     public function getUserActivities($userId)
     {
         return $this->getActivitiesRepository()->getUserActivities($userId);
-    }
-
-    /**
-     * @return Issues
-     */
-    protected function getIssuesRepository()
-    {
-        return $this->manager->getRepository('AppBundle:Issue');
-    }
-
-    /**
-     * @return IssueActivities
-     */
-    protected function getActivitiesRepository()
-    {
-        return $this->manager->getRepository('AppBundle:IssueActivity');
-    }
-
-    protected function getUsersRepository()
-    {
-        return $this->manager->getRepository('AppBundle:User');
     }
 }

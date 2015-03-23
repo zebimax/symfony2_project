@@ -11,13 +11,25 @@ class ProjectsRoleVoter extends AbstractSupportedRoleVoter
     const PROJECTS = 'projects';
     const PROJECTS_LIST =  'projects_list';
     const PROJECTS_ADD =  'projects_add';
+    const PROJECTS_EDIT = 'projects_edit';
+    const PROJECTS_MEMBERS_LIST = 'projects_members_list';
+    const PROJECTS_MEMBERS_ADD = 'projects_members_add';
+    const PROJECTS_MEMBERS_DELETE = 'projects_members_remove';
 
     /**
      * @inheritdoc
      */
     protected function setSupportedAttributes()
     {
-        $this->supportedAttributes = [self::PROJECTS, self::PROJECTS_LIST, self::PROJECTS_ADD];
+        $this->supportedAttributes = [
+            self::PROJECTS,
+            self::PROJECTS_LIST,
+            self::PROJECTS_ADD,
+            self::PROJECTS_EDIT,
+            self::PROJECTS_MEMBERS_LIST,
+            self::PROJECTS_MEMBERS_ADD,
+            self::PROJECTS_MEMBERS_DELETE
+        ];
 
         return $this;
     }
@@ -31,7 +43,7 @@ class ProjectsRoleVoter extends AbstractSupportedRoleVoter
         if ($vote === VoterInterface::ACCESS_GRANTED) {
             $this->checkAttributes($attributes);
             $attribute = $attributes[0];
-            if ($attribute === self::PROJECTS_ADD &&
+            if (in_array($attribute, [self::PROJECTS_ADD, self::PROJECTS_EDIT]) &&
                 !$this->hasRole($token->getUser(), Role::MANAGER)
             ) {
                 return VoterInterface::ACCESS_DENIED;
