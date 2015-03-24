@@ -15,10 +15,35 @@ class ProjectController extends Controller
 {
     /**
      * @Route("/project/add", name="app_project_add")
+     * @Template("project/add.html.twig")
+     * @Security("is_granted('projects_add')")
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function addAction()
     {
-        return $this->render('default/index.html.twig');
+        $projectFormsService = $this->get('app.services.project_forms');
+        $project = new Project();
+        $form = $projectFormsService->getProjectForm($project);
+        if ($this->get('request')->getMethod() === 'POST') {
+            $form->submit($this->get('request'));
+            if ($form->isValid()) {
+                try {
+                    $projectFormsService->saveProject($project);
+                    $message = 'app.messages.project.add.success';
+                } catch (\Exception $e) {
+                    $message = 'app.messages.project.add.fail';
+                }
+                $this->addFlash(
+                    'flash_project_add',
+                    $this->get('translator.default')->trans($message)
+                );
+                return $this->redirect($this->generateUrl('app_project_view', ['id' => $project->getId()]));
+            }
+        }
+
+        return [
+            'form' => $form->createView()
+        ];
     }
 
     /**
@@ -68,7 +93,28 @@ class ProjectController extends Controller
      */
     public function editAction(Project $project)
     {
-        return ['project' => $project];
+        $projectFormsService = $this->get('app.services.project_forms');
+        $form = $projectFormsService->getProjectForm($project);
+        if ($this->get('request')->getMethod() === 'POST') {
+            $form->submit($this->get('request'));
+            if ($form->isValid()) {
+                try {
+                    $projectFormsService->saveProject($project);
+                    $message = 'app.messages.project.edit.success';
+                } catch (\Exception $e) {
+                    $message = 'app.messages.project.add.fail';
+                }
+                $this->addFlash(
+                    'flash_project_edit',
+                    $this->get('translator.default')->trans($message)
+                );
+                return $this->redirect($this->generateUrl('app_project_view', ['id' => $project->getId()]));
+            }
+        }
+
+        return [
+            'form' => $form->createView()
+        ];
     }
 
     /**
@@ -100,24 +146,23 @@ class ProjectController extends Controller
      */
     public function addMemberAction(Project $project)
     {
-        $form = $this->container->get('app.services.project_forms')->getMembersForm($project);
+        $projectFormsService = $this->container->get('app.services.project_forms');
+        $form = $projectFormsService->getMembersForm($project);
         if ($this->get('request')->getMethod() === 'POST') {
             $form->submit($this->get('request'));
 
             if ($form->isValid()) {
-                $plainPassword = $form->get('password')->getData();
-                if (!$plainPassword) {
-                    $generator = $this->container->get('hackzilla.password_generator.computer');
-                    $plainPassword = $generator->setLength(12)->generatePassword();
+                try {
+                    $projectFormsService->addMember($project, $form);
+                    $message = 'app.messages.project.add_member.success';
+                } catch (\Exception $e) {
+                    $message = 'app.messages.project.add_member.fail';
                 }
-
-                $encodePassword = $this->container->get('security.password_encoder')
-                    ->encodePassword($user, $plainPassword);
-                $user->setPassword($encodePassword);
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($user);
-                $em->flush();
-                return $this->redirect($this->generateUrl('app_user_list'));
+                $this->addFlash(
+                    'flash_project_member_add',
+                    $this->get('translator.default')->trans($message)
+                );
+                return $this->redirect($this->generateUrl('app_project_add_member', ['id' => $project->getId()]));
             }
         }
 

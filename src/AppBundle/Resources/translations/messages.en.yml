@@ -13,6 +13,15 @@ app:
             remove_member:
                 success: 'User was removed from project'
                 fail: 'Unexpected error while removing user from project'
+            add_member:
+                success: 'User was added to project'
+                fail: 'Unexpected error while adding user to project'
+            edit:
+                    success: 'Project updated'
+                    fail: 'Unexpected error while editing project'
+            add:
+                    success: 'New project created'
+                    fail: 'Unexpected error while creating project'
     email: 'Email'
     title: 'Simple bug tracker'
     button:
@@ -53,6 +62,8 @@ app:
         project_view: '[%project_code%] %project_label%'
         project_members_list: 'Members of [%project_code%] %project_label% project'
         project_members_add: 'Add member to project'
+        project_add: 'Add project'
+        project_edit: 'Edit project'
     password: 'Password'
     password_will_be_generated: 'password, If leave empty will be generated'
     tooltip:
@@ -67,6 +78,8 @@ app:
         activities: 'Activities'
         user_info: 'User Information'
         assigned_issues: 'Assigned Issues'
+    label: 'Label'
+    summary: 'Summary'
 logout_menu:
     logout: 'Logout'
 login_form:
@@ -98,3 +111,5 @@ projects:
     issues: 'Project issues'
     info: 'Projects info'
     add_member: 'Add member'
+    add_project: 'Create new project'
+    edit: 'Edit project'

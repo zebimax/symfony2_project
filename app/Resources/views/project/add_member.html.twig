@@ -4,6 +4,9 @@
 {% endblock %}
 {% block page_header %}{{ 'app.titles.project_members_add'|trans }}{%  endblock %}
 {% block page_content %}
+    {% for flashMessage in app.session.flashbag.get('flash_project_member_add') %}
+        <div class="alert alert-info" role="alert">{{ flashMessage }}</div>
+    {% endfor %}
     <form method="post" {{ form_enctype(form) }}>
         {{ form_widget(form) }}
 

@@ -25,3 +25,10 @@ AppBundle\Entity\Role:
         role:
             - NotBlank: ~
             - Choice: { choices: [ROLE_OPERATOR, ROLE_MANAGER, ROLE_ADMINISTRATOR] }
+AppBundle\Entity\Project:
+    properties:
+        label:
+            - NotBlank: ~
+            - Length:
+                  max: 64
+

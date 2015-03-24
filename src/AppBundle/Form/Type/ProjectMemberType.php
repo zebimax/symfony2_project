@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Translation\Translator;
 use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Component\Validator\Constraints\Choice;
 
 class ProjectMemberType extends AbstractType
 {
@@ -28,17 +29,12 @@ class ProjectMemberType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('users', 'entity', [
+            ->add('users', 'choice', [
+                'choices' => $options['data'],
                 'required' => true,
-                'attr' => array('class' => 'form-control')
-            ])
-            ->add(
-                'submit',
-                'submit',
-                [
-                    'label' => $this->translator->trans('app.button.submit')
-                ]
-            );
+                'attr' => array('class' => 'form-control'),
+                'constraints' => new Choice(['choices' => array_keys($options['data'])]),
+            ]);
     }
 
     /**

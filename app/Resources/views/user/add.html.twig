@@ -6,9 +6,8 @@
 {% block page_content %}
     <form method="post" {{ form_enctype(form) }}>
         {{ form_widget(form) }}
-
         <input type="submit" class="btn btn-primary" value="{{ 'user.add_user'|trans }}"/>
-        {#<a class="btn btn-danger" href="{{ path('academic_bts_user_list') }}">{{ 'common.cancel'|trans }}</a>#}
+        <a class="btn btn-danger" href="{{ path('app_user_list') }}">{{ 'app.button.cancel'|trans }}</a>
     </form>
 {%  endblock %}
 
