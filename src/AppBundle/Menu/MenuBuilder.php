@@ -22,8 +22,11 @@ class MenuBuilder
      * @param TranslatorInterface $translator
      * @param AuthorizationCheckerInterface $authorizationChecker
      */
-    public function __construct(FactoryInterface $factory, TranslatorInterface $translator, AuthorizationCheckerInterface $authorizationChecker)
-    {
+    public function __construct(
+        FactoryInterface $factory,
+        TranslatorInterface $translator,
+        AuthorizationCheckerInterface $authorizationChecker
+    ) {
         $this->factory = $factory;
         $this->translator = $translator;
         $this->authorizationChecker = $authorizationChecker;

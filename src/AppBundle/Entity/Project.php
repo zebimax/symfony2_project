@@ -146,9 +146,13 @@ class Project
     {
         $parts = preg_split("/[\s,_-]+/", $this->label);
         $this->code = strtoupper(
-            array_reduce($parts, function ($carry, $item) {
-                return $carry . $item[0];
-            }, '')
+            array_reduce(
+                $parts,
+                function ($carry, $item) {
+                    return $carry . $item[0];
+                },
+                ''
+            )
         );
     }
 

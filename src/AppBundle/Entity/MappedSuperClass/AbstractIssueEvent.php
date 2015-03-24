@@ -73,19 +73,6 @@ class AbstractIssueEvent
     }
 
     /**
-     * Set user
-     *
-     * @param User $user
-     * @return $this
-     */
-    public function setUser(User $user = null)
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    /**
      * Get user
      *
      * @return User

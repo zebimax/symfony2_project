@@ -48,8 +48,6 @@ services:
             - { name: form.type, alias: app_user }
     app.form.type.project_member:
         class: AppBundle\Form\Type\ProjectMemberType
-        arguments:
-            - @translator.default
         tags:
             - { name: form.type, alias: app_project_member }
     app.form.type.project:

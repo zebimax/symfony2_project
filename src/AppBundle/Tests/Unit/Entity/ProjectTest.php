@@ -26,6 +26,8 @@ class ProjectTest extends \PHPUnit_Framework_TestCase
      * @param string $property
      * @param string $value
      * @param string $expected
+     * @covers AppBundle\Entity\Project::setLabel
+     * @covers AppBundle\Entity\Project::setSummary
      * @dataProvider getSetDataProvider
      */
     public function testGetSet($property, $value, $expected)
@@ -37,6 +39,13 @@ class ProjectTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    public function testPrePersist()
+    {
+        $this->entity->setLabel('First letter from each word in upper case');
+        $this->entity->prePersist();
+        $this->assertEquals('FLFEWIUC', $this->entity->getCode());
+    }
+
     /**
      * Data provider
      *
@@ -46,10 +55,13 @@ class ProjectTest extends \PHPUnit_Framework_TestCase
     {
         return [
             'label' => ['label', 'test_label', 'test_label'],
-            'code'    => ['code', 'test_code', 'test_code']
+            'summary'    => ['summary', 'test_summary', 'test_summary']
         ];
     }
 
+    /**
+     * @covers AppBundle\Entity\Project::removeUser
+     */
     public function testRemoveFromCollections()
     {
         $user = new User();
@@ -60,6 +72,9 @@ class ProjectTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(0, count($this->entity->getUsers()));
     }
 
+    /**
+     * @covers AppBundle\Entity\Project::addUser
+     */
     public function testAddToCollections()
     {
         $this->entity->addUser(new User());

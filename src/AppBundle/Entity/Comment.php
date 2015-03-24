@@ -14,6 +14,13 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Comment extends AbstractIssueEvent
 {
+    public function __construct(Issue $issue, User $user)
+    {
+        $this->issue = $issue;
+        $this->issue->addComment($this);
+        $this->user = $user;
+        parent::__construct();
+    }
     /**
      * @var Issue
      *
@@ -69,32 +76,20 @@ class Comment extends AbstractIssueEvent
     }
 
     /**
-     * @param IssueActivity $activity
-     */
-    public function setActivity($activity)
-    {
-        $this->activity = $activity;
-    }
-
-    /**
-     * @param Issue $issue
-     * @return $this
-     */
-    public function setIssue(Issue $issue)
-    {
-        $this->issue = $issue;
-
-        return $this;
-    }
-
-    /**
      * @ORM\PrePersist
      */
     public function prePersist()
     {
-        $this->activity = (new IssueActivity())
-            ->setType(IssueActivity::COMMENT_ISSUE)
-            ->setUser($this->user);
+        $this->activity = (new IssueActivity($this->issue, $this->user))
+            ->setType(IssueActivity::COMMENT_ISSUE);
         $this->issue->addCollaborator($this->user);
+    }
+
+    /**
+     * @return Issue
+     */
+    public function getIssue()
+    {
+        return $this->issue;
     }
 }

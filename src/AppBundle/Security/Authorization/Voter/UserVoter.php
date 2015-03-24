@@ -17,10 +17,13 @@ class UserVoter extends AbstractRoleVoter
      */
     public function supportsAttribute($attribute)
     {
-        return in_array($attribute, array(
-            self::EDIT,
-            self::VIEW
-        ));
+        return in_array(
+            $attribute,
+            [
+                self::EDIT,
+                self::VIEW
+            ]
+        );
     }
 
     /**

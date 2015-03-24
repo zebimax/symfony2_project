@@ -334,12 +334,18 @@ class Issue
      * Set status
      *
      * @param string $status
+     * @param User $user
      * @return Issue
      */
-    public function setStatus($status)
+    public function setStatus($status, User $user)
     {
         $this->status = $status;
-
+        if ($status !== $this->status) {
+            $this->addActivity(
+                (new IssueActivity($this, $user))
+                    ->setType(IssueActivity::COMMENT_ISSUE)
+            );
+        }
         return $this;
     }
 
@@ -519,7 +525,6 @@ class Issue
      */
     public function addActivity(IssueActivity $activity)
     {
-        $activity->setIssue($this);
         $this->activities->set($activity->getId(), $activity);
 
         return $this;
@@ -541,7 +546,6 @@ class Issue
      */
     public function addComment(Comment $comment)
     {
-        $comment->setIssue($this);
         $this->comments->set($comment->getId(), $comment);
         return $this;
     }
@@ -580,9 +584,8 @@ class Issue
             $this->addCollaborator($this->assignee);
         }
         $this->addActivity(
-            (new IssueActivity())
+            (new IssueActivity($this, $this->reporter))
             ->setType(IssueActivity::CREATE_ISSUE)
-            ->setUser($this->reporter)
         );
     }
 

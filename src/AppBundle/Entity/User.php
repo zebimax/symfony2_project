@@ -433,11 +433,15 @@ class User implements UserInterface, \Serializable
      */
     public function getRolesArray()
     {
-        return array_reduce($this->getRoles(), function ($carry, $item) {
-            /** @var Role $item */
-            $carry[$item->getRole()] = $item->getId();
-            return $carry;
-        }, []);
+        return array_reduce(
+            $this->getRoles(),
+            function ($carry, $item) {
+                /** @var Role $item */
+                $carry[$item->getRole()] = $item->getId();
+                return $carry;
+            },
+            []
+        );
     }
 
     /**

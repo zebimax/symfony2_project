@@ -11,9 +11,12 @@ abstract class EnumType extends Type
 
     public function getSqlDeclaration(array $fieldDeclaration, AbstractPlatform $platform)
     {
-        $values = array_map(function ($val) {
-            return "'".$val."'";
-        }, $this->values);
+        $values = array_map(
+            function ($val) {
+                return "'".$val."'";
+            },
+            $this->values
+        );
 
         return "ENUM(".implode(", ", $values).") COMMENT '(DC2Type:".$this->name.")'";
     }

@@ -34,7 +34,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetSet($property, $value, $expected)
     {
-        call_user_func([$this->entity, 'set' . ucfirst($property)],$value);
+        call_user_func([$this->entity, 'set' . ucfirst($property)], $value);
         $this->assertEquals(
             $expected,
             call_user_func([$this->entity, 'get' . ucfirst($property)])

@@ -19,10 +19,8 @@ class LoadCommentData extends AbstractOrderedContainerAwareFixture
         /** @var User $user */
         $user = $this->getReference('user_manager');
 
-        $project = (new Comment())
-            ->setBody('test comment')
-            ->setUser($user)
-            ->setIssue($issue);
+        $project = (new Comment($issue, $user))
+            ->setBody('test comment');
 
         $manager->persist($project);
         $manager->flush();

@@ -7,7 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
-class UserType extends AbstractType
+class ProjectType extends AbstractType
 {
     /**
      * @var TranslatorInterface
@@ -29,7 +29,7 @@ class UserType extends AbstractType
      */
     public function getName()
     {
-        return 'app_user';
+        return 'app_project';
     }
 
     /**
@@ -38,8 +38,7 @@ class UserType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         return [
-            'data_class' => 'AppBundle\Entity\User',
-            'validation_groups' => ['add']
+            'data_class' => 'AppBundle\Entity\Project'
         ];
     }
 
@@ -50,46 +49,19 @@ class UserType extends AbstractType
     {
         $builder
             ->add(
-                'email',
-                'email',
-                [
-                    'required' => true,
-                    'label' => $this->translator->trans('app.email')
-                ]
-            )
-            ->add(
-                'username',
+                'label',
                 'text',
                 [
                     'required' => true,
-                    'label' => $this->translator->trans('app.username')
+                    'label' => $this->translator->trans('app.label')
                 ]
             )
             ->add(
-                'fullname',
-                'text',
-                [
-                    'required' => true,
-                    'label' => $this->translator->trans('app.fullName')
-                ]
-            )
-            ->add(
-                'file',
-                'file',
+                'summary',
+                'textarea',
                 [
                     'required' => false,
-                    'label' => $this->translator->trans('app.avatar')
-                ]
-            )
-            ->add(
-                'roles',
-                'entity',
-                [
-                    'required' => true,
-                    'class' => 'AppBundle:Role',
-                    'property' => 'name',
-                    'multiple' => true,
-                    'attr' => array('class' => 'form-control')
+                    'label' => $this->translator->trans('app.summary')
                 ]
             );
     }

@@ -43,8 +43,17 @@ class ProjectsRoleVoter extends AbstractSupportedRoleVoter
         if ($vote === VoterInterface::ACCESS_GRANTED) {
             $this->checkAttributes($attributes);
             $attribute = $attributes[0];
-            if (in_array($attribute, [self::PROJECTS_ADD, self::PROJECTS_EDIT]) &&
-                !$this->hasRole($token->getUser(), Role::MANAGER)
+            if (in_array(
+                $attribute,
+                [
+                    self::PROJECTS_ADD,
+                    self::PROJECTS_EDIT,
+                    self::PROJECTS_MEMBERS_LIST,
+                    self::PROJECTS_MEMBERS_ADD,
+                    self::PROJECTS_MEMBERS_DELETE
+                ]
+            )
+                && !$this->hasRole($token->getUser(), Role::MANAGER)
             ) {
                 return VoterInterface::ACCESS_DENIED;
             }

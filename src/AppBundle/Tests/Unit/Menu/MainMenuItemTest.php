@@ -33,12 +33,14 @@ class MainMenuItemTest extends \PHPUnit_Framework_TestCase
 
         $this->object = new MainMenuItem(
             ['name' => 'profile', 'label' => 'profile_label'],
-            [new MainMenuItem([
-                'name' => 'profile_sub_item',
-                'label' => 'profile_sub_item_label',
-                'route' => 'profile_sub_item_route',
-                'route_parameters' => [$userIdParameterProvider]
-            ])]
+            [new MainMenuItem(
+                [
+                    'name' => 'profile_sub_item',
+                    'label' => 'profile_sub_item_label',
+                    'route' => 'profile_sub_item_route',
+                    'route_parameters' => [$userIdParameterProvider]
+                ]
+            )]
         );
     }
 

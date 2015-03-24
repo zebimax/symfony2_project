@@ -103,10 +103,6 @@ class LoadIssueData extends AbstractOrderedContainerAwareFixture
             $issue->setResolution($params['resolution']);
         }
 
-        if (array_key_exists('status', $params)) {
-            $issue->setStatus($params['status']);
-        }
-
         if (array_key_exists('type', $params)) {
             $issue->setType($params['type']);
         }

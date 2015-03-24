@@ -20,11 +20,13 @@ class MainMenuManagerTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new MainMenuManager([
-            'test',
-            new MainMenuItem(['name' => 'test', 'label' => 'test']),
-            new MainMenuItem(['name' => 'test', 'label' => 'test'])
-        ]);
+        $this->object = new MainMenuManager(
+            [
+                'test',
+                new MainMenuItem(['name' => 'test', 'label' => 'test']),
+                new MainMenuItem(['name' => 'test', 'label' => 'test'])
+            ]
+        );
     }
 
     /**
