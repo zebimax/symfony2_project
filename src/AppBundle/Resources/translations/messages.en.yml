@@ -22,6 +22,13 @@ app:
             add:
                     success: 'New project created'
                     fail: 'Unexpected error while creating project'
+            add_issue:
+                    success: 'New issue created'
+                    fail: 'Unexpected error while creating issue'
+        issue:
+            edit:
+                success: 'Issue updated'
+                fail: 'Unexpected error while editing issue'
     email: 'Email'
     title: 'Simple bug tracker'
     button:
@@ -64,6 +71,10 @@ app:
         project_members_add: 'Add member to project'
         project_add: 'Add project'
         project_edit: 'Edit project'
+        project_issue_add: 'Add issue'
+        issue_view: 'Issue %issue_code%'
+        issue_edit: 'Edit issue %issue_code%'
+        issue_list: 'Issues list'
     password: 'Password'
     password_will_be_generated: 'password, If leave empty will be generated'
     tooltip:
@@ -72,6 +83,8 @@ app:
         project_view: 'View project'
         project_edit: 'Edit project'
         project_member_remove: 'Remove member'
+        issue_view: 'View issue'
+        issue_edit: 'Edit issue'
     avatar: 'Avatar'
     dashboard_items:
         related_issues: 'Related Issues'
@@ -80,6 +93,48 @@ app:
         assigned_issues: 'Assigned Issues'
     label: 'Label'
     summary: 'Summary'
+    issue:
+        issues: 'Issues'
+        assignee: 'Assignee'
+        info: 'Information of issue'
+        code: 'Issue code'
+        unassigned: 'Unassigned'
+        type: 'Issue type'
+        priority: 'Priority'
+        resolution: Resolution
+        status: 'Status'
+        types:
+            bug: 'bug'
+            task: 'task'
+            story: 'story'
+            sub_task: 'sub task'
+        priorities:
+            blocker: 'blocker'
+            major: 'major'
+            minor: 'minor'
+            trivial: 'trivial'
+        resolutions:
+            won_t_do: 'Won''t do'
+            done: 'Done'
+            cannot_reproduce: 'Cannot reproduce'
+            incomplete: 'Incomplete'
+            duplicate: 'Duplicate'
+            won_t_fix: 'Won''t fix'
+            fixed: 'Fixed'
+        statuses:
+            closed: 'Closed'
+            in_progress: 'In progress'
+            open: 'Open'
+        empty_list: 'No issues found'
+        reporter: 'Reporter'
+        project: 'Project'
+        created: 'Created'
+        updated: 'Updated'
+        last_update: 'Last updated'
+    project: 'Project'
+    description: 'Description'
+    assignee: 'Assignee'
+    undefined: 'undefined'
 logout_menu:
     logout: 'Logout'
 login_form:
@@ -107,9 +162,10 @@ projects:
     projects: 'Projects'
     code: 'Code'
     label: 'Label'
-    empty_list: 'No project found'
+    empty_list: 'No projects found'
     issues: 'Project issues'
     info: 'Projects info'
     add_member: 'Add member'
     add_project: 'Create new project'
     edit: 'Edit project'
+    add_issue: 'Create issue'

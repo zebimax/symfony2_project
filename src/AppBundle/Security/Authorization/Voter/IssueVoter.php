@@ -2,24 +2,29 @@
 
 namespace AppBundle\Security\Authorization\Voter;
 
-use AppBundle\Entity\Project;
+use AppBundle\Entity\Issue;
 use AppBundle\Entity\Role;
 use AppBundle\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
 
-class ProjectVoter extends AbstractRoleVoter
+class IssueVoter extends AbstractRoleVoter
 {
+    const EDIT = 'edit';
     const VIEW = 'view';
-    const ISSUE_ADD = 'issue_add';
 
     /**
      * @inheritdoc
      */
     public function supportsAttribute($attribute)
     {
-        return in_array($attribute, [self::VIEW, self::ISSUE_ADD]);
+        return in_array(
+            $attribute,
+            [
+                self::EDIT,
+                self::VIEW,
+            ]
+        );
     }
 
     /**
@@ -27,7 +32,7 @@ class ProjectVoter extends AbstractRoleVoter
      */
     public function supportsClass($class)
     {
-        $supportedClass = 'AppBundle\Entity\Project';
+        $supportedClass = 'AppBundle\Entity\Issue';
 
         return $supportedClass === $class || is_subclass_of($class, $supportedClass);
     }
@@ -35,15 +40,15 @@ class ProjectVoter extends AbstractRoleVoter
     /**
      * @inheritdoc
      */
-    public function vote(TokenInterface $token, $project, array $attributes)
+    public function vote(TokenInterface $token, $issue, array $attributes)
     {
-        if (!$this->supportsClass(get_class($project))) {
+        if (!$this->supportsClass(get_class($issue))) {
             return VoterInterface::ACCESS_ABSTAIN;
         }
-        /** @var Project $project */
+        /** @var Issue $issue */
         if (1 !== count($attributes)) {
             throw new \InvalidArgumentException(
-                'Only one attribute is allowed for VIEW'
+                'Only one attribute is allowed for VIEW, EDIT'
             );
         }
 
@@ -52,14 +57,17 @@ class ProjectVoter extends AbstractRoleVoter
         if (!$this->supportsAttribute($attribute)) {
             return VoterInterface::ACCESS_ABSTAIN;
         }
-        /** @var User $user */
+
         $user = $token->getUser();
 
-        if (!$user instanceof UserInterface) {
+        if (!$user instanceof User) {
             return VoterInterface::ACCESS_DENIED;
         }
 
-        if ($this->hasRole($user, Role::MANAGER) || $project->isMember($user)) {
+        if ($issue->getProject()->isMember($user) || $this->hasRole($user, Role::MANAGER)) {
+            return VoterInterface::ACCESS_GRANTED;
+        }
+        if ($this->hasRole($user, Role::OPERATOR) && $attribute == self::VIEW) {
             return VoterInterface::ACCESS_GRANTED;
         }
         return VoterInterface::ACCESS_DENIED;

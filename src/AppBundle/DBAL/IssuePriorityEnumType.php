@@ -9,6 +9,21 @@ class IssuePriorityEnumType extends EnumType
     const MAJOR   = 'major';
     const BLOCKER = 'blocker';
 
-    protected $name = 'issue_priority_enum';
-    protected $values = [self::TRIVIAL, self::MINOR, self::MAJOR, self::BLOCKER];
+    const TYPE_NAME = 'issue_priority_enum';
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return self::TYPE_NAME;
+    }
+
+    /**
+     * @return array
+     */
+    public function getValues()
+    {
+        return [self::TRIVIAL, self::MINOR, self::MAJOR, self::BLOCKER];
+    }
 }

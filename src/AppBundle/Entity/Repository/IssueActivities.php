@@ -23,6 +23,10 @@ class IssueActivities extends EntityRepository
             ->getResult();
     }
 
+    /**
+     * @param $projectId
+     * @return array
+     */
     public function getProjectActivities($projectId)
     {
         return $this->createQueryBuilder('a')
@@ -32,6 +36,22 @@ class IssueActivities extends EntityRepository
             ->where('p.id = :projectId')
             ->addOrderBy('a.created')
             ->setParameters(['projectId' => $projectId])
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @param $issueId
+     * @return array
+     */
+    public function getIssueActivities($issueId)
+    {
+        return $this->createQueryBuilder('a')
+            ->select(['a'])
+            ->join('a.issue', 'i')
+            ->where('i.id = :issueId')
+            ->addOrderBy('a.created')
+            ->setParameters(['issueId' => $issueId])
             ->getQuery()
             ->getResult();
     }

@@ -10,9 +10,14 @@ class AbstractControllerService
 {
     /** @var EntityManager */
     protected $manager;
+
     /** @var TranslatorInterface */
     protected $translator;
 
+    /**
+     * @param EntityManager $manager
+     * @param TranslatorInterface $translator
+     */
     public function __construct(EntityManager $manager, TranslatorInterface $translator)
     {
         $this->manager = $manager;
@@ -43,6 +48,9 @@ class AbstractControllerService
         return $this->manager->getRepository('AppBundle:IssueActivity');
     }
 
+    /**
+     * @return \AppBundle\Entity\Repository\Users
+     */
     protected function getUsersRepository()
     {
         return $this->manager->getRepository('AppBundle:User');

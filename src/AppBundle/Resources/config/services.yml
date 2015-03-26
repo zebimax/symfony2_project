@@ -32,6 +32,7 @@ parameters:
     app.services.user.list_limit: 10
     app.services.project.list_limit: 10
     app.services.project.members_list_limit: 10
+    app.services.issue.list_limit: 10
     app.page_name: 'page'
 services:
     app.form.type.login_type:
@@ -56,6 +57,12 @@ services:
             - @translator.default
         tags:
             - { name: form.type, alias: app_project }
+    app.form.type.issue:
+        class: AppBundle\Form\Type\IssueType
+        arguments:
+            - @translator.default
+        tags:
+            - { name: form.type, alias: app_issue }
     app.menu_builder:
         class: AppBundle\Menu\MenuBuilder
         arguments: ["@knp_menu.factory", "@translator.default", "@security.authorization_checker"]
@@ -93,6 +100,11 @@ services:
         parent: app.security.access.role_voter
     app.security.access.user_voter:
         class:      AppBundle\Security\Authorization\Voter\UserVoter
+        parent: app.security.access.role_voter
+        tags:
+           - { name: security.voter }
+    app.security.access.issue_voter:
+        class:      AppBundle\Security\Authorization\Voter\IssueVoter
         parent: app.security.access.role_voter
         tags:
            - { name: security.voter }
@@ -145,7 +157,6 @@ services:
                 label: %app.main_menu_items_labels.issue%
             sub_items:
                 - @app.main_menu_issue_list_item
-                - @app.main_menu_issue_add_item
     app.main_menu_project_item:
         class:      AppBundle\Menu\MainMenuItem
         factory: [@app.main_menu_item.factory, createMainMenuItem]
@@ -262,6 +273,13 @@ services:
             - @translator.default
         tags:
             - { name: twig.extension }
+    app.twig.issue_extension:
+        class: AppBundle\Twig\IssueExtension
+        parent: app.twig.abtract_extension
+        arguments:
+            - @translator.default
+        tags:
+            - { name: twig.extension }
     app.services.user:
         class: AppBundle\Service\UserService
         arguments:
@@ -280,8 +298,20 @@ services:
             - @doctrine.orm.default_entity_manager
             - @knp_paginator
             - @translator.default
+    app.services.issue:
+        class: AppBundle\Service\IssueService
+        arguments:
+            - @doctrine.orm.default_entity_manager
+            - @knp_paginator
+            - @translator.default
     app.services.project_forms:
         class: AppBundle\Service\ProjectFormsService
+        arguments:
+            - @doctrine.orm.default_entity_manager
+            - @translator.default
+            - @form.factory
+    app.services.issue_form:
+        class: AppBundle\Service\IssueFormService
         arguments:
             - @doctrine.orm.default_entity_manager
             - @translator.default

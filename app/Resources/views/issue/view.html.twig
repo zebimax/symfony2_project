@@ -1,0 +1,18 @@
+{% extends 'default/index.html.twig' %}
+{% block title %}
+    {{ 'app.titles.issue_view' | trans({'%issue_code%' : issue.code}) }}
+{% endblock %}
+{% block page_header %}
+    {{ 'app.titles.issue_view' | trans({'%issue_code%' : issue.code}) }}
+{%  endblock %}
+{% block page_content %}
+    <table class="table">
+        <tr>
+            <td colspan="2">{% include 'issue.html.twig' %}</td>
+        </tr>
+
+        <tr>
+            <td>{% include 'activities.html.twig' %}</td>
+        </tr>
+    </table>
+{%  endblock %}

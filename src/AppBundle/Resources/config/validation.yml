@@ -31,4 +31,13 @@ AppBundle\Entity\Project:
             - NotBlank: ~
             - Length:
                   max: 64
+AppBundle\Entity\Issue:
+    properties:
+        summary:
+            - NotBlank: ~
+        created:
+            - DateTime: ~
+        updated:
+            - DateTime: ~
+
 

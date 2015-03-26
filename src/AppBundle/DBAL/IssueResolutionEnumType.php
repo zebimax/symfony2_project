@@ -12,15 +12,30 @@ class IssueResolutionEnumType extends EnumType
     const DONE             = 'done';
     const WON_T_DO         = 'won_t_do';
 
-    protected $name = 'issue_resolution_enum';
-    protected $values = [
-        self::FIXED,
-        self::WON_T_DO,
-        self::DUPLICATE,
-        self::INCOMPLETE,
-        self::CANNOT_REPRODUCE,
-        self::DONE,
-        self::WON_T_DO,
-        null
-    ];
+    const TYPE_NAME = 'issue_resolution_enum';
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return self::TYPE_NAME;
+    }
+
+    /**
+     * @return array
+     */
+    public function getValues()
+    {
+        return [
+            self::FIXED,
+            self::WON_T_DO,
+            self::DUPLICATE,
+            self::INCOMPLETE,
+            self::CANNOT_REPRODUCE,
+            self::DONE,
+            self::WON_T_DO,
+            null
+        ];
+    }
 }

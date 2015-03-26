@@ -13,9 +13,10 @@ class Issues extends EntityRepository
      */
     public function getNotClosedUserIssues($userId)
     {
-        return $this->getUserIssuesQueryBuilder($userId)
+        $queryBuilder = $this->getUserIssuesQueryBuilder($userId);
+        return $queryBuilder
             ->join('i.collaborators', 'u')
-            ->andWhere('u.id = :userId')
+            ->andWhere($queryBuilder->expr()->eq('u.id', ':userId'))
             ->getQuery()
             ->getResult();
     }
@@ -26,19 +27,46 @@ class Issues extends EntityRepository
      */
     public function getNotClosedUserAssignedIssues($userId)
     {
-        return $this->getUserIssuesQueryBuilder($userId)
-            ->andWhere('i.assignee = :userId')
+        $queryBuilder = $this->getUserIssuesQueryBuilder($userId);
+        return $queryBuilder
+            ->andWhere($queryBuilder->expr()->eq('i.assignee', ':userId'))
             ->getQuery()
             ->getResult();
     }
 
+    /**
+     * @param $projectId
+     * @return array
+     */
     public function getProjectIssues($projectId)
     {
-        return $this->createQueryBuilder('i')
+        $queryBuilder = $this->createQueryBuilder('i');
+        return $queryBuilder
             ->select(['i'])
             ->join('i.project', 'p')
-            ->where('i.project = :projectId')
+            ->where($queryBuilder->expr()->eq('i.project', ':projectId'))
             ->setParameters(['projectId' => $projectId])
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @param $userId
+     * @return array
+     */
+    public function getUserProjectsIssues($userId)
+    {
+        $queryBuilder = $this->getEntityManager()->createQueryBuilder();
+        $userProjectsSubQuery = $queryBuilder
+            ->from('AppBundle:Project', 'p1')
+            ->select('p1.id')
+            ->join('p1.users', 'u1')
+            ->where($queryBuilder->expr()->eq('u1', ':userId'))
+            ->getQuery();
+
+        return $this->getUserIssuesQueryBuilder($userId)
+            ->andWhere($queryBuilder->expr()->exists($userProjectsSubQuery->getDQL()))
+            ->orderBy('p.id')
             ->getQuery()
             ->getResult();
     }
@@ -49,10 +77,11 @@ class Issues extends EntityRepository
      */
     private function getUserIssuesQueryBuilder($userId)
     {
-        return $this->createQueryBuilder('i')
+        $queryBuilder = $this->createQueryBuilder('i');
+        return $queryBuilder
             ->select(['i'])
             ->join('i.project', 'p')
-            ->where('i.status != :statusClosed')
-            ->setParameters(['userId' => $userId, 'statusClosed' => IssueStatusEnumType::CLOSED]);
+            ->where($queryBuilder->expr()->neq('i.status', ':statusClosed'))
+            ->setParameters(['statusClosed' => IssueStatusEnumType::CLOSED, 'userId' => $userId]);
     }
 }

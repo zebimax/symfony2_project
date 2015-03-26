@@ -3,6 +3,7 @@
 namespace AppBundle\Security\Authorization\Voter;
 
 use AppBundle\Entity\Role;
+use AppBundle\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 
@@ -43,18 +44,9 @@ class ProjectsRoleVoter extends AbstractSupportedRoleVoter
         if ($vote === VoterInterface::ACCESS_GRANTED) {
             $this->checkAttributes($attributes);
             $attribute = $attributes[0];
-            if (in_array(
-                $attribute,
-                [
-                    self::PROJECTS_ADD,
-                    self::PROJECTS_EDIT,
-                    self::PROJECTS_MEMBERS_LIST,
-                    self::PROJECTS_MEMBERS_ADD,
-                    self::PROJECTS_MEMBERS_DELETE
-                ]
-            )
-                && !$this->hasRole($token->getUser(), Role::MANAGER)
-            ) {
+            /** @var User $user */
+            $user = $token->getUser();
+            if ($this->isManagerAttributeAndNotManager($user, $attribute)) {
                 return VoterInterface::ACCESS_DENIED;
             }
         }
@@ -67,5 +59,25 @@ class ProjectsRoleVoter extends AbstractSupportedRoleVoter
     protected function getSupportedRole()
     {
         return Role::OPERATOR;
+    }
+
+    /**
+     * @param User $user
+     * @param $attribute
+     * @return bool
+     */
+    private function isManagerAttributeAndNotManager(User $user, $attribute)
+    {
+        return in_array(
+            $attribute,
+            [
+                self::PROJECTS_ADD,
+                self::PROJECTS_EDIT,
+                self::PROJECTS_MEMBERS_LIST,
+                self::PROJECTS_MEMBERS_ADD,
+                self::PROJECTS_MEMBERS_DELETE
+            ]
+        )
+        && !$this->hasRole($user, Role::MANAGER);
     }
 }

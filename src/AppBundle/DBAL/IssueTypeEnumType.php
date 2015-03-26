@@ -9,6 +9,21 @@ class IssueTypeEnumType extends EnumType
     const TASK     = 'task';
     const STORY    = 'story';
 
-    protected $name = 'issue_type_enum';
-    protected $values = [self::BUG, self::SUB_TASK, self::TASK, self::STORY];
+    const TYPE_NAME = 'issue_type_enum';
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return self::TYPE_NAME;
+    }
+
+    /**
+     * @return array
+     */
+    public function getValues()
+    {
+        return [self::BUG, self::SUB_TASK, self::TASK, self::STORY];
+    }
 }

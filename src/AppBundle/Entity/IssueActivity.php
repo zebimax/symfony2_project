@@ -33,6 +33,13 @@ class IssueActivity extends AbstractIssueEvent
     private $type;
 
     /**
+     * @var array
+     *
+     * @ORM\Column(type="json_array", nullable=true)
+     */
+    private $details;
+
+    /**
      * @var Issue
      *
      * @ORM\ManyToOne(targetEntity="Issue", inversedBy="activities")
@@ -65,6 +72,29 @@ class IssueActivity extends AbstractIssueEvent
     public function getType()
     {
         return $this->type;
+    }
+
+    /**
+     * Set details
+     *
+     * @param array $details
+     * @return IssueActivity
+     */
+    public function setDetails($details)
+    {
+        $this->details = $details;
+
+        return $this;
+    }
+
+    /**
+     * Get details
+     *
+     * @return array
+     */
+    public function getDetails()
+    {
+        return $this->details;
     }
 
     /**

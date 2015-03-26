@@ -2,6 +2,7 @@
 
 namespace AppBundle\Twig;
 
+use AppBundle\DBAL\IssueStatusEnumType;
 use AppBundle\Entity\IssueActivity;
 
 class ActivityExtension extends AbstractExtension
@@ -43,7 +44,19 @@ class ActivityExtension extends AbstractExtension
             ];
             $type = $activity->getType();
             if ($type === IssueActivity::CHANGE_ISSUE_STATUS) {
-                $values['%issue_status%'] = $this->translator->trans($activity->getIssue()->getStatus()->getCode());
+                $details = $activity->getDetails();
+                if (isset($details['new']['status'])) {
+                    $status = $details['new']['status'];
+                    $statusesTranslateMap = [
+                        IssueStatusEnumType::OPEN => 'app.issue.statuses.open',
+                        IssueStatusEnumType::IN_PROGRESS => 'app.issue.statuses.in_progress',
+                        IssueStatusEnumType::CLOSED => 'app.issue.statuses.closed'
+                    ];
+                    $statusValue = array_key_exists($status, $statusesTranslateMap)
+                        ? $statusesTranslateMap[$status]
+                        : 'app.statuses.undefined';
+                    $values['%status%'] = sprintf('"%s"', $this->translator->trans($statusValue));
+                }
             }
             $message = $this->translator->trans($map[$type], $values);
         }

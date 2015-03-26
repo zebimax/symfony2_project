@@ -6,36 +6,46 @@ use Doctrine\DBAL\Platforms\AbstractPlatform;
 
 abstract class EnumType extends Type
 {
-    protected $name;
-    protected $values = [];
-
+    /**
+     * @param array $fieldDeclaration
+     * @param AbstractPlatform $platform
+     * @return string
+     */
     public function getSqlDeclaration(array $fieldDeclaration, AbstractPlatform $platform)
     {
         $values = array_map(
             function ($val) {
-                return "'".$val."'";
+                return sprintf('\'%s\'', $val);
             },
-            $this->values
+            $this->getValues()
         );
 
-        return "ENUM(".implode(", ", $values).") COMMENT '(DC2Type:".$this->name.")'";
+        return sprintf('ENUM(%s) COMMENT \'(DC2Type:%s)\'', implode(', ', $values), $this->getName());
     }
 
+    /**
+     * @param mixed $value
+     * @param AbstractPlatform $platform
+     * @return mixed
+     */
     public function convertToPHPValue($value, AbstractPlatform $platform)
     {
         return $value;
     }
 
+    /**
+     * @param mixed $value
+     * @param AbstractPlatform $platform
+     * @return mixed
+     */
     public function convertToDatabaseValue($value, AbstractPlatform $platform)
     {
-        if (!in_array($value, $this->values)) {
-            throw new \InvalidArgumentException("Invalid '".$this->name."' value.");
+        if (!in_array($value, (array)$this->getValues())) {
+            throw new \InvalidArgumentException(sprintf('Invalid \'%s\' value', $this->getName()));
         }
         return $value;
     }
 
-    public function getName()
-    {
-        return $this->name;
-    }
+    /** @return array */
+    abstract public function getValues();
 }

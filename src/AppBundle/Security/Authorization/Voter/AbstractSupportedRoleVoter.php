@@ -2,10 +2,10 @@
 
 namespace AppBundle\Security\Authorization\Voter;
 
+use AppBundle\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 use Symfony\Component\Security\Core\Role\RoleHierarchyInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 abstract class AbstractSupportedRoleVoter extends AbstractRoleVoter
 {
@@ -35,7 +35,7 @@ abstract class AbstractSupportedRoleVoter extends AbstractRoleVoter
 
         $user = $token->getUser();
 
-        if (!$user instanceof UserInterface) {
+        if (!$user instanceof User) {
             return VoterInterface::ACCESS_DENIED;
         }
         if ($this->hasRole($user, $this->getSupportedRole())) {

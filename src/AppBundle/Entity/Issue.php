@@ -2,9 +2,6 @@
 
 namespace AppBundle\Entity;
 
-use AppBundle\DBAL\IssuePriorityEnumType;
-use AppBundle\DBAL\IssueStatusEnumType;
-use AppBundle\DBAL\IssueTypeEnumType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -28,7 +25,7 @@ class Issue
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=255, unique=true)
+     * @ORM\Column(type="string", length=255)
      */
     private $summary;
 
@@ -154,9 +151,6 @@ class Issue
         $this->comments = new ArrayCollection();
         $this->created = new \DateTime();
         $this->updated = new \DateTime();
-        $this->status = IssueStatusEnumType::OPEN;
-        $this->type = IssueTypeEnumType::TASK;
-        $this->priority = IssuePriorityEnumType::TRIVIAL;
     }
 
     /**
@@ -337,15 +331,10 @@ class Issue
      * @param User $user
      * @return Issue
      */
-    public function setStatus($status, User $user)
+    public function setStatus($status)
     {
         $this->status = $status;
-        if ($status !== $this->status) {
-            $this->addActivity(
-                (new IssueActivity($this, $user))
-                    ->setType(IssueActivity::COMMENT_ISSUE)
-            );
-        }
+
         return $this;
     }
 
@@ -397,8 +386,7 @@ class Issue
 
     /**
      * Get assignee
-     *
-     * @return User
+     * @return User|null
      */
     public function getAssignee()
     {
@@ -572,21 +560,6 @@ class Issue
     public function getCode()
     {
         return $this->project->getCode() . '-' . $this->id;
-    }
-
-    /**
-     * @ORM\PrePersist
-     */
-    public function prePersist()
-    {
-        $this->addCollaborator($this->reporter);
-        if ($this->assignee !== null) {
-            $this->addCollaborator($this->assignee);
-        }
-        $this->addActivity(
-            (new IssueActivity($this, $this->reporter))
-            ->setType(IssueActivity::CREATE_ISSUE)
-        );
     }
 
     /**

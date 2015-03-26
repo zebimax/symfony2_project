@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Issue;
 use AppBundle\Entity\Project;
 use AppBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -102,7 +103,7 @@ class ProjectController extends Controller
                     $projectFormsService->saveProject($project);
                     $message = 'app.messages.project.edit.success';
                 } catch (\Exception $e) {
-                    $message = 'app.messages.project.add.fail';
+                    $message = 'app.messages.project.edit.fail';
                 }
                 $this->addFlash(
                     'flash_project_edit',
@@ -185,5 +186,43 @@ class ProjectController extends Controller
         $resultMessage = $this->get('app.services.project')->removeMember($project, $user);
         $this->addFlash('flash_project_member_remove', $resultMessage);
         return $this->redirect($this->generateUrl('app_project_members_list', ['id' => $project->getId()]));
+    }
+
+    /**
+     * @Route("/project/{id}/issues/add", name="app_project_add_issue")
+     * @Template("project/add_issue.html.twig")
+     * @Security("is_granted('issue_add', project)")
+     * @param Project $project
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function addIssueAction(Project $project)
+    {
+        $issueFormService = $this->container->get('app.services.issue_form');
+        $issue = new Issue();
+        /** @var User $user */
+        $user = $this->getUser();
+        $form = $issueFormService->getIssueForm($issue, $user);
+        if ($this->get('request')->getMethod() === 'POST') {
+            $form->submit($this->get('request'));
+
+            if ($form->isValid()) {
+                try {
+                    $issueFormService->createIssue($issue, $project, $user);
+                    $message = 'app.messages.project.add_issue.success';
+                } catch (\Exception $e) {
+                    $message = 'app.messages.project.add_issue.fail';
+                }
+                $this->addFlash(
+                    'flash_project_issue_add',
+                    $this->get('translator.default')->trans($message)
+                );
+                return $this->redirect($this->generateUrl('app_issue_view', ['id' => $issue->getId()]));
+            }
+        }
+
+        return [
+            'project' => $project,
+            'form' => $form->createView()
+        ];
     }
 }
