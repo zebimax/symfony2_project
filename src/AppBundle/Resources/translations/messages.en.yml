@@ -29,6 +29,23 @@ app:
             edit:
                 success: 'Issue updated'
                 fail: 'Unexpected error while editing issue'
+            add_comment:
+                    fail: 'Fail to add comment'
+                    success: 'Comment added'
+        comment:
+            update:
+                success: 'comment updated'
+                fail: 'Error updating comment'
+            remove:
+                success: 'comment removed'
+                fail: 'Error removing comment'
+        user:
+            add:
+                success: 'User created'
+                fail: 'Error creating user'
+            update:
+                success: 'User updated'
+                fail: 'Error updating user'
     email: 'Email'
     title: 'Simple bug tracker'
     button:
@@ -38,6 +55,7 @@ app:
         add: 'Add'
         project_members: 'Members'
         add_sub_task: 'Add sub task'
+        comment: 'Comment'
     main_menu:
         home: 'Home'
         users:
@@ -77,6 +95,7 @@ app:
         issue_edit: 'Edit issue %issue_code%'
         issue_list: 'Issues list'
         issue_sub_task_add: 'Add sub task'
+        comment_edit: 'Edit Comment'
     password: 'Password'
     password_will_be_generated: 'password, If leave empty will be generated'
     tooltip:
@@ -94,6 +113,7 @@ app:
         user_info: 'User Information'
         assigned_issues: 'Assigned Issues'
         sub_tasks: 'Sub tasks'
+        comments: 'Comments'
     label: 'Label'
     summary: 'Summary'
     issue:
@@ -143,6 +163,11 @@ app:
     errors:
         issue:
             not_story_add_sub_task_error: 'Not story! Can''t add sub task'
+    placeholders:
+        your_comment: 'Your comment ...'
+    comment:
+        edit: 'edit comment'
+        remove: 'remove comment'
 logout_menu:
     logout: 'Logout'
 login_form:

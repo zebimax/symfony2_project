@@ -43,7 +43,7 @@ class ProjectVoter extends AbstractRoleVoter
         /** @var Project $project */
         if (1 !== count($attributes)) {
             throw new \InvalidArgumentException(
-                'Only one attribute is allowed for VIEW'
+                'Only one attribute is allowed for VIEW, ISSUE_ADD'
             );
         }
 
@@ -62,6 +62,7 @@ class ProjectVoter extends AbstractRoleVoter
         if ($this->hasRole($user, Role::MANAGER) || $project->isMember($user)) {
             return VoterInterface::ACCESS_GRANTED;
         }
+
         return VoterInterface::ACCESS_DENIED;
     }
 }

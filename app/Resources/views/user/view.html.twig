@@ -6,6 +6,9 @@
     {{ 'app.titles.user_view' | trans({'%user%' : user.username}) }}
 {%  endblock %}
 {% block page_content %}
+    {% for flashMessage in app.session.flashbag.get('flash_user_actions') %}
+        <div class="alert alert-warning" role="alert">{{ flashMessage }}</div>
+    {% endfor %}
     <table class="table">
         <tr>
             <td colspan="2">{% include 'user.html.twig' %}</td>

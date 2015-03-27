@@ -136,7 +136,7 @@ class Issue
     /**
      * @var ArrayCollection Comment[]
      *
-     * @ORM\OneToMany(targetEntity="Comment", mappedBy="issue", indexBy="id", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="issue")
      **/
     private $comments;
 

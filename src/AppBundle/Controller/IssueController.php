@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\DBAL\IssueTypeEnumType;
+use AppBundle\Entity\Comment;
 use AppBundle\Entity\Issue;
 use AppBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -62,7 +63,7 @@ class IssueController extends Controller
         $translator = $this->get('translator.default');
         if ($issue->getType() !== IssueTypeEnumType::STORY) {
             $this->addFlash(
-                'flash_project_issue_add_sub_task_error',
+                'flash_issue_actions',
                 $translator->trans('app.errors.issue.not_story_add_sub_task_error')
             );
             $this->redirect($this->generateUrl('app_issue_view'). ['id' => $issue->getId()]);
@@ -83,7 +84,7 @@ class IssueController extends Controller
                     $message = 'app.messages.project.add_issue.fail';
                 }
                 $this->addFlash(
-                    'flash_project_issue_add',
+                    'flash_issue_actions',
                     $translator->trans($message)
                 );
                 return $this->redirect($this->generateUrl('app_issue_view', ['id' => $subTask->getId()]));
@@ -120,7 +121,7 @@ class IssueController extends Controller
                     $message = 'app.messages.issue.edit.fail';
                 }
                 $this->addFlash(
-                    'flash_issue_edit',
+                    'flash_issue_actions',
                     $this->get('translator.default')->trans($message)
                 );
                 return $this->redirect($this->generateUrl('app_issue_view', ['id' => $issue->getId()]));
@@ -131,5 +132,44 @@ class IssueController extends Controller
             'issue' => $issue,
             'form' => $form->createView()
         ];
+    }
+
+    /**
+     * @Route("/issue/{id}/comment/add", name="app_issue_add_comment")
+     * @Template("issue/add_comment.html.twig")
+     * @Security("is_granted('add_comment', issue)")
+     * @param Issue $issue
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function addCommentAction(Issue $issue)
+    {
+        $redirectUrl = $this->get('request')->headers->get('referer');
+        if (!$redirectUrl) {
+            $redirectUrl = $this->generateUrl('app_home');
+        }
+        /** @var User $user */
+        $user = $this->getUser();
+        $comment = new Comment();
+
+        $commentService = $this->get('app.services.comment');
+        $form = $commentService->getCommentForm($comment, $issue, $user);
+
+        if ($this->get('request')->getMethod() === 'POST') {
+            $form->submit($this->get('request'));
+            if ($form->isValid()) {
+                try {
+                    $commentService->createComment($comment, $issue, $user);
+                    $message = 'app.messages.issue.add_comment.success';
+                } catch (\Exception $e) {
+                    $message = 'app.messages.issue.add_comment.fail';
+                }
+                $this->addFlash(
+                    'flash_issue_actions',
+                    $this->get('translator.default')->trans($message)
+                );
+            }
+        }
+
+        return $this->redirect($redirectUrl);
     }
 }

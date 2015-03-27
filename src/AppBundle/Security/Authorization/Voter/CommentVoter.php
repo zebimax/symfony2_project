@@ -2,19 +2,16 @@
 
 namespace AppBundle\Security\Authorization\Voter;
 
-use AppBundle\Entity\Issue;
+use AppBundle\Entity\Comment;
 use AppBundle\Entity\Role;
 use AppBundle\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 
-class IssueVoter extends AbstractRoleVoter
+class CommentVoter extends AbstractRoleVoter
 {
     const EDIT = 'edit';
-    const VIEW = 'view';
-    const ADD_SUB_TASK = 'add_sub_task';
-    const COMMENTS_LIST = 'comments_list';
-    const ADD_COMMENT = 'add_comment';
+    const REMOVE = 'remove';
 
     /**
      * @inheritdoc
@@ -25,10 +22,7 @@ class IssueVoter extends AbstractRoleVoter
             $attribute,
             [
                 self::EDIT,
-                self::VIEW,
-                self::ADD_SUB_TASK,
-                self::COMMENTS_LIST,
-                self::ADD_COMMENT
+                self::REMOVE
             ]
         );
     }
@@ -38,7 +32,7 @@ class IssueVoter extends AbstractRoleVoter
      */
     public function supportsClass($class)
     {
-        $supportedClass = 'AppBundle\Entity\Issue';
+        $supportedClass = 'AppBundle\Entity\Comment';
 
         return $supportedClass === $class || is_subclass_of($class, $supportedClass);
     }
@@ -46,15 +40,15 @@ class IssueVoter extends AbstractRoleVoter
     /**
      * @inheritdoc
      */
-    public function vote(TokenInterface $token, $issue, array $attributes)
+    public function vote(TokenInterface $token, $comment, array $attributes)
     {
-        if (!$this->supportsClass(get_class($issue))) {
+        if (!$this->supportsClass(get_class($comment))) {
             return VoterInterface::ACCESS_ABSTAIN;
         }
-        /** @var Issue $issue */
+        /** @var Comment $comment */
         if (1 !== count($attributes)) {
             throw new \InvalidArgumentException(
-                'Only one attribute is allowed for VIEW, EDIT, ADD_SUB_TASK, COMMENTS_LIST'
+                'Only one attribute is allowed for EDIT, REMOVE'
             );
         }
 
@@ -70,10 +64,9 @@ class IssueVoter extends AbstractRoleVoter
             return VoterInterface::ACCESS_DENIED;
         }
 
-        if ($issue->getProject()->isMember($user) || $this->hasRole($user, Role::MANAGER)) {
+        if ($user->getId() === $comment->getUser()->getId() || $this->hasRole($user, Role::ADMINISTRATOR)) {
             return VoterInterface::ACCESS_GRANTED;
         }
-
         return VoterInterface::ACCESS_DENIED;
     }
 }

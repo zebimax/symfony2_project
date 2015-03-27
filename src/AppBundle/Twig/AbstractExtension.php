@@ -11,6 +11,9 @@ abstract class AbstractExtension extends \Twig_Extension
      */
     protected $translator;
 
+    /**
+     * @param TranslatorInterface $translatorInterface
+     */
     public function __construct(TranslatorInterface $translatorInterface)
     {
         $this->translator = $translatorInterface;

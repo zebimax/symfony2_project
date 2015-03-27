@@ -14,13 +14,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Comment extends AbstractIssueEvent
 {
-    public function __construct(Issue $issue, User $user)
-    {
-        $this->issue = $issue;
-        $this->issue->addComment($this);
-        $this->user = $user;
-        parent::__construct();
-    }
     /**
      * @var Issue
      *
@@ -35,14 +28,6 @@ class Comment extends AbstractIssueEvent
      * @ORM\Column(name="body", type="text")
      */
     private $body;
-
-    /**
-     * @var IssueActivity
-     *
-     * @ORM\OneToOne(targetEntity="IssueActivity", cascade={"persist"})
-     * @ORM\JoinColumn(onDelete="CASCADE")
-     */
-    private $activity;
 
     /**
      * Set body
@@ -68,28 +53,21 @@ class Comment extends AbstractIssueEvent
     }
 
     /**
-     * @return IssueActivity
-     */
-    public function getActivity()
-    {
-        return $this->activity;
-    }
-
-    /**
-     * @ORM\PrePersist
-     */
-    public function prePersist()
-    {
-        $this->activity = (new IssueActivity($this->issue, $this->user))
-            ->setType(IssueActivity::COMMENT_ISSUE);
-        $this->issue->addCollaborator($this->user);
-    }
-
-    /**
      * @return Issue
      */
     public function getIssue()
     {
         return $this->issue;
+    }
+
+    /**
+     * @param Issue $issue
+     * @return $this
+     */
+    public function setIssue($issue)
+    {
+        $this->issue = $issue;
+
+        return $this;
     }
 }

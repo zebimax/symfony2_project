@@ -2,8 +2,10 @@
 namespace AppBundle\DataFixtures\ORM;
 
 use AppBundle\DBAL\IssuePriorityEnumType;
+use AppBundle\DBAL\IssueStatusEnumType;
 use AppBundle\DBAL\IssueTypeEnumType;
 use AppBundle\Entity\Issue;
+use AppBundle\Entity\IssueActivity;
 use AppBundle\Entity\Project;
 use AppBundle\Entity\Role;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -22,7 +24,8 @@ class LoadIssueData extends AbstractOrderedContainerAwareFixture
             'type' => IssueTypeEnumType::BUG,
             'reporter' => 'user_manager',
             'project' => 'test_project',
-            'assignee' => 'user_operator'
+            'assignee' => 'user_operator',
+            'priority' => IssuePriorityEnumType::TRIVIAL
         ];
 
         $bug = $this->createEntityInstance($bugParams);
@@ -91,12 +94,17 @@ class LoadIssueData extends AbstractOrderedContainerAwareFixture
             ->setSummary($params['summary'])
             ->setDescription($params['description'])
             ->setReporter($reporter)
-            ->setProject($project);
+            ->addCollaborator($reporter)
+            ->setProject($project)
+            ->setPriority($params['priority'])
+            ->setStatus(IssueStatusEnumType::OPEN);
+
+        $this->addCreateActivity($issue, $reporter);
 
         if (array_key_exists('assignee', $params)) {
             /** @var User $assignee */
             $assignee = $this->getReference($params['assignee']);
-            $issue->setAssignee($assignee);
+            $issue->setAssignee($assignee)->addCollaborator($assignee);
         }
 
         if (array_key_exists('resolution', $params)) {
@@ -118,5 +126,14 @@ class LoadIssueData extends AbstractOrderedContainerAwareFixture
         }
 
         return $issue;
+    }
+
+    private function addCreateActivity(Issue $issue, User $user)
+    {
+        $issue->addActivity(
+            (new IssueActivity($issue, $user))
+                ->setType(IssueActivity::CREATE_ISSUE)
+                ->setCreated($issue->getCreated())
+        );
     }
 }

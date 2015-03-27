@@ -2,9 +2,6 @@
 
 namespace AppBundle\Service;
 
-use AppBundle\Entity\IssueActivity;
-use AppBundle\Entity\Repository\IssueActivities;
-use AppBundle\Entity\Repository\Issues;
 use Doctrine\ORM\EntityManager;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Translation\TranslatorInterface;
@@ -31,6 +28,11 @@ class UserService extends AbstractControllerService
         parent::__construct($manager, $translator);
     }
 
+    /**
+     * @param $page
+     * @param $limit
+     * @return \Knp\Component\Pager\Pagination\PaginationInterface
+     */
     public function getUsersList($page, $limit)
     {
         return $this->paginator->paginate(

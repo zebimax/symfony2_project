@@ -183,8 +183,14 @@ class ProjectController extends Controller
      */
     public function removeMember(Project $project, User $user)
     {
-        $resultMessage = $this->get('app.services.project')->removeMember($project, $user);
-        $this->addFlash('flash_project_member_remove', $resultMessage);
+        try {
+            $this->get('app.services.project')->removeMember($project, $user);
+            $message = 'app.messages.project.remove_member.success';
+        } catch (\Exception $e) {
+            $message = 'app.messages.comment.remove.fail';
+        }
+
+        $this->addFlash('flash_project_member_remove', $this->get('translator.default')->trans($message));
         return $this->redirect($this->generateUrl('app_project_members_list', ['id' => $project->getId()]));
     }
 
@@ -213,7 +219,7 @@ class ProjectController extends Controller
                     $message = 'app.messages.project.add_issue.fail';
                 }
                 $this->addFlash(
-                    'flash_project_issue_add',
+                    'flash_issue_actions',
                     $this->get('translator.default')->trans($message)
                 );
                 return $this->redirect($this->generateUrl('app_issue_view', ['id' => $issue->getId()]));

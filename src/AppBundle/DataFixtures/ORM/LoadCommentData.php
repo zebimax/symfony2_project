@@ -4,6 +4,7 @@ namespace AppBundle\DataFixtures\ORM;
 
 use AppBundle\Entity\Comment;
 use AppBundle\Entity\Issue;
+use AppBundle\Entity\IssueActivity;
 use AppBundle\Entity\User;
 use Doctrine\Common\Persistence\ObjectManager;
 
@@ -19,10 +20,18 @@ class LoadCommentData extends AbstractOrderedContainerAwareFixture
         /** @var User $user */
         $user = $this->getReference('user_manager');
 
-        $project = (new Comment($issue, $user))
+        $comment = (new Comment())
+            ->setIssue($issue)
+            ->setUser($user)
             ->setBody('test comment');
 
-        $manager->persist($project);
+        $issueActivity = (new IssueActivity($issue, $user))
+            ->setType(IssueActivity::COMMENT_ISSUE)
+            ->setCreated($comment->getCreated());
+
+        $issue->addActivity($issueActivity)->addCollaborator($user);
+
+        $manager->persist($comment);
         $manager->flush();
     }
 

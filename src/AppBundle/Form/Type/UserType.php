@@ -80,17 +80,6 @@ class UserType extends AbstractType
                     'required' => false,
                     'label' => $this->translator->trans('app.avatar')
                 ]
-            )
-            ->add(
-                'roles',
-                'entity',
-                [
-                    'required' => true,
-                    'class' => 'AppBundle:Role',
-                    'property' => 'name',
-                    'multiple' => true,
-                    'attr' => array('class' => 'form-control')
-                ]
             );
     }
 }

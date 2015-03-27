@@ -18,33 +18,31 @@ class UserController extends Controller
      */
     public function addAction()
     {
-        $form = $this->container->get('app.services.user_form')->getAddForm();
+        /** @var User $currentUser */
+        $currentUser = $this->getUser();
+
         $user = new User();
-        $form = $this->createForm('app_user', $user)->add(
-            'password',
-            'text',
-            [
-                'required' => false,
-                'label' => $this->container->get('translator.default')->trans('app.password_will_be_generated')
-            ]
-        );
+        $userFormService = $this->container->get('app.services.user_form');
+        $form = $userFormService->getUserForm($user, $currentUser);
 
         if ($this->get('request')->getMethod() === 'POST') {
             $form->submit($this->get('request'));
-
             if ($form->isValid()) {
-                $plainPassword = $form->get('password')->getData();
-                if (!$plainPassword) {
-                    $generator = $this->container->get('hackzilla.password_generator.computer');
-                    $plainPassword = $generator->setLength(12)->generatePassword();
+                $this->get('app.services.user_password_service')->setUserPassword(
+                    $user,
+                    $form->get('password')->getData(),
+                    $this->container->getParameter('app.user_password_length')
+                );
+                try {
+                    $userFormService->saveUser($user);
+                    $message = 'app.messages.user.add.success';
+                } catch (\Exception $e) {
+                    $message = 'app.messages.user.add.fail';
                 }
-
-                $encodePassword = $this->container->get('security.password_encoder')
-                    ->encodePassword($user, $plainPassword);
-                $user->setPassword($encodePassword);
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($user);
-                $em->flush();
+                $this->addFlash(
+                    'flash_user_actions',
+                    $this->get('translator.default')->trans($message)
+                );
                 return $this->redirect($this->generateUrl('app_user_list'));
             }
         }
@@ -80,18 +78,27 @@ class UserController extends Controller
      */
     public function editAction(User $userObject)
     {
-        $form = $this->createForm('app_user', $userObject);
+        /** @var User $currentUser */
+        $currentUser = $this->getUser();
+
+        $userFormService = $this->container->get('app.services.user_form');
+        $form = $userFormService->getUserForm($userObject, $currentUser);
 
         if ($this->get('request')->getMethod() === 'POST') {
             $form->submit($this->get('request'));
 
             if ($form->isValid()) {
-                $this->getDoctrine()->getManager()->flush();
+                try {
+                    $userFormService->saveUser($userObject);
+                    $message = 'app.messages.user.update.success';
+                } catch (\Exception $e) {
+                    $message = 'app.messages.user.update.fail';
+                }
                 $this->addFlash(
-                    'flash_user_edit',
-                    $this->container->get('translator.default')->trans('app.messages.user_edit_success')
+                    'flash_user_actions',
+                    $this->get('translator.default')->trans($message)
                 );
-                return $this->redirect($this->generateUrl('app_user_edit', ['id' => $userObject->getId()]));
+                return $this->redirect($this->generateUrl('app_user_view', ['id' => $userObject->getId()]));
             }
         }
 

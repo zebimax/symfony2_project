@@ -3,11 +3,13 @@
 namespace AppBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class SecurityController extends Controller
 {
     /**
+     * @Template("form/login.html.twig")
      * @Route("/login", name="login")
      */
     public function loginAction()
@@ -20,13 +22,10 @@ class SecurityController extends Controller
         $form = $this->createForm('app_login');
 
         $formView = $form->createView();
-        return $this->render(
-            'form/login.html.twig',
-            [
+        return [
                 'last_username' => $lastUsername,
                 'error'         => $error,
                 'form'          => $formView
-            ]
-        );
+            ];
     }
 }

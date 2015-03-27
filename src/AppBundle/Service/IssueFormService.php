@@ -79,10 +79,14 @@ class IssueFormService extends AbstractFormService
             ->addCollaborator($user)
             ->setReporter($user)
             ->setProject($project)
-            ->setStatus(IssueStatusEnumType::OPEN);
+            ->setStatus(IssueStatusEnumType::OPEN)
+            ->addActivity(
+                (new IssueActivity($issue, $user))
+                    ->setType(IssueActivity::CREATE_ISSUE)
+                    ->setCreated($issue->getCreated())
+            );
 
-        $this->manager->persist($issue);
-        $this->manager->flush();
+        $this->saveIssue($issue);
     }
 
     /**

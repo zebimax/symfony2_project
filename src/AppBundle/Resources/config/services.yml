@@ -34,6 +34,7 @@ parameters:
     app.services.project.members_list_limit: 10
     app.services.issue.list_limit: 10
     app.page_name: 'page'
+    app.user_password_length: 10
 services:
     app.form.type.login_type:
         class: AppBundle\Form\Type\LoginType
@@ -63,6 +64,12 @@ services:
             - @translator.default
         tags:
             - { name: form.type, alias: app_issue }
+    app.form.type.comment:
+        class: AppBundle\Form\Type\CommentType
+        arguments:
+            - @translator.default
+        tags:
+            - { name: form.type, alias: app_comment }
     app.menu_builder:
         class: AppBundle\Menu\MenuBuilder
         arguments: ["@knp_menu.factory", "@translator.default", "@security.authorization_checker"]
@@ -110,6 +117,11 @@ services:
            - { name: security.voter }
     app.security.access.project_voter:
         class:      AppBundle\Security\Authorization\Voter\ProjectVoter
+        parent: app.security.access.role_voter
+        tags:
+           - { name: security.voter }
+    app.security.access.comment_voter:
+        class:      AppBundle\Security\Authorization\Voter\CommentVoter
         parent: app.security.access.role_voter
         tags:
            - { name: security.voter }
@@ -316,4 +328,15 @@ services:
             - @doctrine.orm.default_entity_manager
             - @translator.default
             - @form.factory
+    app.services.comment:
+        class: AppBundle\Service\CommentService
+        arguments:
+            - @doctrine.orm.default_entity_manager
+            - @translator.default
+            - @form.factory
+    app.services.user_password_service:
+        class: AppBundle\Service\UserPasswordService
+        arguments:
+            - @security.password_encoder
+            - @hackzilla.password_generator.computer
 

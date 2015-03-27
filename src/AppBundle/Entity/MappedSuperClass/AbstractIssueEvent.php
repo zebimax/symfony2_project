@@ -81,4 +81,15 @@ class AbstractIssueEvent
     {
         return $this->user;
     }
+
+    /**
+     * @param User $user
+     * @return $this
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
 }

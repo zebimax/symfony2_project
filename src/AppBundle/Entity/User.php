@@ -559,6 +559,14 @@ class User implements UserInterface, \Serializable
     }
 
     /**
+     * @return bool
+     */
+    public function isAdmin()
+    {
+        return in_array($this->getPrimaryRole(), [Role::ADMINISTRATOR]);
+    }
+
+    /**
      * @return string
      */
     protected function getUploadRootDir()
