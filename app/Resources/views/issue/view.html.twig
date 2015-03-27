@@ -6,12 +6,20 @@
     {{ 'app.titles.issue_view' | trans({'%issue_code%' : issue.code}) }}
 {%  endblock %}
 {% block page_content %}
+    {% for flashMessage in app.session.flashbag.get('flash_project_issue_add') %}
+        <div class="alert alert-info" role="alert">{{ flashMessage }}</div>
+    {% endfor %}
+    {% for flashMessage in app.session.flashbag.get('flash_project_issue_add_sub_task_error') %}
+        <div class="alert alert-error" role="alert">{{ flashMessage }}</div>
+    {% endfor %}
     <table class="table">
         <tr>
             <td colspan="2">{% include 'issue.html.twig' %}</td>
         </tr>
-
         <tr>
+            {% if issue.type == constant('AppBundle\\DBAL\\IssueTypeEnumType::STORY') and issue.children | length %}
+                <td>{% include 'issues.html.twig' with {'issues_panel_title': 'app.issue.sub_tasks' | trans, 'issues': issue.children} %}</td>
+            {% endif %}
             <td>{% include 'activities.html.twig' %}</td>
         </tr>
     </table>

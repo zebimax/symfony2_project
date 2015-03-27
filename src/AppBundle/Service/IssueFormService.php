@@ -21,14 +21,18 @@ class IssueFormService extends AbstractFormService
     /**
      * @param Issue $issue
      * @param User $user
+     * @param Issue $parent
      * @return FormInterface
      */
-    public function getIssueForm(Issue $issue, User $user)
+    public function getIssueForm(Issue $issue, User $user, Issue $parent = null)
     {
         $currentStatus = $issue->getStatus();
         $currentAssignee = $issue->getAssignee();
         $builder = $this->factory->createBuilder('app_issue', $issue);
-        if ($this->isIssueTypeChangeable($issue)) {
+        if ($parent !== null) {
+            $issue->setType(IssueTypeEnumType::SUB_TASK)->setParent($parent);
+        }
+        if ($parent === null && $this->isIssueTypeChangeable($issue)) {
             $this->addTypeField($builder);
         }
         if ($issue->getStatus() !== null) {

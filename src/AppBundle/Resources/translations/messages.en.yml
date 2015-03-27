@@ -37,6 +37,7 @@ app:
         edit: 'Edit'
         add: 'Add'
         project_members: 'Members'
+        add_sub_task: 'Add sub task'
     main_menu:
         home: 'Home'
         users:
@@ -75,6 +76,7 @@ app:
         issue_view: 'Issue %issue_code%'
         issue_edit: 'Edit issue %issue_code%'
         issue_list: 'Issues list'
+        issue_sub_task_add: 'Add sub task'
     password: 'Password'
     password_will_be_generated: 'password, If leave empty will be generated'
     tooltip:
@@ -91,6 +93,7 @@ app:
         activities: 'Activities'
         user_info: 'User Information'
         assigned_issues: 'Assigned Issues'
+        sub_tasks: 'Sub tasks'
     label: 'Label'
     summary: 'Summary'
     issue:
@@ -131,10 +134,15 @@ app:
         created: 'Created'
         updated: 'Updated'
         last_update: 'Last updated'
+        sub_tasks: 'Story sub tasks'
+        story: 'Story'
     project: 'Project'
     description: 'Description'
     assignee: 'Assignee'
     undefined: 'undefined'
+    errors:
+        issue:
+            not_story_add_sub_task_error: 'Not story! Can''t add sub task'
 logout_menu:
     logout: 'Logout'
 login_form:

@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\DBAL\IssueTypeEnumType;
 use AppBundle\Entity\Issue;
 use AppBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -46,6 +47,52 @@ class IssueController extends Controller
         return [
             'issue' => $issue,
             'activities' => $issueService->getIssueActivities($issue)
+        ];
+    }
+
+    /**
+     * @Route("/issue/{id}/sub_task/add", name="app_issue_add_sub_task")
+     * @Template("issue/add_sub_task.html.twig")
+     * @Security("is_granted('add_sub_task', issue)")
+     * @param Issue $issue
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function addSubTaskAction(Issue $issue)
+    {
+        $translator = $this->get('translator.default');
+        if ($issue->getType() !== IssueTypeEnumType::STORY) {
+            $this->addFlash(
+                'flash_project_issue_add_sub_task_error',
+                $translator->trans('app.errors.issue.not_story_add_sub_task_error')
+            );
+            $this->redirect($this->generateUrl('app_issue_view'). ['id' => $issue->getId()]);
+        }
+        $issueFormService = $this->container->get('app.services.issue_form');
+        $subTask = new Issue();
+        /** @var User $user */
+        $user = $this->getUser();
+        $form = $issueFormService->getIssueForm($subTask, $user, $issue);
+        if ($this->get('request')->getMethod() === 'POST') {
+            $form->submit($this->get('request'));
+
+            if ($form->isValid()) {
+                try {
+                    $issueFormService->createIssue($subTask, $issue->getProject(), $user);
+                    $message = 'app.messages.project.add_issue.success';
+                } catch (\Exception $e) {
+                    $message = 'app.messages.project.add_issue.fail';
+                }
+                $this->addFlash(
+                    'flash_project_issue_add',
+                    $translator->trans($message)
+                );
+                return $this->redirect($this->generateUrl('app_issue_view', ['id' => $subTask->getId()]));
+            }
+        }
+
+        return [
+            'project' => $issue->getProject(),
+            'form' => $form->createView()
         ];
     }
 

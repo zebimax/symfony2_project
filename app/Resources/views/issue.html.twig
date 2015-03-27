@@ -20,6 +20,16 @@
                             <div class="col-md-6">{{ issue.code }}</div>
                         </div>
                     </li>
+                    {% if issue.parent is not null %}
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-md-6">{{ 'app.issue.story' | trans }}</div>
+                                <div class="col-md-6">
+                                    <a href="{{ path('app_issue_view', {'id' : issue.parent.id}) }}">{{ issue.parent.code }}</a>
+                                </div>
+                            </div>
+                        </li>
+                    {% endif %}
                     <li class="list-group-item">
                         <div class="row">
                             <div class="col-md-6">{{ 'app.issue.type' | trans }}</div>
@@ -95,8 +105,13 @@
         </div>
         <div class="row">
             {% if app.user and is_granted('edit', issue) %}
-                <div class="col-md-9">
+                <div class="col-md-10">
                     <a class="btn btn-primary" href="{{ path('app_issue_edit', {'id' : issue.id}) }}">{{'app.button.edit' | trans}}</a>
+                </div>
+            {% endif %}
+            {% if app.user and issue.type == constant('AppBundle\\DBAL\\IssueTypeEnumType::STORY') and is_granted('add_sub_task', issue) %}
+                <div class="col-md-2">
+                    <a class="btn btn-primary" href="{{ path('app_issue_add_sub_task', {'id' : issue.id}) }}">{{'app.button.add_sub_task' | trans}}</a>
                 </div>
             {% endif %}
         </div>

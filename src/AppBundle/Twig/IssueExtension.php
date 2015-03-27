@@ -70,7 +70,6 @@ class IssueExtension extends AbstractExtension
      */
     public function shortIssueDescription($description, $maxLen = self::DEFAULT_MAX_DESCRIPTION)
     {
-        $substr = substr($description, 0, $maxLen);
-        return $substr;
+        return substr($description, 0, $maxLen);
     }
 }

@@ -12,6 +12,7 @@ class IssueVoter extends AbstractRoleVoter
 {
     const EDIT = 'edit';
     const VIEW = 'view';
+    const ADD_SUB_TASK = 'add_sub_task';
 
     /**
      * @inheritdoc
@@ -23,6 +24,7 @@ class IssueVoter extends AbstractRoleVoter
             [
                 self::EDIT,
                 self::VIEW,
+                self::ADD_SUB_TASK
             ]
         );
     }
