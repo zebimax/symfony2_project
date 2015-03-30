@@ -8,6 +8,7 @@ class Projects extends EntityRepository
 {
     /**
      * @param $userId
+     *
      * @return \Doctrine\ORM\QueryBuilder
      */
     public function getUserProjectsQuery($userId)

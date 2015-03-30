@@ -1,4 +1,5 @@
 <?php
+
 namespace AppBundle\Menu;
 
 use Knp\Menu\FactoryInterface;
@@ -18,8 +19,8 @@ class MenuBuilder
     private $authorizationChecker;
 
     /**
-     * @param FactoryInterface $factory
-     * @param TranslatorInterface $translator
+     * @param FactoryInterface              $factory
+     * @param TranslatorInterface           $translator
      * @param AuthorizationCheckerInterface $authorizationChecker
      */
     public function __construct(
@@ -34,12 +35,14 @@ class MenuBuilder
 
     /**
      * @param MainMenuManager $mainMenuManager
+     *
      * @return ItemInterface
      */
     public function createMainMenu(MainMenuManager $mainMenuManager)
     {
         $menu = $this->factory->createItem('root');
         $this->addItems($menu, $mainMenuManager->getMenuItems());
+
         return $menu;
     }
 
@@ -50,11 +53,12 @@ class MenuBuilder
     {
         $menu = $this->factory->createItem('root');
         $menu->addChild($this->translator->trans('logout_menu.logout'), array('route' => 'logout'));
+
         return $menu;
     }
 
     /**
-     * @param ItemInterface $menuBuilder
+     * @param ItemInterface           $menuBuilder
      * @param MainMenuItemInterface[] $menuItems
      */
     private function addItems(ItemInterface $menuBuilder, array $menuItems)

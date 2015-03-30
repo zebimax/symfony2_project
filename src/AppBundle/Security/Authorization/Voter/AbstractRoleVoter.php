@@ -25,6 +25,7 @@ abstract class AbstractRoleVoter implements VoterInterface
     /**
      * @param UserInterface $user
      * @param $checkRole
+     *
      * @return bool
      */
     final protected function hasRole(UserInterface $user, $checkRole)
@@ -36,6 +37,7 @@ abstract class AbstractRoleVoter implements VoterInterface
                 return true;
             }
         }
+
         return false;
     }
 

@@ -21,7 +21,7 @@ class UserVoter extends AbstractRoleVoter
             $attribute,
             [
                 self::EDIT,
-                self::VIEW
+                self::VIEW,
             ]
         );
     }
@@ -69,6 +69,7 @@ class UserVoter extends AbstractRoleVoter
         if ($this->hasRole($user, Role::OPERATOR) && $attribute == self::VIEW) {
             return VoterInterface::ACCESS_GRANTED;
         }
+
         return VoterInterface::ACCESS_DENIED;
     }
 }

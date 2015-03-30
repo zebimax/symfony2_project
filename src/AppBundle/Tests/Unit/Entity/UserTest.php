@@ -34,15 +34,15 @@ class UserTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetSet($property, $value, $expected)
     {
-        call_user_func([$this->entity, 'set' . ucfirst($property)], $value);
+        call_user_func([$this->entity, 'set'.ucfirst($property)], $value);
         $this->assertEquals(
             $expected,
-            call_user_func([$this->entity, 'get' . ucfirst($property)])
+            call_user_func([$this->entity, 'get'.ucfirst($property)])
         );
     }
 
     /**
-     * Data provider
+     * Data provider.
      *
      * @return array
      */
@@ -54,7 +54,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
             'fullname' => ['fullname', 'test_fullname', 'test_fullname'],
             'isActive' => ['isActive', false, false],
             'password' => ['password', 'test_password', 'test_password'],
-            'username' => ['username', 'test_username', 'test_username']
+            'username' => ['username', 'test_username', 'test_username'],
         ];
     }
 
@@ -86,8 +86,8 @@ class UserTest extends \PHPUnit_Framework_TestCase
     public function testAddToCollections($property, $addValue)
     {
         $ucFirstProperty = ucfirst($property);
-        call_user_func([$this->entity, 'add' . $ucFirstProperty], $addValue);
-        $this->assertGreaterThan(0, count(call_user_func([$this->entity, 'get' . $ucFirstProperty. 's'])));
+        call_user_func([$this->entity, 'add'.$ucFirstProperty], $addValue);
+        $this->assertGreaterThan(0, count(call_user_func([$this->entity, 'get'.$ucFirstProperty.'s'])));
     }
 
     /**
@@ -98,7 +98,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
         return [
             'role' => ['role', new Role()],
             'project' => ['project', new Project()],
-            'issue' => ['issue', new Issue()]
+            'issue' => ['issue', new Issue()],
         ];
     }
 }

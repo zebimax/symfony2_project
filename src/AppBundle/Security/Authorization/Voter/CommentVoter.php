@@ -22,7 +22,7 @@ class CommentVoter extends AbstractRoleVoter
             $attribute,
             [
                 self::EDIT,
-                self::REMOVE
+                self::REMOVE,
             ]
         );
     }
@@ -45,7 +45,7 @@ class CommentVoter extends AbstractRoleVoter
         if (!$this->supportsClass(get_class($comment))) {
             return VoterInterface::ACCESS_ABSTAIN;
         }
-        /** @var Comment $comment */
+        /* @var Comment $comment */
         if (1 !== count($attributes)) {
             throw new \InvalidArgumentException(
                 'Only one attribute is allowed for EDIT, REMOVE'
@@ -67,6 +67,7 @@ class CommentVoter extends AbstractRoleVoter
         if ($user->getId() === $comment->getUser()->getId() || $this->hasRole($user, Role::ADMINISTRATOR)) {
             return VoterInterface::ACCESS_GRANTED;
         }
+
         return VoterInterface::ACCESS_DENIED;
     }
 }

@@ -22,10 +22,11 @@ class SecurityController extends Controller
         $form = $this->createForm('app_login');
 
         $formView = $form->createView();
+
         return [
                 'last_username' => $lastUsername,
                 'error'         => $error,
-                'form'          => $formView
+                'form'          => $formView,
             ];
     }
 }

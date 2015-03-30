@@ -20,7 +20,7 @@ class TwigSubscriber implements EventSubscriberInterface
     protected $tokenStorage;
 
     /**
-     * @param \Twig_Environment $twig
+     * @param \Twig_Environment     $twig
      * @param TokenStorageInterface $tokenStorage
      */
     public function __construct(\Twig_Environment $twig, TokenStorageInterface $tokenStorage)
@@ -32,17 +32,18 @@ class TwigSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            KernelEvents::REQUEST => ['onKernelRequest', self::EVENT_PRIORITY]
+            KernelEvents::REQUEST => ['onKernelRequest', self::EVENT_PRIORITY],
         ];
     }
 
     /**
      * @param GetResponseEvent $event
+     *
      * @throws \Twig_Error_Runtime
      */
     public function onKernelRequest(GetResponseEvent $event)
     {
-        /** @var User $user */
+        /* @var User $user */
         $tokenInterface = $this->tokenStorage->getToken();
         if (null !== $tokenInterface) {
             $user = $tokenInterface->getUser();

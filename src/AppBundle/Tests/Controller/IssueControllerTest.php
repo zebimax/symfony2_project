@@ -12,7 +12,7 @@ class IssueControllerTest extends WebTestCase
         $summaries = [
             'Test bug summary',
             'Test story summary',
-            'Test sub_task summary'
+            'Test sub_task summary',
         ];
         $crawler = $this->client->request('GET', '/issue/list');
         $filtered = $crawler->filter('td.issue_summary')
@@ -30,7 +30,7 @@ class IssueControllerTest extends WebTestCase
         /** @var Issue $story */
         $story = $this->getReference('issue_story');
         $id = $story->getId();
-        $crawler = $this->client->request('GET', '/issue/view/' . $id);
+        $crawler = $this->client->request('GET', '/issue/view/'.$id);
         $linkFilter = sprintf('a[href="/issue/edit/%d"]', $id);
         $this->assertSame(1, $crawler->filter($linkFilter)->count());
     }
@@ -40,7 +40,7 @@ class IssueControllerTest extends WebTestCase
         /** @var Issue $story */
         $story = $this->getReference('issue_story');
         $id = $story->getId();
-        $crawler = $this->client->request('GET', '/issue/' . $id . '/sub_task/add');
+        $crawler = $this->client->request('GET', '/issue/'.$id.'/sub_task/add');
         $summary = 'test summary(sub task of story)';
         $form = $crawler->selectButton('Add')->form(['app_issue[summary]' => $summary]);
         $this->client->followRedirects();
@@ -55,7 +55,7 @@ class IssueControllerTest extends WebTestCase
         /** @var Issue $story */
         $story = $this->getReference('issue_story');
         $id = $story->getId();
-        $crawler = $this->client->request('GET', '/issue/edit/' . $id);
+        $crawler = $this->client->request('GET', '/issue/edit/'.$id);
         $summary = 'Edited summary';
         $form = $crawler->selectButton('Edit')->form(['app_issue[summary]' => $summary]);
         $this->client->followRedirects();
@@ -70,7 +70,7 @@ class IssueControllerTest extends WebTestCase
         /** @var Issue $story */
         $story = $this->getReference('issue_story');
         $id = $story->getId();
-        $crawler = $this->client->request('GET', '/issue/view/' . $id);
+        $crawler = $this->client->request('GET', '/issue/view/'.$id);
         $comment = 'test comment of story';
         $form = $crawler->selectButton('Comment')->form(['app_comment[body]' => $comment]);
         $this->client->followRedirects();
@@ -86,7 +86,7 @@ class IssueControllerTest extends WebTestCase
             'AppBundle\DataFixtures\ORM\LoadRoleData',
             'AppBundle\DataFixtures\ORM\LoadUserData',
             'AppBundle\DataFixtures\ORM\LoadProjectData',
-            'AppBundle\DataFixtures\ORM\LoadIssueData'
+            'AppBundle\DataFixtures\ORM\LoadIssueData',
         ];
     }
 }

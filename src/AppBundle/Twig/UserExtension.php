@@ -21,12 +21,13 @@ class UserExtension extends AbstractExtension
     {
         return [
             new \Twig_SimpleFilter('renderPrimaryRole', [$this, 'renderPrimaryRole']),
-            new \Twig_SimpleFilter('renderIsActive', [$this, 'renderIsActive'])
+            new \Twig_SimpleFilter('renderIsActive', [$this, 'renderIsActive']),
         ];
     }
 
     /**
      * @param $userRole
+     *
      * @return string
      */
     public function renderPrimaryRole($userRole)
@@ -45,11 +46,13 @@ class UserExtension extends AbstractExtension
             default:
                 break;
         }
+
         return $this->translator->trans($role);
     }
 
     /**
      * @param $isActive
+     *
      * @return string
      */
     public function renderIsActive($isActive)

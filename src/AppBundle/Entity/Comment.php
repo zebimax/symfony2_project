@@ -6,8 +6,6 @@ use AppBundle\Entity\MappedSuperClass\AbstractIssueEvent;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Comment
- *
  * @ORM\Table(name="bt_comment")
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks
@@ -30,9 +28,10 @@ class Comment extends AbstractIssueEvent
     private $body;
 
     /**
-     * Set body
+     * Set body.
      *
      * @param string $body
+     *
      * @return Comment
      */
     public function setBody($body)
@@ -43,7 +42,7 @@ class Comment extends AbstractIssueEvent
     }
 
     /**
-     * Get body
+     * Get body.
      *
      * @return string
      */
@@ -62,6 +61,7 @@ class Comment extends AbstractIssueEvent
 
     /**
      * @param Issue $issue
+     *
      * @return $this
      */
     public function setIssue($issue)

@@ -1,4 +1,5 @@
 <?php
+
 namespace AppBundle\Tests\Unit\Menu;
 
 use AppBundle\Menu\MainMenuManager;
@@ -24,7 +25,7 @@ class MainMenuManagerTest extends \PHPUnit_Framework_TestCase
             [
                 'test',
                 new MainMenuItem(['name' => 'test', 'label' => 'test']),
-                new MainMenuItem(['name' => 'test', 'label' => 'test'])
+                new MainMenuItem(['name' => 'test', 'label' => 'test']),
             ]
         );
     }

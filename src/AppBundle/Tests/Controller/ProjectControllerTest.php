@@ -2,7 +2,6 @@
 
 namespace AppBundle\Tests\Controller;
 
-
 use AppBundle\Entity\Project;
 use AppBundle\Entity\User;
 
@@ -16,7 +15,7 @@ class ProjectControllerTest extends WebTestCase
         $form = $crawler->selectButton('Add')->form(
             [
                 'app_project[label]' => $label,
-                'app_project[summary]' => $summary
+                'app_project[summary]' => $summary,
             ]
         );
         $this->client->followRedirects();
@@ -42,7 +41,7 @@ class ProjectControllerTest extends WebTestCase
         /** @var Project $project */
         $project = $this->getReference('test_project');
         $id = $project->getId();
-        $crawler = $this->client->request('GET', '/project/view/' . $id);
+        $crawler = $this->client->request('GET', '/project/view/'.$id);
         $this->assertTrue($crawler->filter(sprintf('a[href="/project/edit/%s"]', $id))->count() > 0);
     }
 
@@ -103,7 +102,7 @@ class ProjectControllerTest extends WebTestCase
         );
         $this->client->followRedirects();
         $crawler = $this->client->submit($form);
-        $this->assertTrue($crawler->filter('html:contains("'. $summary .'")')->count() > 0);
+        $this->assertTrue($crawler->filter('html:contains("'.$summary.'")')->count() > 0);
     }
 
     protected function setFixtures()
@@ -111,7 +110,7 @@ class ProjectControllerTest extends WebTestCase
         $this->fixtures = [
             'AppBundle\DataFixtures\ORM\LoadRoleData',
             'AppBundle\DataFixtures\ORM\LoadUserData',
-            'AppBundle\DataFixtures\ORM\LoadProjectData'
+            'AppBundle\DataFixtures\ORM\LoadProjectData',
         ];
     }
 }

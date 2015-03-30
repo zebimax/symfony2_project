@@ -8,6 +8,7 @@ class IssueActivities extends EntityRepository
 {
     /**
      * @param $userId
+     *
      * @return array
      */
     public function getUserActivities($userId)
@@ -25,6 +26,7 @@ class IssueActivities extends EntityRepository
 
     /**
      * @param $projectId
+     *
      * @return array
      */
     public function getProjectActivities($projectId)
@@ -42,6 +44,7 @@ class IssueActivities extends EntityRepository
 
     /**
      * @param $issueId
+     *
      * @return array
      */
     public function getIssueActivities($issueId)

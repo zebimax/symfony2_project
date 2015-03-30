@@ -2,7 +2,6 @@
 
 namespace AppBundle\Tests\Controller;
 
-
 use AppBundle\Entity\Role;
 use AppBundle\Entity\User;
 
@@ -18,7 +17,7 @@ class UserControllerTest extends WebTestCase
         $form = $crawler->selectButton('Add user')->form(
             [
                 'app_user[username]' => $userName,
-                'app_user[email]' => $email
+                'app_user[email]' => $email,
             ]
         );
         $form['app_user[roles]']->select([$roleOperator->getId()]);
@@ -60,10 +59,10 @@ class UserControllerTest extends WebTestCase
         /** @var User $operator */
         $operator = $this->getReference('user_operator');
         $fullName = 'Edited full name';
-        $crawler = $this->client->request('GET', '/user/edit/' . $operator->getId());
+        $crawler = $this->client->request('GET', '/user/edit/'.$operator->getId());
         $form = $crawler->selectButton('Save user')->form(
             [
-                'app_user[fullname]' => $fullName
+                'app_user[fullname]' => $fullName,
             ]
         );
         $this->client->followRedirects();
@@ -90,7 +89,7 @@ class UserControllerTest extends WebTestCase
     {
         $this->fixtures = [
             'AppBundle\DataFixtures\ORM\LoadRoleData',
-            'AppBundle\DataFixtures\ORM\LoadUserData'
+            'AppBundle\DataFixtures\ORM\LoadUserData',
         ];
     }
 }

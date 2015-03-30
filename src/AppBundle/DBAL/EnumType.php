@@ -1,4 +1,5 @@
 <?php
+
 namespace AppBundle\DBAL;
 
 use Doctrine\DBAL\Types\Type;
@@ -7,8 +8,9 @@ use Doctrine\DBAL\Platforms\AbstractPlatform;
 abstract class EnumType extends Type
 {
     /**
-     * @param array $fieldDeclaration
+     * @param array            $fieldDeclaration
      * @param AbstractPlatform $platform
+     *
      * @return string
      */
     public function getSqlDeclaration(array $fieldDeclaration, AbstractPlatform $platform)
@@ -24,8 +26,9 @@ abstract class EnumType extends Type
     }
 
     /**
-     * @param mixed $value
+     * @param mixed            $value
      * @param AbstractPlatform $platform
+     *
      * @return mixed
      */
     public function convertToPHPValue($value, AbstractPlatform $platform)
@@ -34,15 +37,17 @@ abstract class EnumType extends Type
     }
 
     /**
-     * @param mixed $value
+     * @param mixed            $value
      * @param AbstractPlatform $platform
+     *
      * @return mixed
      */
     public function convertToDatabaseValue($value, AbstractPlatform $platform)
     {
-        if (!in_array($value, (array)$this->getValues())) {
+        if (!in_array($value, (array) $this->getValues())) {
             throw new \InvalidArgumentException(sprintf('Invalid \'%s\' value', $this->getName()));
         }
+
         return $value;
     }
 

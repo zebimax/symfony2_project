@@ -32,10 +32,10 @@ class ProjectTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetSet($property, $value, $expected)
     {
-        call_user_func([$this->entity, 'set' . ucfirst($property)], $value);
+        call_user_func([$this->entity, 'set'.ucfirst($property)], $value);
         $this->assertEquals(
             $expected,
-            call_user_func([$this->entity, 'get' . ucfirst($property)])
+            call_user_func([$this->entity, 'get'.ucfirst($property)])
         );
     }
 
@@ -47,7 +47,7 @@ class ProjectTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Data provider
+     * Data provider.
      *
      * @return array
      */
@@ -55,7 +55,7 @@ class ProjectTest extends \PHPUnit_Framework_TestCase
     {
         return [
             'label' => ['label', 'test_label', 'test_label'],
-            'summary'    => ['summary', 'test_summary', 'test_summary']
+            'summary'    => ['summary', 'test_summary', 'test_summary'],
         ];
     }
 

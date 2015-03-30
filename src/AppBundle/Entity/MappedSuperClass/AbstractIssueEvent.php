@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 class AbstractIssueEvent
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -40,9 +40,9 @@ class AbstractIssueEvent
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -50,9 +50,10 @@ class AbstractIssueEvent
     }
 
     /**
-     * Set created
+     * Set created.
      *
      * @param \DateTime $created
+     *
      * @return $this
      */
     public function setCreated($created)
@@ -63,7 +64,7 @@ class AbstractIssueEvent
     }
 
     /**
-     * Get created
+     * Get created.
      *
      * @return \DateTime
      */
@@ -73,7 +74,7 @@ class AbstractIssueEvent
     }
 
     /**
-     * Get user
+     * Get user.
      *
      * @return User
      */
@@ -84,6 +85,7 @@ class AbstractIssueEvent
 
     /**
      * @param User $user
+     *
      * @return $this
      */
     public function setUser($user)

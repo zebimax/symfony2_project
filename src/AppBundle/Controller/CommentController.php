@@ -15,7 +15,9 @@ class CommentController extends Controller
     /**
      * @Template("issue_comments.html.twig")
      * @Security("is_granted('comments_list', issue)")
+     *
      * @param Issue $issue
+     *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function listAction(Issue $issue)
@@ -27,7 +29,7 @@ class CommentController extends Controller
 
         return [
             'issue' => $issue,
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ];
     }
 
@@ -35,7 +37,9 @@ class CommentController extends Controller
      * @Route("/comment/edit/{id}", name="app_comment_edit")
      * @Template("comment/edit.html.twig")
      * @Security("is_granted('edit', comment)")
+     *
      * @param Comment $comment
+     *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function editAction(Comment $comment)
@@ -62,14 +66,16 @@ class CommentController extends Controller
 
         return [
             'issue' => $comment->getIssue(),
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ];
     }
 
     /**
      * @Route("/comment/remove/{id}", name="app_comment_remove")
+     *
      * @param Comment $comment
      * @Security("is_granted('remove', comment)")
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function removeAction(Comment $comment)
@@ -85,6 +91,7 @@ class CommentController extends Controller
             'flash_issue_actions',
             $this->get('translator.default')->trans($message)
         );
+
         return $this->redirect($this->generateUrl('app_issue_view', ['id' => $comment->getIssue()->getId()]));
     }
 }

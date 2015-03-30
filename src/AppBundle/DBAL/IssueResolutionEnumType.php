@@ -35,7 +35,7 @@ class IssueResolutionEnumType extends EnumType
             self::CANNOT_REPRODUCE,
             self::DONE,
             self::WON_T_DO,
-            null
+            null,
         ];
     }
 }

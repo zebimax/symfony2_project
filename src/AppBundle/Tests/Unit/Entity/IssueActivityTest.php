@@ -1,7 +1,7 @@
 <?php
+
 namespace AppBundle\Tests\Unit\Entity;
 
-use AppBundle\DBAL\IssueTypeEnumType;
 use AppBundle\Entity\Issue;
 use AppBundle\Entity\User;
 use AppBundle\Entity\IssueActivity;
@@ -58,8 +58,8 @@ class IssueActivityTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetSet($property, $value, $expected)
     {
-        call_user_func_array(array($this->object, 'set' . ucfirst($property)), [$value]);
-        $this->assertEquals($expected, call_user_func_array([$this->object, 'get' . ucfirst($property)], []));
+        call_user_func_array(array($this->object, 'set'.ucfirst($property)), [$value]);
+        $this->assertEquals($expected, call_user_func_array([$this->object, 'get'.ucfirst($property)], []));
     }
 
     /**
@@ -76,16 +76,17 @@ class IssueActivityTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * get set data provider
+     * get set data provider.
      *
      * @return array
      */
     public function getSetDataProvider()
     {
         $created = new DateTime();
+
         return [
             'type'    => ['type', IssueActivity::CREATE_ISSUE, IssueActivity::CREATE_ISSUE],
-            'created' => ['created', $created, $created]
+            'created' => ['created', $created, $created],
         ];
     }
 }

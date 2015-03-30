@@ -1,4 +1,5 @@
 <?php
+
 namespace AppBundle\Tests\Unit\Menu;
 
 use AppBundle\Entity\Role;
@@ -38,7 +39,7 @@ class MainMenuItemTest extends \PHPUnit_Framework_TestCase
                     'name' => 'profile_sub_item',
                     'label' => 'profile_sub_item_label',
                     'route' => 'profile_sub_item_route',
-                    'route_parameters' => [$userIdParameterProvider]
+                    'route_parameters' => [$userIdParameterProvider],
                 ]
             )]
         );

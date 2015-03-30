@@ -14,8 +14,8 @@ class IssueService extends AbstractControllerService
     protected $paginator;
 
     /**
-     * @param EntityManager $manager
-     * @param PaginatorInterface $paginatorInterface
+     * @param EntityManager       $manager
+     * @param PaginatorInterface  $paginatorInterface
      * @param TranslatorInterface $translator
      */
     public function __construct(
@@ -31,6 +31,7 @@ class IssueService extends AbstractControllerService
      * @param User $user
      * @param $page
      * @param $limit
+     *
      * @return \Knp\Component\Pager\Pagination\PaginationInterface
      */
     public function getIssuesList(User $user, $page, $limit)
@@ -46,6 +47,7 @@ class IssueService extends AbstractControllerService
 
     /**
      * @param Issue $issue
+     *
      * @return array
      */
     public function getIssueActivities(Issue $issue)

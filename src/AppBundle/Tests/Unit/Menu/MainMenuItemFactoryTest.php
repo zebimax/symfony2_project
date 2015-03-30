@@ -1,4 +1,5 @@
 <?php
+
 namespace AppBundle\Tests\Unit\Menu;
 
 use AppBundle\Menu\MainMenuItemFactory;
@@ -19,7 +20,7 @@ class MainMenuItemFactoryTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new MainMenuItemFactory;
+        $this->object = new MainMenuItemFactory();
     }
 
     /**

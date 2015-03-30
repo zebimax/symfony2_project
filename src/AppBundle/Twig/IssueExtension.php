@@ -23,49 +23,54 @@ class IssueExtension extends AbstractExtension
             new \Twig_SimpleFilter('renderIssueType', [$this, 'getType']),
             new \Twig_SimpleFilter('renderIssuePriority', [$this, 'getPriority']),
             new \Twig_SimpleFilter('renderIssueResolution', [$this, 'getResolution']),
-            new \Twig_SimpleFilter('renderShortIssueDescription', [$this, 'shortIssueDescription'])
+            new \Twig_SimpleFilter('renderShortIssueDescription', [$this, 'shortIssueDescription']),
         ];
     }
 
     /**
      * @param $status
+     *
      * @return string
      */
     public function getStatus($status)
     {
-        return $this->translator->trans('app.issue.statuses.' . $status);
+        return $this->translator->trans('app.issue.statuses.'.$status);
     }
 
     /**
      * @param $type
+     *
      * @return string
      */
     public function getType($type)
     {
-        return $this->translator->trans('app.issue.types.' . $type);
+        return $this->translator->trans('app.issue.types.'.$type);
     }
 
     /**
      * @param $priority
+     *
      * @return string
      */
     public function getPriority($priority)
     {
-        return $this->translator->trans('app.issue.priorities.' . $priority);
+        return $this->translator->trans('app.issue.priorities.'.$priority);
     }
 
     /**
      * @param $resolution
+     *
      * @return string
      */
     public function getResolution($resolution)
     {
-        return $this->translator->trans('app.issue.resolutions.' . $resolution);
+        return $this->translator->trans('app.issue.resolutions.'.$resolution);
     }
 
     /**
      * @param $description
      * @param int $maxLen
+     *
      * @return string
      */
     public function shortIssueDescription($description, $maxLen = self::DEFAULT_MAX_DESCRIPTION)

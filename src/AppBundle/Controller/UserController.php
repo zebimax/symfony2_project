@@ -43,20 +43,23 @@ class UserController extends Controller
                     'flash_user_actions',
                     $this->get('translator.default')->trans($message)
                 );
+
                 return $this->redirect($this->generateUrl('app_user_list'));
             }
         }
 
         return [
             'user' => $user,
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ];
     }
 
     /**
      * @Route("/user/list", name="app_user_list")
      * @Security("is_granted('users_list')")
+     *
      * @param Request $request
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      * @Template("user/list.html.twig")
      */
@@ -66,11 +69,13 @@ class UserController extends Controller
             $request->query->get($this->container->getParameter('app.page_name'), 1),
             $this->container->getParameter('app.services.user.list_limit')
         );
+
         return ['users' => $users];
     }
 
     /**
      * @param User $userObject
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/user/edit/{id}", name="app_user_edit")
      * @Template("user/edit.html.twig")
@@ -98,19 +103,20 @@ class UserController extends Controller
                     'flash_user_actions',
                     $this->get('translator.default')->trans($message)
                 );
+
                 return $this->redirect($this->generateUrl('app_user_view', ['id' => $userObject->getId()]));
             }
         }
 
         return [
             'user' => $userObject,
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ];
     }
 
-
     /**
      * @param User $userObject
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/user/view/{id}", name="app_user_view")
      * @Template("user/view.html.twig")
@@ -119,10 +125,11 @@ class UserController extends Controller
     public function viewAction(User $userObject)
     {
         $service = $this->get('app.services.user');
+
         return [
             'issues' => $service->getUserAssignedIssues($userObject->getId()),
             'activities' => $service->getUserActivities($userObject->getId()),
-            'user' => $userObject
+            'user' => $userObject,
         ];
     }
 }

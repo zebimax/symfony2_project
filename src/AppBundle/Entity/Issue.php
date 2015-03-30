@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Issue
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -115,7 +115,6 @@ class Issue
      *  @var \DateTime
      *
      * @ORM\Column(type="datetime")
-     *
      */
     private $created;
 
@@ -140,9 +139,6 @@ class Issue
      **/
     private $comments;
 
-    /**
-     * Constructor
-     */
     public function __construct()
     {
         $this->collaborators = new ArrayCollection();
@@ -154,9 +150,9 @@ class Issue
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -164,9 +160,10 @@ class Issue
     }
 
     /**
-     * Set summary
+     * Set summary.
      *
      * @param string $summary
+     *
      * @return Issue
      */
     public function setSummary($summary)
@@ -177,7 +174,7 @@ class Issue
     }
 
     /**
-     * Get summary
+     * Get summary.
      *
      * @return string
      */
@@ -187,9 +184,10 @@ class Issue
     }
 
     /**
-     * Set description
+     * Set description.
      *
      * @param string $description
+     *
      * @return Issue
      */
     public function setDescription($description)
@@ -200,7 +198,7 @@ class Issue
     }
 
     /**
-     * Get description
+     * Get description.
      *
      * @return string
      */
@@ -210,9 +208,10 @@ class Issue
     }
 
     /**
-     * Set created
+     * Set created.
      *
      * @param \DateTime $created
+     *
      * @return Issue
      */
     public function setCreated($created)
@@ -223,7 +222,7 @@ class Issue
     }
 
     /**
-     * Get created
+     * Get created.
      *
      * @return \DateTime
      */
@@ -233,9 +232,10 @@ class Issue
     }
 
     /**
-     * Set updated
+     * Set updated.
      *
      * @param \DateTime $updated
+     *
      * @return Issue
      */
     public function setUpdated($updated)
@@ -246,7 +246,7 @@ class Issue
     }
 
     /**
-     * Get updated
+     * Get updated.
      *
      * @return \DateTime
      */
@@ -256,9 +256,10 @@ class Issue
     }
 
     /**
-     * Set type
+     * Set type.
      *
      * @param string $type
+     *
      * @return Issue
      */
     public function setType($type)
@@ -269,7 +270,7 @@ class Issue
     }
 
     /**
-     * Get type
+     * Get type.
      *
      * @return string
      */
@@ -279,9 +280,10 @@ class Issue
     }
 
     /**
-     * Set priority
+     * Set priority.
      *
      * @param string $priority
+     *
      * @return Issue
      */
     public function setPriority($priority)
@@ -292,7 +294,7 @@ class Issue
     }
 
     /**
-     * Get priority
+     * Get priority.
      *
      * @return string
      */
@@ -302,9 +304,10 @@ class Issue
     }
 
     /**
-     * Set resolution
+     * Set resolution.
      *
      * @param string $resolution
+     *
      * @return Issue
      */
     public function setResolution($resolution)
@@ -315,7 +318,7 @@ class Issue
     }
 
     /**
-     * Get resolution
+     * Get resolution.
      *
      * @return string
      */
@@ -325,10 +328,11 @@ class Issue
     }
 
     /**
-     * Set status
+     * Set status.
      *
      * @param string $status
-     * @param User $user
+     * @param User   $user
+     *
      * @return Issue
      */
     public function setStatus($status)
@@ -339,7 +343,7 @@ class Issue
     }
 
     /**
-     * Get status
+     * Get status.
      *
      * @return string
      */
@@ -349,9 +353,10 @@ class Issue
     }
 
     /**
-     * Set reporter
+     * Set reporter.
      *
      * @param User $reporter
+     *
      * @return Issue
      */
     public function setReporter(User $reporter = null)
@@ -362,7 +367,7 @@ class Issue
     }
 
     /**
-     * Get reporter
+     * Get reporter.
      *
      * @return User
      */
@@ -372,9 +377,10 @@ class Issue
     }
 
     /**
-     * Set assignee
+     * Set assignee.
      *
      * @param User $assignee
+     *
      * @return Issue
      */
     public function setAssignee(User $assignee = null)
@@ -385,7 +391,8 @@ class Issue
     }
 
     /**
-     * Get assignee
+     * Get assignee.
+     *
      * @return User|null
      */
     public function getAssignee()
@@ -394,9 +401,10 @@ class Issue
     }
 
     /**
-     * Add collaborator
+     * Add collaborator.
      *
      * @param User $collaborator
+     *
      * @return Issue
      */
     public function addCollaborator(User $collaborator)
@@ -407,7 +415,7 @@ class Issue
     }
 
     /**
-     * Remove collaborators
+     * Remove collaborators.
      *
      * @param User $collaborators
      */
@@ -417,7 +425,7 @@ class Issue
     }
 
     /**
-     * Get collaborators
+     * Get collaborators.
      *
      * @return Collection
      */
@@ -427,9 +435,10 @@ class Issue
     }
 
     /**
-     * Set parent
+     * Set parent.
      *
      * @param Issue $parent
+     *
      * @return Issue
      */
     public function setParent(Issue $parent = null)
@@ -440,7 +449,7 @@ class Issue
     }
 
     /**
-     * Get parent
+     * Get parent.
      *
      * @return Issue
      */
@@ -450,9 +459,10 @@ class Issue
     }
 
     /**
-     * Add children
+     * Add children.
      *
      * @param Issue $children
+     *
      * @return Issue
      */
     public function addChild(Issue $children)
@@ -463,7 +473,7 @@ class Issue
     }
 
     /**
-     * Remove children
+     * Remove children.
      *
      * @param Issue $children
      */
@@ -473,7 +483,7 @@ class Issue
     }
 
     /**
-     * Get children
+     * Get children.
      *
      * @return Collection
      */
@@ -483,9 +493,10 @@ class Issue
     }
 
     /**
-     * Set project
+     * Set project.
      *
      * @param Project $project
+     *
      * @return Issue
      */
     public function setProject(Project $project = null)
@@ -496,7 +507,7 @@ class Issue
     }
 
     /**
-     * Get project
+     * Get project.
      *
      * @return Project
      */
@@ -506,9 +517,10 @@ class Issue
     }
 
     /**
-     * Add activity
+     * Add activity.
      *
      * @param IssueActivity $activity
+     *
      * @return Issue
      */
     public function addActivity(IssueActivity $activity)
@@ -519,7 +531,7 @@ class Issue
     }
 
     /**
-     * Remove activity
+     * Remove activity.
      *
      * @param IssueActivity $activity
      */
@@ -530,11 +542,13 @@ class Issue
 
     /**
      * @param Comment $comment
+     *
      * @return $this
      */
     public function addComment(Comment $comment)
     {
         $this->comments->set($comment->getId(), $comment);
+
         return $this;
     }
 
@@ -559,7 +573,7 @@ class Issue
      */
     public function getCode()
     {
-        return $this->project->getCode() . '-' . $this->id;
+        return $this->project->getCode().'-'.$this->id;
     }
 
     /**

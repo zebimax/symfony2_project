@@ -9,11 +9,13 @@ class Issues extends EntityRepository
 {
     /**
      * @param $userId
+     *
      * @return array
      */
     public function getNotClosedUserIssues($userId)
     {
         $queryBuilder = $this->getUserIssuesQueryBuilder($userId);
+
         return $queryBuilder
             ->join('i.collaborators', 'u')
             ->andWhere($queryBuilder->expr()->eq('u.id', ':userId'))
@@ -23,11 +25,13 @@ class Issues extends EntityRepository
 
     /**
      * @param $userId
+     *
      * @return array
      */
     public function getNotClosedUserAssignedIssues($userId)
     {
         $queryBuilder = $this->getUserIssuesQueryBuilder($userId);
+
         return $queryBuilder
             ->andWhere($queryBuilder->expr()->eq('i.assignee', ':userId'))
             ->getQuery()
@@ -36,11 +40,13 @@ class Issues extends EntityRepository
 
     /**
      * @param $projectId
+     *
      * @return array
      */
     public function getProjectIssues($projectId)
     {
         $queryBuilder = $this->createQueryBuilder('i');
+
         return $queryBuilder
             ->select(['i'])
             ->join('i.project', 'p')
@@ -52,6 +58,7 @@ class Issues extends EntityRepository
 
     /**
      * @param $userId
+     *
      * @return array
      */
     public function getUserProjectsIssues($userId)
@@ -73,11 +80,13 @@ class Issues extends EntityRepository
 
     /**
      * @param $userId
+     *
      * @return \Doctrine\ORM\QueryBuilder
      */
     private function getUserIssuesQueryBuilder($userId)
     {
         $queryBuilder = $this->createQueryBuilder('i');
+
         return $queryBuilder
             ->select(['i'])
             ->join('i.project', 'p')

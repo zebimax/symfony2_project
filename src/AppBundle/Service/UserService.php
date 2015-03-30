@@ -14,9 +14,10 @@ class UserService extends AbstractControllerService
     protected $paginator;
 
     /**
-     * @param EntityManager $manager
+     * @param EntityManager       $manager
      * @param TranslatorInterface $translator
-     * @param PaginatorInterface $paginatorInterface
+     * @param PaginatorInterface  $paginatorInterface
+     *
      * @internal param PaginatorInterface $paginationInterface
      */
     public function __construct(
@@ -31,6 +32,7 @@ class UserService extends AbstractControllerService
     /**
      * @param $page
      * @param $limit
+     *
      * @return \Knp\Component\Pager\Pagination\PaginationInterface
      */
     public function getUsersList($page, $limit)
@@ -44,6 +46,7 @@ class UserService extends AbstractControllerService
 
     /**
      * @param $userId
+     *
      * @return array
      */
     public function getUserIssues($userId)
@@ -53,6 +56,7 @@ class UserService extends AbstractControllerService
 
     /**
      * @param $userId
+     *
      * @return array
      */
     public function getUserAssignedIssues($userId)
@@ -62,6 +66,7 @@ class UserService extends AbstractControllerService
 
     /**
      * @param $userId
+     *
      * @return array
      */
     public function getUserActivities($userId)

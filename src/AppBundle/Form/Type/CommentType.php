@@ -41,7 +41,7 @@ class CommentType extends AbstractType
             [
                 'required' => true,
                 'label' => false,
-                'attr' => ['placeholder' => $this->translator->trans('app.placeholders.your_comment')]
+                'attr' => ['placeholder' => $this->translator->trans('app.placeholders.your_comment')],
             ]
         );
     }

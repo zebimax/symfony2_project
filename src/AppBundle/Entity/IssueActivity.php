@@ -17,7 +17,7 @@ class IssueActivity extends AbstractIssueEvent
 
     /**
      * @param Issue $issue
-     * @param User $user
+     * @param User  $user
      */
     public function __construct(Issue $issue, User $user)
     {
@@ -48,13 +48,14 @@ class IssueActivity extends AbstractIssueEvent
     protected $issue;
 
     /**
-     * @var integer
+     * @var int
      */
 
     /**
-     * Set type
+     * Set type.
      *
      * @param string $type
+     *
      * @return IssueActivity
      */
     public function setType($type)
@@ -65,7 +66,7 @@ class IssueActivity extends AbstractIssueEvent
     }
 
     /**
-     * Get type
+     * Get type.
      *
      * @return string
      */
@@ -75,9 +76,10 @@ class IssueActivity extends AbstractIssueEvent
     }
 
     /**
-     * Set details
+     * Set details.
      *
      * @param array $details
+     *
      * @return IssueActivity
      */
     public function setDetails($details)
@@ -88,7 +90,7 @@ class IssueActivity extends AbstractIssueEvent
     }
 
     /**
-     * Get details
+     * Get details.
      *
      * @return array
      */

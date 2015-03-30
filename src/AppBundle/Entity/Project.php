@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Project
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -53,13 +53,13 @@ class Project
 
     public function __construct()
     {
-         $this->users = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -67,9 +67,10 @@ class Project
     }
 
     /**
-     * Set label
+     * Set label.
      *
      * @param string $label
+     *
      * @return Project
      */
     public function setLabel($label)
@@ -80,7 +81,7 @@ class Project
     }
 
     /**
-     * Get label
+     * Get label.
      *
      * @return string
      */
@@ -90,7 +91,7 @@ class Project
     }
 
     /**
-     * Get code
+     * Get code.
      *
      * @return string
      */
@@ -100,9 +101,10 @@ class Project
     }
 
     /**
-     * Add user
+     * Add user.
      *
      * @param User $user
+     *
      * @return Project
      */
     public function addUser(User $user)
@@ -113,9 +115,10 @@ class Project
     }
 
     /**
-     * Remove user
+     * Remove user.
      *
      * @param User $user
+     *
      * @return bool
      */
     public function removeUser(User $user)
@@ -124,7 +127,7 @@ class Project
     }
 
     /**
-     * Get users
+     * Get users.
      *
      * @return Collection
      */
@@ -149,7 +152,7 @@ class Project
             array_reduce(
                 $parts,
                 function ($carry, $item) {
-                    return $carry . $item[0];
+                    return $carry.$item[0];
                 },
                 ''
             )

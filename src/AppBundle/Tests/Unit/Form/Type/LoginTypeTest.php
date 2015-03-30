@@ -39,8 +39,8 @@ class LoginTypeTest extends \PHPUnit_Framework_TestCase
                     new NotBlank(),
                     new Length(
                         ['min' => LoginType::MIN_USERNAME_LENGTH]
-                    )
-                ]
+                    ),
+                ],
             ]
         );
 
@@ -56,8 +56,8 @@ class LoginTypeTest extends \PHPUnit_Framework_TestCase
                     new NotBlank(),
                     new Length(
                         ['min' => LoginType::MIN_PASSWORD_LENGTH]
-                    )
-                ]
+                    ),
+                ],
             ]
         );
 
@@ -67,7 +67,7 @@ class LoginTypeTest extends \PHPUnit_Framework_TestCase
             'submit',
             'submit',
             [
-                'label' => $this->translator->trans('app.button.submit')
+                'label' => $this->translator->trans('app.button.submit'),
             ]
         );
 

@@ -36,6 +36,7 @@ class WebTestCase extends BaseWebTestCase
 
     /**
      * @param $name
+     *
      * @return object
      */
     protected function getReference($name)
@@ -43,11 +44,11 @@ class WebTestCase extends BaseWebTestCase
         if ($this->referenceRepository === null) {
             throw new \LogicException('Reference repository doesn\'t set');
         }
+
         return $this->referenceRepository->getReference($name);
     }
 
     protected function setFixtures()
     {
-
     }
 }

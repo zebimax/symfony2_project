@@ -13,8 +13,8 @@ class AbstractFormService extends AbstractControllerService
     protected $factory;
 
     /**
-     * @param EntityManager $manager
-     * @param TranslatorInterface $translator
+     * @param EntityManager        $manager
+     * @param TranslatorInterface  $translator
      * @param FormFactoryInterface $factory
      */
     public function __construct(EntityManager $manager, TranslatorInterface $translator, FormFactoryInterface $factory)

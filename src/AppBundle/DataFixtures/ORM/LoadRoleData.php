@@ -1,4 +1,5 @@
 <?php
+
 namespace AppBundle\DataFixtures\ORM;
 
 use AppBundle\Entity\Role;
@@ -27,9 +28,9 @@ class LoadRoleData extends AbstractOrderedContainerAwareFixture
     }
 
     /**
-     * Get the order of this fixture
+     * Get the order of this fixture.
      *
-     * @return integer
+     * @return int
      */
     public function getOrder()
     {

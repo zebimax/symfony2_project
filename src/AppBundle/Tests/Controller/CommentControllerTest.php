@@ -12,7 +12,7 @@ class CommentControllerTest extends WebTestCase
         /** @var Comment $comment */
         $comment = $this->getReference('test_comment');
         $id = $comment->getId();
-        $crawler = $this->client->request('GET', '/comment/edit/' . $id);
+        $crawler = $this->client->request('GET', '/comment/edit/'.$id);
         $body = 'new comment body';
         $form = $crawler->selectButton('Edit')->form(['app_comment[body]' => $body]);
         $this->client->followRedirects();
@@ -26,7 +26,7 @@ class CommentControllerTest extends WebTestCase
         /** @var Issue $story */
         $story = $this->getReference('issue_story');
         $issueId = $story->getId();
-        $crawler = $this->client->request('GET', '/issue/view/' . $issueId);
+        $crawler = $this->client->request('GET', '/issue/view/'.$issueId);
         /** @var Comment $comment */
         $comment = $this->getReference('test_comment');
         $id = $comment->getId();
@@ -45,7 +45,7 @@ class CommentControllerTest extends WebTestCase
             'AppBundle\DataFixtures\ORM\LoadUserData',
             'AppBundle\DataFixtures\ORM\LoadProjectData',
             'AppBundle\DataFixtures\ORM\LoadIssueData',
-            'AppBundle\DataFixtures\ORM\LoadCommentData'
+            'AppBundle\DataFixtures\ORM\LoadCommentData',
         ];
     }
 }

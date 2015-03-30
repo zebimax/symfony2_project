@@ -43,5 +43,3 @@ AppBundle\Entity\Comment:
     properties:
         created:
             - DateTime: ~
-
-

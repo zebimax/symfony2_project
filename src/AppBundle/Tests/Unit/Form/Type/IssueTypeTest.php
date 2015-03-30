@@ -1,4 +1,5 @@
 <?php
+
 namespace AppBundle\Tests\Form\Type;
 
 use AppBundle\Form\Type\IssueType;
@@ -46,7 +47,7 @@ class IssueTypeTest extends TypeTestCase
             'summary' => 'text',
             'description' => 'textarea',
             'priority' => 'choice',
-            'assignee' => 'entity'
+            'assignee' => 'entity',
         );
         $builder = $this->getMockBuilder('Symfony\Component\Form\FormBuilder')
             ->disableOriginalConstructor()

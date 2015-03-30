@@ -1,4 +1,5 @@
 <?php
+
 namespace AppBundle\Tests\Unit\Security\Authorization\Voter;
 
 use AppBundle\Entity\Project;
@@ -35,7 +36,7 @@ class ProjectVoterTest extends \PHPUnit_Framework_TestCase
             Role::OPERATOR => [$operatorRole],
             Role::MANAGER => [$operatorRole, $managerRole],
             Role::ADMINISTRATOR => [$operatorRole, $managerRole, $adminRole],
-            'ROLE_INVALID' => [$invalidRole]
+            'ROLE_INVALID' => [$invalidRole],
         ];
         $roleHierarchy = $this->getMock('Symfony\Component\Security\Core\Role\RoleHierarchyInterface');
         $roleHierarchy
@@ -46,6 +47,7 @@ class ProjectVoterTest extends \PHPUnit_Framework_TestCase
                 $this->returnCallback(
                     function ($value) use ($roles) {
                         $role = $value[0];
+
                         return $roles[$role->getRole()];
                     }
                 )
@@ -64,6 +66,7 @@ class ProjectVoterTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers       AppBundle\Security\Authorization\Voter\ProjectVoter::supportsAttribute
      * @dataProvider supportsAttributeDataProvider
+     *
      * @param $attribute
      * @param $expected
      */
@@ -75,6 +78,7 @@ class ProjectVoterTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers       AppBundle\Security\Authorization\Voter\ProjectVoter::supportsClass
      * @dataProvider supportsClassDataProvider
+     *
      * @param $class
      * @param $expected
      */
@@ -85,6 +89,7 @@ class ProjectVoterTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers AppBundle\Security\Authorization\Voter\ProjectVoter::vote
+     *
      * @param $roleName
      * @param array $attributes
      * @param $object
@@ -108,30 +113,29 @@ class ProjectVoterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * supportsAttribute data provider
+     * supportsAttribute data provider.
      */
     public function supportsAttributeDataProvider()
     {
         return [
             'supports view attribute' => ['attribute' => 'view', 'expected' => true],
-            'not supports edit attribute' => ['attribute' => 'edit', 'expected' => false]
+            'not supports edit attribute' => ['attribute' => 'edit', 'expected' => false],
         ];
     }
 
     /**
-     * supportsClass data provider
+     * supportsClass data provider.
      */
     public function supportsClassDataProvider()
     {
         return [
             'supports AppBundle\Entity\Project class' => ['class' => 'AppBundle\Entity\Project', 'expected' => true],
-            'not AppBundle\Entity\User class' => ['class' => 'AppBundle\Entity\User', 'expected' => false]
+            'not AppBundle\Entity\User class' => ['class' => 'AppBundle\Entity\User', 'expected' => false],
         ];
     }
 
     /**
-     * Vote data provider
-     *
+     * Vote data provider.
      */
     public function voteDataProvider()
     {
@@ -140,25 +144,25 @@ class ProjectVoterTest extends \PHPUnit_Framework_TestCase
                 'roleName' => Role::OPERATOR,
                 'object' => new Project(),
                 'attributes' => ['edit'],
-                'expected' => VoterInterface::ACCESS_ABSTAIN
+                'expected' => VoterInterface::ACCESS_ABSTAIN,
             ],
             'access denied operator not member' => [
                 'roleName' => Role::OPERATOR,
                 'object' => new Project(),
                 'attributes' => [ProjectVoter::VIEW],
-                'expected' => VoterInterface::ACCESS_DENIED
+                'expected' => VoterInterface::ACCESS_DENIED,
             ],
             'access granted manager' => [
                 'roleName' => Role::MANAGER,
                 'object' => new Project(),
                 'attributes' => [ProjectVoter::VIEW],
-                'expected' => VoterInterface::ACCESS_GRANTED
+                'expected' => VoterInterface::ACCESS_GRANTED,
             ],
             'access granted administrator' => [
                 'roleName' => Role::ADMINISTRATOR,
                 'object' => new Project(),
                 'attributes' => [ProjectVoter::VIEW],
-                'expected' => VoterInterface::ACCESS_GRANTED
+                'expected' => VoterInterface::ACCESS_GRANTED,
             ],
             'access granted operator is member' => [
                 'roleName' => Role::OPERATOR,
@@ -166,9 +170,10 @@ class ProjectVoterTest extends \PHPUnit_Framework_TestCase
                     return (new Project())->addUser($user);
                 },
                 'attributes' => [ProjectVoter::VIEW],
-                'expected' => VoterInterface::ACCESS_GRANTED
-            ]
+                'expected' => VoterInterface::ACCESS_GRANTED,
+            ],
         ];
+
         return $data;
     }
 }

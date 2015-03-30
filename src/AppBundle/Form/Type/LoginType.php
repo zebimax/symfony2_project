@@ -40,8 +40,8 @@ class LoginType extends AbstractType
                     'label' => $this->translator->trans('login_form.username'),
                     'constraints'   => [
                         new NotBlank(),
-                        new Length(['min' => self::MIN_USERNAME_LENGTH])
-                    ]
+                        new Length(['min' => self::MIN_USERNAME_LENGTH]),
+                    ],
                 ]
             )
             ->add(
@@ -52,8 +52,8 @@ class LoginType extends AbstractType
                     'label' => $this->translator->trans('login_form.password'),
                     'constraints'   => [
                         new NotBlank(),
-                        new Length(['min' => self::MIN_PASSWORD_LENGTH])
-                    ]
+                        new Length(['min' => self::MIN_PASSWORD_LENGTH]),
+                    ],
                 ]
             )
             ->add(

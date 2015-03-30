@@ -53,7 +53,7 @@ class IssueType extends AbstractType
                 'text',
                 [
                     'required' => true,
-                    'label' => $this->translator->trans('app.summary')
+                    'label' => $this->translator->trans('app.summary'),
                 ]
             )
             ->add(
@@ -61,7 +61,7 @@ class IssueType extends AbstractType
                 'textarea',
                 [
                     'required' => false,
-                    'label' => $this->translator->trans('app.description')
+                    'label' => $this->translator->trans('app.description'),
                 ]
             )
             ->add(
@@ -73,17 +73,17 @@ class IssueType extends AbstractType
                             IssuePriorityEnumType::TRIVIAL,
                             IssuePriorityEnumType::MINOR,
                             IssuePriorityEnumType::MAJOR,
-                            IssuePriorityEnumType::BLOCKER
+                            IssuePriorityEnumType::BLOCKER,
                         ],
                         [
                             $this->translator->trans('app.issue.priorities.trivial'),
                             $this->translator->trans('app.issue.priorities.minor'),
                             $this->translator->trans('app.issue.priorities.major'),
-                            $this->translator->trans('app.issue.priorities.blocker')
+                            $this->translator->trans('app.issue.priorities.blocker'),
                         ]
                     ),
                     'required' => true,
-                    'label' => $this->translator->trans('app.issue.priority')
+                    'label' => $this->translator->trans('app.issue.priority'),
                 ]
             )
             ->add(
@@ -95,7 +95,7 @@ class IssueType extends AbstractType
                     'class'         => 'AppBundle:User',
                     'property'      => 'username',
                     'required' => false,
-                    'attr' => array('class'=>'form-control')
+                    'attr' => array('class' => 'form-control'),
                 )
             );
     }

@@ -1,4 +1,5 @@
 <?php
+
 namespace AppBundle\DataFixtures\ORM;
 
 use AppBundle\DBAL\IssuePriorityEnumType;
@@ -25,7 +26,7 @@ class LoadIssueData extends AbstractOrderedContainerAwareFixture
             'reporter' => 'user_manager',
             'project' => 'test_project',
             'assignee' => 'user_operator',
-            'priority' => IssuePriorityEnumType::TRIVIAL
+            'priority' => IssuePriorityEnumType::TRIVIAL,
         ];
 
         $bug = $this->createEntityInstance($bugParams);
@@ -37,7 +38,7 @@ class LoadIssueData extends AbstractOrderedContainerAwareFixture
             'type' => IssueTypeEnumType::STORY,
             'reporter' => 'user_manager',
             'priority' => IssuePriorityEnumType::MAJOR,
-            'project' => 'test_project'
+            'project' => 'test_project',
         ];
 
         $story = $this->createEntityInstance($storyParams);
@@ -51,7 +52,7 @@ class LoadIssueData extends AbstractOrderedContainerAwareFixture
             'reporter' => 'user_manager',
             'priority' => IssuePriorityEnumType::MAJOR,
             'project' => 'test_project',
-            'parent' => 'issue_story'
+            'parent' => 'issue_story',
         ];
         $subTask = $this->createEntityInstance($subTaskParams);
         $manager->persist($subTask);
@@ -61,9 +62,9 @@ class LoadIssueData extends AbstractOrderedContainerAwareFixture
     }
 
     /**
-     * Get the order of this fixture
+     * Get the order of this fixture.
      *
-     * @return integer
+     * @return int
      */
     public function getOrder()
     {
@@ -72,6 +73,7 @@ class LoadIssueData extends AbstractOrderedContainerAwareFixture
 
     /**
      * @param $name
+     *
      * @return Role
      */
     protected function getRoleReference($name)
@@ -81,6 +83,7 @@ class LoadIssueData extends AbstractOrderedContainerAwareFixture
 
     /**
      * @param array $params
+     *
      * @return Issue
      */
     private function createEntityInstance(array $params = [])

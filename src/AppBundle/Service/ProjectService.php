@@ -14,8 +14,8 @@ class ProjectService extends AbstractControllerService
     protected $paginator;
 
     /**
-     * @param EntityManager $manager
-     * @param PaginatorInterface $paginatorInterface
+     * @param EntityManager       $manager
+     * @param PaginatorInterface  $paginatorInterface
      * @param TranslatorInterface $translator
      */
     public function __construct(
@@ -31,6 +31,7 @@ class ProjectService extends AbstractControllerService
      * @param User $user
      * @param $page
      * @param $limit
+     *
      * @return \Knp\Component\Pager\Pagination\PaginationInterface
      */
     public function getProjectsList(User $user, $page, $limit)
@@ -54,6 +55,7 @@ class ProjectService extends AbstractControllerService
 
     /**
      * @param Project $project
+     *
      * @return array
      */
     public function getProjectIssues(Project $project)
@@ -63,6 +65,7 @@ class ProjectService extends AbstractControllerService
 
     /**
      * @param Project $project
+     *
      * @return array
      */
     public function getProjectActivities(Project $project)
@@ -74,6 +77,7 @@ class ProjectService extends AbstractControllerService
      * @param Project $project
      * @param $page
      * @param $limit
+     *
      * @return \Knp\Component\Pager\Pagination\PaginationInterface
      */
     public function getMembers(Project $project, $page, $limit)
@@ -83,7 +87,7 @@ class ProjectService extends AbstractControllerService
 
     /**
      * @param Project $project
-     * @param User $user
+     * @param User    $user
      */
     public function removeMember(Project $project, User $user)
     {

@@ -28,7 +28,7 @@ class IssueVoter extends AbstractRoleVoter
                 self::VIEW,
                 self::ADD_SUB_TASK,
                 self::COMMENTS_LIST,
-                self::ADD_COMMENT
+                self::ADD_COMMENT,
             ]
         );
     }
@@ -51,7 +51,7 @@ class IssueVoter extends AbstractRoleVoter
         if (!$this->supportsClass(get_class($issue))) {
             return VoterInterface::ACCESS_ABSTAIN;
         }
-        /** @var Issue $issue */
+        /* @var Issue $issue */
         if (1 !== count($attributes)) {
             throw new \InvalidArgumentException(
                 'Only one attribute is allowed for VIEW, EDIT, ADD_SUB_TASK, COMMENTS_LIST'

@@ -1,7 +1,7 @@
 <?php
+
 namespace AppBundle\Tests\Form\Type;
 
-use AppBundle\Entity\Comment;
 use AppBundle\Form\Type\CommentType;
 use Symfony\Component\Form\Test\TypeTestCase;
 
@@ -55,7 +55,7 @@ class CommentTypeTest extends TypeTestCase
     public function testBuildForm()
     {
         $expectedFields = array(
-            'body' => 'textarea'
+            'body' => 'textarea',
         );
         $builder = $this->getMockBuilder('Symfony\Component\Form\FormBuilder')
             ->disableOriginalConstructor()

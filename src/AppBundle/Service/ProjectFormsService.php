@@ -11,6 +11,7 @@ class ProjectFormsService extends AbstractFormService
 {
     /**
      * @param Project $project
+     *
      * @return \Symfony\Component\Form\FormInterface
      */
     public function getMembersForm(Project $project)
@@ -22,6 +23,7 @@ class ProjectFormsService extends AbstractFormService
                 $this->getUsersRepository()->getNotProjectUsers($project->getId()),
                 function ($carry, $item) {
                     $carry[$item['id']] = $item['username'];
+
                     return $carry;
                 }
             )]
@@ -30,6 +32,7 @@ class ProjectFormsService extends AbstractFormService
 
     /**
      * @param Project $project
+     *
      * @return FormInterface
      */
     public function getProjectForm(Project $project)
@@ -38,13 +41,14 @@ class ProjectFormsService extends AbstractFormService
     }
 
     /**
-     * @param Project $project
+     * @param Project       $project
      * @param FormInterface $form
+     *
      * @throws \Doctrine\ORM\ORMException
      */
     public function addMember(Project $project, FormInterface $form)
     {
-        /** @var User $user */
+        /* @var User $user */
         $id = $form->get('users')->getData();
         $user = $this->getUsersRepository()->find($id);
         $project->addUser($user);

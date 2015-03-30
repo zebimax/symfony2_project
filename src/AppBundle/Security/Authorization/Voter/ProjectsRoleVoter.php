@@ -29,7 +29,7 @@ class ProjectsRoleVoter extends AbstractSupportedRoleVoter
             self::PROJECTS_EDIT,
             self::PROJECTS_MEMBERS_LIST,
             self::PROJECTS_MEMBERS_ADD,
-            self::PROJECTS_MEMBERS_DELETE
+            self::PROJECTS_MEMBERS_DELETE,
         ];
 
         return $this;
@@ -50,6 +50,7 @@ class ProjectsRoleVoter extends AbstractSupportedRoleVoter
                 return VoterInterface::ACCESS_DENIED;
             }
         }
+
         return $vote;
     }
 
@@ -64,6 +65,7 @@ class ProjectsRoleVoter extends AbstractSupportedRoleVoter
     /**
      * @param User $user
      * @param $attribute
+     *
      * @return bool
      */
     private function isManagerAttributeAndNotManager(User $user, $attribute)
@@ -75,7 +77,7 @@ class ProjectsRoleVoter extends AbstractSupportedRoleVoter
                 self::PROJECTS_EDIT,
                 self::PROJECTS_MEMBERS_LIST,
                 self::PROJECTS_MEMBERS_ADD,
-                self::PROJECTS_MEMBERS_DELETE
+                self::PROJECTS_MEMBERS_DELETE,
             ]
         )
         && !$this->hasRole($user, Role::MANAGER);

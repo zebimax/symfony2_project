@@ -1,4 +1,5 @@
 <?php
+
 namespace AppBundle\Tests\Unit\Form\Type;
 
 use AppBundle\Form\Type\UserType;
@@ -55,7 +56,7 @@ class UserTypeTest extends \PHPUnit_Framework_TestCase
                 'email',
                 [
                     'required' => true,
-                    'label' => null
+                    'label' => null,
                 ]
             );
         $builder->expects($this->at(1))->method('add')
@@ -65,7 +66,7 @@ class UserTypeTest extends \PHPUnit_Framework_TestCase
                 'text',
                 [
                     'required' => true,
-                    'label' => null
+                    'label' => null,
                 ]
             );
         $builder->expects($this->at(2))->method('add')
@@ -75,7 +76,7 @@ class UserTypeTest extends \PHPUnit_Framework_TestCase
                 'text',
                 [
                     'required' => true,
-                    'label' => null
+                    'label' => null,
                 ]
             );
         $builder->expects($this->at(3))->method('add')
@@ -85,7 +86,7 @@ class UserTypeTest extends \PHPUnit_Framework_TestCase
                 'timezone',
                 [
                     'required' => false,
-                    'label' => null
+                    'label' => null,
                 ]
             );
         $builder->expects($this->at(4))->method('add')
@@ -95,7 +96,7 @@ class UserTypeTest extends \PHPUnit_Framework_TestCase
                 'file',
                 [
                     'required' => false,
-                    'label' => null
+                    'label' => null,
                 ]
             );
         $this->object->buildForm($builder, []);

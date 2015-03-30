@@ -27,6 +27,7 @@ class ActivityExtension extends AbstractExtension
 
     /**
      * @param IssueActivity $activity
+     *
      * @return string
      */
     public function getActivityMessage(IssueActivity $activity)
@@ -34,13 +35,13 @@ class ActivityExtension extends AbstractExtension
         $map =  [
             IssueActivity::CREATE_ISSUE => 'app.messages.activities.templates.create_issue',
             IssueActivity::CHANGE_ISSUE_STATUS => 'app.messages.activities.templates.change_issue_activity',
-            IssueActivity::COMMENT_ISSUE => 'app.messages.activities.templates.comment_issue'
+            IssueActivity::COMMENT_ISSUE => 'app.messages.activities.templates.comment_issue',
         ];
         $message = '';
         if (array_key_exists($activity->getType(), $map)) {
             $values = [
                 '%user%' => $activity->getUser()->getUserName(),
-                '%issue%' => $activity->getIssue()->getCode()
+                '%issue%' => $activity->getIssue()->getCode(),
             ];
             $type = $activity->getType();
             if ($type === IssueActivity::CHANGE_ISSUE_STATUS) {
@@ -50,7 +51,7 @@ class ActivityExtension extends AbstractExtension
                     $statusesTranslateMap = [
                         IssueStatusEnumType::OPEN => 'app.issue.statuses.open',
                         IssueStatusEnumType::IN_PROGRESS => 'app.issue.statuses.in_progress',
-                        IssueStatusEnumType::CLOSED => 'app.issue.statuses.closed'
+                        IssueStatusEnumType::CLOSED => 'app.issue.statuses.closed',
                     ];
                     $statusValue = array_key_exists($status, $statusesTranslateMap)
                         ? $statusesTranslateMap[$status]
@@ -60,6 +61,7 @@ class ActivityExtension extends AbstractExtension
             }
             $message = $this->translator->trans($map[$type], $values);
         }
+
         return $message;
     }
 }

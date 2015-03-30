@@ -17,7 +17,7 @@ class Role implements RoleInterface
     const ADMINISTRATOR = 'ROLE_ADMINISTRATOR';
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -33,7 +33,7 @@ class Role implements RoleInterface
     private $name;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="role", type="string", length=64, unique=true)
      */
@@ -60,9 +60,9 @@ class Role implements RoleInterface
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -70,9 +70,10 @@ class Role implements RoleInterface
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
+     *
      * @return Role
      */
     public function setName($name)
@@ -83,7 +84,7 @@ class Role implements RoleInterface
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -93,9 +94,10 @@ class Role implements RoleInterface
     }
 
     /**
-     * Set role
+     * Set role.
      *
      * @param string $role
+     *
      * @return Role
      */
     public function setRole($role)
@@ -106,7 +108,7 @@ class Role implements RoleInterface
     }
 
     /**
-     * Get users
+     * Get users.
      *
      * @return \Doctrine\Common\Collections\Collection
      */

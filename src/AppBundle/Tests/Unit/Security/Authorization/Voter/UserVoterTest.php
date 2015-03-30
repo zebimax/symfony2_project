@@ -1,4 +1,5 @@
 <?php
+
 namespace AppBundle\Tests\Unit\Security\Authorization\Voter;
 
 use AppBundle\Entity\User;
@@ -34,7 +35,7 @@ class UserVoterTest extends \PHPUnit_Framework_TestCase
             Role::OPERATOR => [$operatorRole],
             Role::MANAGER => [$operatorRole, $managerRole],
             Role::ADMINISTRATOR => [$operatorRole, $managerRole, $adminRole],
-            'ROLE_INVALID' => [$invalidRole]
+            'ROLE_INVALID' => [$invalidRole],
         ];
         $roleHierarchy = $this->getMock('Symfony\Component\Security\Core\Role\RoleHierarchyInterface');
         $roleHierarchy
@@ -45,6 +46,7 @@ class UserVoterTest extends \PHPUnit_Framework_TestCase
                 $this->returnCallback(
                     function ($value) use ($roles) {
                         $role = $value[0];
+
                         return $roles[$role->getRole()];
                     }
                 )
@@ -63,6 +65,7 @@ class UserVoterTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers       AppBundle\Security\Authorization\Voter\UserVoter::supportsAttribute
      * @dataProvider supportsAttributeDataProvider
+     *
      * @param $attribute
      * @param $expected
      */
@@ -74,6 +77,7 @@ class UserVoterTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers       AppBundle\Security\Authorization\Voter\UserVoter::supportsClass
      * @dataProvider supportsClassDataProvider
+     *
      * @param $class
      * @param $expected
      */
@@ -84,6 +88,7 @@ class UserVoterTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers AppBundle\Security\Authorization\Voter\ProjectUser::vote
+     *
      * @param $roleName
      * @param array $attributes
      * @param $object
@@ -107,31 +112,30 @@ class UserVoterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * supportsAttribute data provider
+     * supportsAttribute data provider.
      */
     public function supportsAttributeDataProvider()
     {
         return [
             'supports view attribute' => ['attribute' => 'view', 'expected' => true],
             'supports edit attribute' => ['attribute' => 'edit', 'expected' => true],
-            'not supports add attribute' => ['attribute' => 'add', 'expected' => false]
+            'not supports add attribute' => ['attribute' => 'add', 'expected' => false],
         ];
     }
 
     /**
-     * supportsClass data provider
+     * supportsClass data provider.
      */
     public function supportsClassDataProvider()
     {
         return [
             'supports AppBundle\Entity\User class' => ['class' => 'AppBundle\Entity\User', 'expected' => true],
-            'not AppBundle\Entity\Project class' => ['class' => 'AppBundle\Entity\Project', 'expected' => false]
+            'not AppBundle\Entity\Project class' => ['class' => 'AppBundle\Entity\Project', 'expected' => false],
         ];
     }
 
     /**
-     * Vote data provider
-     *
+     * Vote data provider.
      */
     public function voteDataProvider()
     {
@@ -140,43 +144,43 @@ class UserVoterTest extends \PHPUnit_Framework_TestCase
                 'roleName' => Role::OPERATOR,
                 'object' => new User(),
                 'attributes' => ['add'],
-                'expected' => VoterInterface::ACCESS_ABSTAIN
+                'expected' => VoterInterface::ACCESS_ABSTAIN,
             ],
             'view access granted operator' => [
                 'roleName' => Role::MANAGER,
                 'object' => new User(),
                 'attributes' => [UserVoter::VIEW],
-                'expected' => VoterInterface::ACCESS_GRANTED
+                'expected' => VoterInterface::ACCESS_GRANTED,
             ],
             'view access granted manager' => [
                 'roleName' => Role::MANAGER,
                 'object' => new User(),
                 'attributes' => [UserVoter::VIEW],
-                'expected' => VoterInterface::ACCESS_GRANTED
+                'expected' => VoterInterface::ACCESS_GRANTED,
             ],
             'view access granted administrator' => [
                 'roleName' => Role::ADMINISTRATOR,
                 'object' => new User(),
                 'attributes' => [UserVoter::VIEW],
-                'expected' => VoterInterface::ACCESS_GRANTED
+                'expected' => VoterInterface::ACCESS_GRANTED,
             ],
             'edit access denied operator' => [
                 'roleName' => Role::OPERATOR,
                 'object' => new User(),
                 'attributes' => [UserVoter::EDIT],
-                'expected' => VoterInterface::ACCESS_DENIED
+                'expected' => VoterInterface::ACCESS_DENIED,
             ],
             'edit access denied manager' => [
                 'roleName' => Role::MANAGER,
                 'object' => new User(),
                 'attributes' => [UserVoter::EDIT],
-                'expected' => VoterInterface::ACCESS_DENIED
+                'expected' => VoterInterface::ACCESS_DENIED,
             ],
             'edit access granted administrator' => [
                 'roleName' => Role::ADMINISTRATOR,
                 'object' => new User(),
                 'attributes' => [UserVoter::EDIT],
-                'expected' => VoterInterface::ACCESS_GRANTED
+                'expected' => VoterInterface::ACCESS_GRANTED,
             ],
             'edit access granted operator owner' => [
                 'roleName' => Role::OPERATOR,
@@ -184,9 +188,10 @@ class UserVoterTest extends \PHPUnit_Framework_TestCase
                     return $user;
                 },
                 'attributes' => [UserVoter::EDIT],
-                'expected' => VoterInterface::ACCESS_GRANTED
-            ]
+                'expected' => VoterInterface::ACCESS_GRANTED,
+            ],
         ];
+
         return $data;
     }
 }

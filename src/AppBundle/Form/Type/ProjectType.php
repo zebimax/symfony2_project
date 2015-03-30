@@ -51,7 +51,7 @@ class ProjectType extends AbstractType
                 'text',
                 [
                     'required' => true,
-                    'label' => $this->translator->trans('app.label')
+                    'label' => $this->translator->trans('app.label'),
                 ]
             )
             ->add(
@@ -59,7 +59,7 @@ class ProjectType extends AbstractType
                 'textarea',
                 [
                     'required' => false,
-                    'label' => $this->translator->trans('app.summary')
+                    'label' => $this->translator->trans('app.summary'),
                 ]
             );
     }

@@ -16,6 +16,7 @@ class Users extends EntityRepository
 
     /**
      * @param $projectId
+     *
      * @return array
      */
     public function getNotProjectUsers($projectId)
@@ -25,6 +26,7 @@ class Users extends EntityRepository
             ->join('u_sub.projects', 'p')
             ->where('p.id = :projectId')
             ->getQuery();
+
         return $this->createQueryBuilder('u')
             ->select(['u.id', 'u.username'])
             ->where("u.id NOT IN ({$currentProjectUsersSubQuery->getDQL()})")

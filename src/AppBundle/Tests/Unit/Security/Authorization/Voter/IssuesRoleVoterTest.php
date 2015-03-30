@@ -1,4 +1,5 @@
 <?php
+
 namespace AppBundle\Tests\Unit\Security\Authorization\Voter;
 
 use AppBundle\Entity\Role;
@@ -22,7 +23,7 @@ class IssuesRoleVoterTest extends \PHPUnit_Framework_TestCase
     protected $supportedAttributes = [
         IssuesRoleVoter::ISSUES,
         IssuesRoleVoter::ISSUES_LIST,
-        IssuesRoleVoter::ISSUES_ADD
+        IssuesRoleVoter::ISSUES_ADD,
     ];
 
     /**
@@ -46,7 +47,7 @@ class IssuesRoleVoterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Vote data provider
+     * Vote data provider.
      *
      * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
      */
@@ -56,29 +57,29 @@ class IssuesRoleVoterTest extends \PHPUnit_Framework_TestCase
             'access abstain not supported attribute' => [
                 'roleName' => Role::OPERATOR,
                 'attributes' => ['edit'],
-                'expected' => VoterInterface::ACCESS_ABSTAIN
-            ]
+                'expected' => VoterInterface::ACCESS_ABSTAIN,
+            ],
         ];
         foreach ($this->supportedAttributes as $attribute) {
-            $data[$attribute . ' access granted operator'] = [
+            $data[$attribute.' access granted operator'] = [
                 'roleName' => Role::OPERATOR,
                 'attributes' => [$attribute],
-                'expected' => VoterInterface::ACCESS_GRANTED
+                'expected' => VoterInterface::ACCESS_GRANTED,
             ];
-            $data[$attribute . ' access granted manager'] = [
+            $data[$attribute.' access granted manager'] = [
                 'roleName' => Role::MANAGER,
                 'attributes' => [$attribute],
-                'expected' => VoterInterface::ACCESS_GRANTED
+                'expected' => VoterInterface::ACCESS_GRANTED,
             ];
-            $data[$attribute . ' access granted administrator'] = [
+            $data[$attribute.' access granted administrator'] = [
                 'roleName' => Role::ADMINISTRATOR,
                 'attributes' => [$attribute],
-                'expected' => VoterInterface::ACCESS_GRANTED
+                'expected' => VoterInterface::ACCESS_GRANTED,
             ];
-            $data[$attribute . ' access denied invalid role'] = [
+            $data[$attribute.' access denied invalid role'] = [
                 'roleName' => 'ROLE_INVALID',
                 'attributes' => [$attribute],
-                'expected' => VoterInterface::ACCESS_DENIED
+                'expected' => VoterInterface::ACCESS_DENIED,
             ];
         }
 
@@ -103,7 +104,7 @@ class IssuesRoleVoterTest extends \PHPUnit_Framework_TestCase
             Role::OPERATOR => [$operatorRole],
             Role::MANAGER => [$operatorRole, $managerRole],
             Role::ADMINISTRATOR => [$operatorRole, $managerRole, $adminRole],
-            'ROLE_INVALID' => [$invalidRole]
+            'ROLE_INVALID' => [$invalidRole],
         ];
         $roleHierarchy = $this->getMock('Symfony\Component\Security\Core\Role\RoleHierarchyInterface');
         $roleHierarchy
@@ -114,6 +115,7 @@ class IssuesRoleVoterTest extends \PHPUnit_Framework_TestCase
                 $this->returnCallback(
                     function ($value) use ($roles) {
                         $role = $value[0];
+
                         return $roles[$role->getRole()];
                     }
                 )

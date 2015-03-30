@@ -10,6 +10,7 @@ class UserFormService extends AbstractFormService
     /**
      * @param User $user
      * @param User $currentUser
+     *
      * @return \Symfony\Component\Form\FormInterface
      */
     public function getUserForm(User $user, User $currentUser)
@@ -21,7 +22,7 @@ class UserFormService extends AbstractFormService
                 'text',
                 [
                     'required' => false,
-                    'label' => $this->translator->trans('app.password_will_be_generated')
+                    'label' => $this->translator->trans('app.password_will_be_generated'),
                 ]
             );
         }
@@ -34,10 +35,11 @@ class UserFormService extends AbstractFormService
                     'class' => 'AppBundle:Role',
                     'property' => 'name',
                     'multiple' => true,
-                    'attr' => array('class' => 'form-control')
+                    'attr' => array('class' => 'form-control'),
                 ]
             );
         }
+
         return $builder;
     }
 

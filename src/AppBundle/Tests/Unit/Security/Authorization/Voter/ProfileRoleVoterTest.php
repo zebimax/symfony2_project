@@ -1,4 +1,5 @@
 <?php
+
 namespace AppBundle\Tests\Unit\Security\Authorization\Voter;
 
 use AppBundle\Entity\Role;
@@ -37,7 +38,7 @@ class ProfileRoleVoterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Vote data provider
+     * Vote data provider.
      *
      * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
      */
@@ -52,83 +53,83 @@ class ProfileRoleVoterTest extends \PHPUnit_Framework_TestCase
             'home access granted operator' => [
                 'roleName' => Role::OPERATOR,
                 'attributes' => [ProfileRoleVoter::HOME],
-                'expected' => VoterInterface::ACCESS_GRANTED
+                'expected' => VoterInterface::ACCESS_GRANTED,
             ],
             'home access granted manager' => [
                 'roleName' => Role::MANAGER,
                 'attributes' => [ProfileRoleVoter::HOME],
-                'expected' => VoterInterface::ACCESS_GRANTED
+                'expected' => VoterInterface::ACCESS_GRANTED,
             ],
             'home access granted admin' => [
                 'roleName' => Role::ADMINISTRATOR,
                 'attributes' => [ProfileRoleVoter::HOME],
-                'expected' => VoterInterface::ACCESS_GRANTED
+                'expected' => VoterInterface::ACCESS_GRANTED,
             ],
             'home access denied invalid role' => [
                 'roleName' => 'ROLE_INVALID',
                 'attributes' => [ProfileRoleVoter::HOME],
-                'expected' => VoterInterface::ACCESS_DENIED
+                'expected' => VoterInterface::ACCESS_DENIED,
             ],
             'profile access granted operator' => [
                 'roleName' => Role::OPERATOR,
                 'attributes' => [ProfileRoleVoter::PROFILE],
-                'expected' => VoterInterface::ACCESS_GRANTED
+                'expected' => VoterInterface::ACCESS_GRANTED,
             ],
             'profile access granted manager' => [
                 'roleName' => Role::MANAGER,
                 'attributes' => [ProfileRoleVoter::PROFILE],
-                'expected' => VoterInterface::ACCESS_GRANTED
+                'expected' => VoterInterface::ACCESS_GRANTED,
             ],
             'profile access granted admin' => [
                 'roleName' => Role::ADMINISTRATOR,
                 'attributes' => [ProfileRoleVoter::PROFILE],
-                'expected' => VoterInterface::ACCESS_GRANTED
+                'expected' => VoterInterface::ACCESS_GRANTED,
             ],
             'profile access denied invalid role' => [
                 'roleName' => 'ROLE_INVALID',
                 'attributes' => [ProfileRoleVoter::PROFILE],
-                'expected' => VoterInterface::ACCESS_DENIED
+                'expected' => VoterInterface::ACCESS_DENIED,
             ],
             'profile_view access granted operator' => [
                 'roleName' => Role::OPERATOR,
                 'attributes' => [ProfileRoleVoter::PROFILE_VIEW],
-                'expected' => VoterInterface::ACCESS_GRANTED
+                'expected' => VoterInterface::ACCESS_GRANTED,
             ],
             'profile_view access granted manager' => [
                 'roleName' => Role::MANAGER,
                 'attributes' => [ProfileRoleVoter::PROFILE_VIEW],
-                'expected' => VoterInterface::ACCESS_GRANTED
+                'expected' => VoterInterface::ACCESS_GRANTED,
             ],
             'profile_view access granted admin' => [
                 'roleName' => Role::ADMINISTRATOR,
                 'attributes' => [ProfileRoleVoter::PROFILE_VIEW],
-                'expected' => VoterInterface::ACCESS_GRANTED
+                'expected' => VoterInterface::ACCESS_GRANTED,
             ],
             'profile_view access denied invalid role' => [
                 'roleName' => 'ROLE_INVALID',
                 'attributes' => [ProfileRoleVoter::PROFILE_VIEW],
-                'expected' => VoterInterface::ACCESS_DENIED
+                'expected' => VoterInterface::ACCESS_DENIED,
             ],
             'profile_edit access granted operator' => [
                 'roleName' => Role::OPERATOR,
                 'attributes' => [ProfileRoleVoter::PROFILE_EDIT],
-                'expected' => VoterInterface::ACCESS_GRANTED
+                'expected' => VoterInterface::ACCESS_GRANTED,
             ],
             'profile_edit access granted manager' => [
                 'roleName' => Role::MANAGER,
                 'attributes' => [ProfileRoleVoter::PROFILE_EDIT],
-                'expected' => VoterInterface::ACCESS_GRANTED
+                'expected' => VoterInterface::ACCESS_GRANTED,
             ],
             'profile_edit access granted admin' => [
                 'roleName' => Role::ADMINISTRATOR,
                 'attributes' => [ProfileRoleVoter::PROFILE_EDIT],
-                'expected' => VoterInterface::ACCESS_GRANTED
+                'expected' => VoterInterface::ACCESS_GRANTED,
             ],
             'profile_edit access denied invalid role' => [
                 'roleName' => 'ROLE_INVALID',
                 'attributes' => [ProfileRoleVoter::PROFILE_EDIT],
-                'expected' => VoterInterface::ACCESS_DENIED
-            ]
+                'expected' => VoterInterface::ACCESS_DENIED,
+            ],
         ];
     }
 
@@ -150,7 +151,7 @@ class ProfileRoleVoterTest extends \PHPUnit_Framework_TestCase
             Role::OPERATOR => [$operatorRole],
             Role::MANAGER => [$operatorRole, $managerRole],
             Role::ADMINISTRATOR => [$operatorRole, $managerRole, $adminRole],
-            'ROLE_INVALID' => [$invalidRole]
+            'ROLE_INVALID' => [$invalidRole],
         ];
         $roleHierarchy = $this->getMock('Symfony\Component\Security\Core\Role\RoleHierarchyInterface');
         $roleHierarchy
@@ -161,6 +162,7 @@ class ProfileRoleVoterTest extends \PHPUnit_Framework_TestCase
                 $this->returnCallback(
                     function ($value) use ($roles) {
                         $role = $value[0];
+
                         return $roles[$role->getRole()];
                     }
                 )

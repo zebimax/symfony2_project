@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * AppBundle\Entity\User
+ * AppBundle\Entity\User.
  *
  * @ORM\Table(name="bt_user")
  * @ORM\Entity(repositoryClass="AppBundle\Entity\Repository\Users")
@@ -19,7 +19,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class User implements UserInterface, \Serializable
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -85,7 +85,7 @@ class User implements UserInterface, \Serializable
     private $issues;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(name="is_active", type="boolean")
      */
@@ -112,9 +112,9 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -122,9 +122,10 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Set email
+     * Set email.
      *
      * @param string $email
+     *
      * @return User
      */
     public function setEmail($email)
@@ -135,7 +136,7 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Get email
+     * Get email.
      *
      * @return string
      */
@@ -145,9 +146,10 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Set username
+     * Set username.
      *
      * @param string $username
+     *
      * @return User
      */
     public function setUsername($username)
@@ -158,7 +160,7 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Get username
+     * Get username.
      *
      * @return string
      */
@@ -168,9 +170,10 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Set fullname
+     * Set fullname.
      *
      * @param string $fullname
+     *
      * @return User
      */
     public function setFullname($fullname)
@@ -181,7 +184,7 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Get fullname
+     * Get fullname.
      *
      * @return string
      */
@@ -191,9 +194,10 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Set avatar
+     * Set avatar.
      *
      * @param string $avatar
+     *
      * @return User
      */
     public function setAvatar($avatar)
@@ -204,7 +208,7 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Get avatar
+     * Get avatar.
      *
      * @return string
      */
@@ -214,9 +218,10 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Set password
+     * Set password.
      *
      * @param string $password
+     *
      * @return User
      */
     public function setPassword($password)
@@ -227,7 +232,7 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Get password
+     * Get password.
      *
      * @return string
      */
@@ -237,9 +242,10 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Set isActive
+     * Set isActive.
      *
-     * @param boolean $isActive
+     * @param bool $isActive
+     *
      * @return User
      */
     public function setIsActive($isActive)
@@ -250,9 +256,9 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Get isActive
+     * Get isActive.
      *
-     * @return boolean
+     * @return bool
      */
     public function getIsActive()
     {
@@ -260,9 +266,10 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Add roles
+     * Add roles.
      *
      * @param Role $roles
+     *
      * @return User
      */
     public function addRole(Role $roles)
@@ -274,6 +281,7 @@ class User implements UserInterface, \Serializable
 
     /**
      * @param Role $roles
+     *
      * @return $this
      */
     public function removeRole(Role $roles)
@@ -284,7 +292,7 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Get roles
+     * Get roles.
      *
      * @return Role[]
      */
@@ -294,9 +302,10 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Add projects
+     * Add projects.
      *
      * @param Project $projects
+     *
      * @return User
      */
     public function addProject(Project $projects)
@@ -308,6 +317,7 @@ class User implements UserInterface, \Serializable
 
     /**
      * @param Project $projects
+     *
      * @return $this
      */
     public function removeProject(Project $projects)
@@ -318,7 +328,7 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Get projects
+     * Get projects.
      *
      * @return Collection
      */
@@ -328,9 +338,10 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Add issues
+     * Add issues.
      *
      * @param Issue $issues
+     *
      * @return User
      */
     public function addIssue(Issue $issues)
@@ -342,6 +353,7 @@ class User implements UserInterface, \Serializable
 
     /**
      * @param Issue $issues
+     *
      * @return $this
      */
     public function removeIssue(Issue $issues)
@@ -352,7 +364,7 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Get issues
+     * Get issues.
      *
      * @return Collection
      */
@@ -385,7 +397,7 @@ class User implements UserInterface, \Serializable
             [
                 $this->id,
                 $this->username,
-                $this->password
+                $this->password,
             ]
         );
     }
@@ -397,11 +409,10 @@ class User implements UserInterface, \Serializable
      */
     public function unserialize($serialized)
     {
-        list (
+        list(
             $this->id,
             $this->username,
-            $this->password,
-            ) = unserialize($serialized);
+            $this->password) = unserialize($serialized);
     }
 
     /**
@@ -441,8 +452,9 @@ class User implements UserInterface, \Serializable
         return array_reduce(
             $this->getRoles(),
             function ($carry, $item) {
-                /** @var Role $item */
+                /* @var Role $item */
                 $carry[$item->getRole()] = $item->getId();
+
                 return $carry;
             },
             []
@@ -581,6 +593,7 @@ class User implements UserInterface, \Serializable
 
     /**
      * @param mixed $timezone
+     *
      * @return $this
      */
     public function setTimezone($timezone)

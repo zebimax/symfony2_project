@@ -40,7 +40,7 @@ class ProjectVoter extends AbstractRoleVoter
         if (!$this->supportsClass(get_class($project))) {
             return VoterInterface::ACCESS_ABSTAIN;
         }
-        /** @var Project $project */
+        /* @var Project $project */
         if (1 !== count($attributes)) {
             throw new \InvalidArgumentException(
                 'Only one attribute is allowed for VIEW, ISSUE_ADD'

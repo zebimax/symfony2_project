@@ -1,4 +1,5 @@
 <?php
+
 namespace AppBundle\Tests\Unit\Form\Type;
 
 use AppBundle\Form\Type\ProjectMemberType;
@@ -20,7 +21,7 @@ class ProjectMemberTypeTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new ProjectMemberType;
+        $this->object = new ProjectMemberType();
     }
 
     /**

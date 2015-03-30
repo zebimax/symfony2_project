@@ -15,7 +15,7 @@ class AbstractControllerService
     protected $translator;
 
     /**
-     * @param EntityManager $manager
+     * @param EntityManager       $manager
      * @param TranslatorInterface $translator
      */
     public function __construct(EntityManager $manager, TranslatorInterface $translator)
