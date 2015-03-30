@@ -46,5 +46,8 @@ class WebTestCase extends BaseWebTestCase
         return $this->referenceRepository->getReference($name);
     }
 
-    protected function setFixtures(){}
+    protected function setFixtures()
+    {
+
+    }
 }

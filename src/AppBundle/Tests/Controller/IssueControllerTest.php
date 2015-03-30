@@ -16,9 +16,11 @@ class IssueControllerTest extends WebTestCase
         ];
         $crawler = $this->client->request('GET', '/issue/list');
         $filtered = $crawler->filter('td.issue_summary')
-            ->each(function (Crawler $node) {
-            return $node->text();
-        });
+            ->each(
+                function (Crawler $node) {
+                    return $node->text();
+                }
+            );
 
         $this->assertSame($summaries, $filtered);
     }

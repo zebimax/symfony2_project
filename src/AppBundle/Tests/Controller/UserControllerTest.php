@@ -15,10 +15,12 @@ class UserControllerTest extends WebTestCase
         $userName = 'new_user';
         $email = 'new_user@mail.com';
         $crawler = $this->client->request('GET', '/user/add');
-        $form = $crawler->selectButton('Add user')->form([
-            'app_user[username]' => $userName,
-            'app_user[email]' => $email,
-        ]);
+        $form = $crawler->selectButton('Add user')->form(
+            [
+                'app_user[username]' => $userName,
+                'app_user[email]' => $email
+            ]
+        );
         $form['app_user[roles]']->select([$roleOperator->getId()]);
         $this->client->followRedirects();
         $crawler = $this->client->submit($form);
@@ -59,9 +61,11 @@ class UserControllerTest extends WebTestCase
         $operator = $this->getReference('user_operator');
         $fullName = 'Edited full name';
         $crawler = $this->client->request('GET', '/user/edit/' . $operator->getId());
-        $form = $crawler->selectButton('Save user')->form([
-            'app_user[fullname]' => $fullName,
-        ]);
+        $form = $crawler->selectButton('Save user')->form(
+            [
+                'app_user[fullname]' => $fullName
+            ]
+        );
         $this->client->followRedirects();
         $crawler = $this->client->submit($form);
         $this->assertTrue(

@@ -42,29 +42,35 @@ class IssueFormService extends AbstractFormService
             $this->addResolutionField($builder);
         }
 
-        $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) use ($currentStatus, $user) {
-            /** @var Issue $issue */
-            $issue = $event->getData();
-            $newStatus = $issue->getStatus();
-            if (!in_array($currentStatus, [null, $newStatus])) {
-                $this->addChangeStatusActivity(
-                    $issue,
-                    $user,
-                    [
-                        'old' => ['status' => $currentStatus],
-                        'new' => ['status' => $newStatus]
-                    ]
-                );
+        $builder->addEventListener(
+            FormEvents::SUBMIT,
+            function (FormEvent $event) use ($currentStatus, $user) {
+                /** @var Issue $issue */
+                $issue = $event->getData();
+                $newStatus = $issue->getStatus();
+                if (!in_array($currentStatus, [null, $newStatus])) {
+                    $this->addChangeStatusActivity(
+                        $issue,
+                        $user,
+                        [
+                            'old' => ['status' => $currentStatus],
+                            'new' => ['status' => $newStatus]
+                        ]
+                    );
+                }
             }
-        });
-        $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) use ($currentAssignee, $user) {
-            /** @var Issue $issue */
-            $issue = $event->getData();
-            $newAssignee = $issue->getAssignee();
-            if ($currentAssignee !== null && $currentAssignee->getId() !== $newAssignee->getId()) {
-                $this->addCollaborator($issue, $newAssignee);
+        );
+        $builder->addEventListener(
+            FormEvents::SUBMIT,
+            function (FormEvent $event) use ($currentAssignee, $user) {
+                /** @var Issue $issue */
+                $issue = $event->getData();
+                $newAssignee = $issue->getAssignee();
+                if ($currentAssignee !== null && $currentAssignee->getId() !== $newAssignee->getId()) {
+                    $this->addCollaborator($issue, $newAssignee);
+                }
             }
-        });
+        );
         return $builder->getForm();
     }
 
