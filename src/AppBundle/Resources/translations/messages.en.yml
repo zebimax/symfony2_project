@@ -96,6 +96,9 @@ app:
         issue_list: 'Issues list'
         issue_sub_task_add: 'Add sub task'
         comment_edit: 'Edit Comment'
+        mail:
+            create_user: 'New user created'
+            issue_activity: 'Issue activity'
     password: 'Password'
     password_will_be_generated: 'password, If leave empty will be generated'
     tooltip:
@@ -169,6 +172,19 @@ app:
         edit: 'edit comment'
         remove: 'remove comment'
     timezone: 'Timezone'
+    mail:
+        create_user:
+            subject: New user
+            invitation: 'Hello, %user_name% in our team'
+            role: 'Your role: %role%'
+            username: 'Your username: %username%'
+            password: 'You password: %password%'
+            login: 'Please login %link%'
+        issue_activity:
+            event: 'Event in issue %issue_code%'
+            issue_link: 'See issue %issue_link%'
+            user_link: 'View user %user_link%'
+            subject: 'Issue activity'
 logout_menu:
     logout: 'Logout'
 login_form:

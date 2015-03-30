@@ -6,14 +6,20 @@ use AppBundle\Entity\Comment;
 use AppBundle\Entity\Issue;
 use AppBundle\Entity\IssueActivity;
 use AppBundle\Entity\User;
+use AppBundle\EventListener\Event\IssueActivityEvent;
+use AppBundle\EventListener\EventDispatcher\EventDispatcherAwareInterface;
+use AppBundle\EventListener\EventDispatcher\EventDispatcherAwareTrait;
 use AppBundle\Service\Form\AbstractFormService;
 
-class CommentService extends AbstractFormService
+class CommentService extends AbstractFormService implements EventDispatcherAwareInterface
 {
+    use EventDispatcherAwareTrait;
+
     /**
      * @param Comment $comment
-     * @param Issue $issue
-     * @param User $user
+     * @param Issue   $issue
+     * @param User    $user
+     *
      * @return \Symfony\Component\Form\Form
      */
     public function getCommentForm(Comment $comment, Issue $issue = null, User $user = null)
@@ -25,13 +31,14 @@ class CommentService extends AbstractFormService
         if ($issue !== null && $comment->getIssue() === null) {
             $comment->setIssue($issue);
         }
+
         return $builder->getForm();
     }
 
     /**
      * @param Comment $comment
-     * @param Issue $issue
-     * @param User $user
+     * @param Issue   $issue
+     * @param User    $user
      */
     public function createComment(Comment $comment, Issue $issue, User $user)
     {
@@ -43,6 +50,11 @@ class CommentService extends AbstractFormService
 
         $issue->addActivity($issueActivity)->addCollaborator($user);
         $this->saveComment($comment);
+
+        $this->dispatcher->dispatch(
+            IssueActivityEvent::ISSUE_ACTIVITY,
+            new IssueActivityEvent($issueActivity)
+        );
     }
 
     /**

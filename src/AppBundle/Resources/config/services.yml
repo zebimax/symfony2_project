@@ -35,6 +35,7 @@ parameters:
     app.services.issue.list_limit: 10
     app.page_name: 'page'
     app.user_password_length: 10
+    app.mail.default_email: s2bugtracker@gmail.com
 services:
     app.form.type.login_type:
         class: AppBundle\Form\Type\LoginType
@@ -328,19 +329,39 @@ services:
             - @doctrine.orm.default_entity_manager
             - @translator.default
             - @form.factory
+        calls:
+            - [setEventDispatcher, ["@event_dispatcher"]]
     app.services.comment:
         class: AppBundle\Service\CommentService
         arguments:
             - @doctrine.orm.default_entity_manager
             - @translator.default
             - @form.factory
+        calls:
+            - [setEventDispatcher, ["@event_dispatcher"]]
     app.services.user_password_service:
         class: AppBundle\Service\UserPasswordService
         arguments:
             - @security.password_encoder
             - @hackzilla.password_generator.computer
+        calls:
+            - [setEventDispatcher, ["@event_dispatcher"]]
+    app.services.mail_service:
+        class: AppBundle\Service\MailService
+        arguments:
+            - @service_container
     app.twig.subscriber:
       class: AppBundle\EventListener\TwigSubscriber
       arguments: [@twig, @security.token_storage]
       tags:
           - { name: kernel.event_listener, event: kernel.request }
+    app.create_user_event.listener:
+      class: AppBundle\EventListener\CreateUserEventListener
+      arguments: [@app.services.mail_service]
+      tags:
+          - { name: kernel.event_listener, event: app.create_user_event }
+    app.issue_activity.listener:
+      class: AppBundle\EventListener\IssueActivityListener
+      arguments: [@app.services.mail_service]
+      tags:
+          - { name: kernel.event_listener, event: app.issue_activity }

@@ -9,6 +9,9 @@ use AppBundle\Entity\Issue;
 use AppBundle\Entity\IssueActivity;
 use AppBundle\Entity\Project;
 use AppBundle\Entity\User;
+use AppBundle\EventListener\Event\IssueActivityEvent;
+use AppBundle\EventListener\EventDispatcher\EventDispatcherAwareInterface;
+use AppBundle\EventListener\EventDispatcher\EventDispatcherAwareTrait;
 use AppBundle\Service\Form\AbstractFormService;
 use Symfony\Component\Form\Extension\Core\ChoiceList\ChoiceList;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -16,18 +19,20 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 
-class IssueFormService extends AbstractFormService
+class IssueFormService extends AbstractFormService implements EventDispatcherAwareInterface
 {
+    use EventDispatcherAwareTrait;
+
     /**
      * @param Issue $issue
-     * @param User $user
+     * @param User  $user
      * @param Issue $parent
+     *
      * @return FormInterface
      */
     public function getIssueForm(Issue $issue, User $user, Issue $parent = null)
     {
         $currentStatus = $issue->getStatus();
-        $currentAssignee = $issue->getAssignee();
         $builder = $this->factory->createBuilder('app_issue', $issue);
         if ($parent !== null) {
             $issue->setType(IssueTypeEnumType::SUB_TASK)->setParent($parent);
@@ -54,7 +59,7 @@ class IssueFormService extends AbstractFormService
                         $user,
                         [
                             'old' => ['status' => $currentStatus],
-                            'new' => ['status' => $newStatus]
+                            'new' => ['status' => $newStatus],
                         ]
                     );
                 }
@@ -62,37 +67,39 @@ class IssueFormService extends AbstractFormService
         );
         $builder->addEventListener(
             FormEvents::SUBMIT,
-            function (FormEvent $event) use ($currentAssignee, $user) {
+            function (FormEvent $event) {
                 /** @var Issue $issue */
                 $issue = $event->getData();
-                $newAssignee = $issue->getAssignee();
-                if ($currentAssignee !== null && $currentAssignee->getId() !== $newAssignee->getId()) {
-                    $this->addCollaborator($issue, $newAssignee);
+                $assignee = $issue->getAssignee();
+                if ($assignee !== null) {
+                    $this->addCollaborator($issue, $assignee);
                 }
             }
         );
+
         return $builder->getForm();
     }
 
     /**
      * @param param Issue $issue
-     * @param Project $project
-     * @param User $user
+     * @param Project     $project
+     * @param User        $user
      */
     public function createIssue(Issue $issue, Project $project, User $user)
     {
+        $activity = (new IssueActivity($issue, $user))
+            ->setType(IssueActivity::CREATE_ISSUE)
+            ->setCreated($issue->getCreated());
         $issue
             ->addCollaborator($user)
             ->setReporter($user)
             ->setProject($project)
             ->setStatus(IssueStatusEnumType::OPEN)
-            ->addActivity(
-                (new IssueActivity($issue, $user))
-                    ->setType(IssueActivity::CREATE_ISSUE)
-                    ->setCreated($issue->getCreated())
-            );
+            ->addActivity($activity);
 
         $this->saveIssue($issue);
+
+        $this->dispatchActivity($activity);
     }
 
     /**
@@ -106,6 +113,7 @@ class IssueFormService extends AbstractFormService
 
     /**
      * @param FormBuilderInterface $builder
+     *
      * @return FormBuilderInterface
      */
     protected function addTypeField(FormBuilderInterface $builder)
@@ -119,22 +127,23 @@ class IssueFormService extends AbstractFormService
                         [
                             IssueTypeEnumType::STORY,
                             IssueTypeEnumType::BUG,
-                            IssueTypeEnumType::TASK
+                            IssueTypeEnumType::TASK,
                         ],
                         [
                             $this->translator->trans('app.issue.types.story'),
                             $this->translator->trans('app.issue.types.bug'),
-                            $this->translator->trans('app.issue.types.task')
+                            $this->translator->trans('app.issue.types.task'),
                         ]
                     ),
                     'required' => true,
-                    'label' => $this->translator->trans('app.issue.type')
+                    'label' => $this->translator->trans('app.issue.type'),
                 ]
             );
     }
 
     /**
      * @param FormBuilderInterface $builder
+     *
      * @return FormBuilderInterface
      */
     protected function addResolutionField(FormBuilderInterface $builder)
@@ -152,7 +161,7 @@ class IssueFormService extends AbstractFormService
                             IssueResolutionEnumType::INCOMPLETE,
                             IssueResolutionEnumType::CANNOT_REPRODUCE,
                             IssueResolutionEnumType::DONE,
-                            IssueResolutionEnumType::WON_T_FIX
+                            IssueResolutionEnumType::WON_T_FIX,
                         ],
                         [
                             $this->translator->trans('app.issue.resolutions.fixed'),
@@ -161,17 +170,18 @@ class IssueFormService extends AbstractFormService
                             $this->translator->trans('app.issue.resolutions.incomplete'),
                             $this->translator->trans('app.issue.resolutions.cannot_reproduce'),
                             $this->translator->trans('app.issue.resolutions.done'),
-                            $this->translator->trans('app.issue.resolutions.won_t_fix')
+                            $this->translator->trans('app.issue.resolutions.won_t_fix'),
                         ]
                     ),
                     'required' => false,
-                    'label' => $this->translator->trans('app.issue.resolution')
+                    'label' => $this->translator->trans('app.issue.resolution'),
                 ]
             );
     }
 
     /**
      * @param FormBuilderInterface $builder
+     *
      * @return FormBuilderInterface
      */
     protected function addStatusField(FormBuilderInterface $builder)
@@ -185,22 +195,23 @@ class IssueFormService extends AbstractFormService
                         [
                             IssueStatusEnumType::OPEN,
                             IssueStatusEnumType::IN_PROGRESS,
-                            IssueStatusEnumType::CLOSED
+                            IssueStatusEnumType::CLOSED,
                         ],
                         [
                             $this->translator->trans('app.issue.statuses.open'),
                             $this->translator->trans('app.issue.statuses.in_progress'),
-                            $this->translator->trans('app.issue.statuses.closed')
+                            $this->translator->trans('app.issue.statuses.closed'),
                         ]
                     ),
                     'required' => true,
-                    'label' => $this->translator->trans('app.issue.status')
+                    'label' => $this->translator->trans('app.issue.status'),
                 ]
             );
     }
 
     /**
      * @param Issue $issue
+     *
      * @return bool
      */
     private function isIssueTypeChangeable(Issue $issue)
@@ -212,24 +223,35 @@ class IssueFormService extends AbstractFormService
 
     /**
      * @param Issue $issue
-     * @param User $user
+     * @param User  $user
      * @param array $details
      */
     private function addChangeStatusActivity(Issue $issue, User $user, array $details)
     {
-        $issue->addActivity(
-            (new IssueActivity($issue, $user))
-                ->setType(IssueActivity::CHANGE_ISSUE_STATUS)
-                ->setDetails($details)
-        );
+        $activity = (new IssueActivity($issue, $user))
+            ->setType(IssueActivity::CHANGE_ISSUE_STATUS)
+            ->setDetails($details);
+        $issue->addActivity($activity);
+        $this->dispatchActivity($activity);
     }
 
     /**
      * @param Issue $issue
-     * @param User $user
+     * @param User  $user
      */
     private function addCollaborator(Issue $issue, User $user)
     {
         $issue->addCollaborator($user);
+    }
+
+    /**
+     * @param IssueActivity $activity
+     */
+    private function dispatchActivity(IssueActivity $activity)
+    {
+        $this->dispatcher->dispatch(
+            IssueActivityEvent::ISSUE_ACTIVITY,
+            new IssueActivityEvent($activity)
+        );
     }
 }
