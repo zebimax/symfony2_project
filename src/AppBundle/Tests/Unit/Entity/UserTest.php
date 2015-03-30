@@ -73,9 +73,9 @@ class UserTest extends \PHPUnit_Framework_TestCase
             ->removeRole($role)
             ->removeIssue($issue);
 
-        $this->assertEquals(0, count($this->entity->getProjects()));
-        $this->assertEquals(0, count($this->entity->getRoles()));
-        $this->assertEquals(0, count($this->entity->getIssues()));
+        $this->assertCount(0, $this->entity->getProjects());
+        $this->assertCount(0, $this->entity->getRoles());
+        $this->assertCount(0, $this->entity->getIssues());
     }
 
     /**

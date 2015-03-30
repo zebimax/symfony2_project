@@ -19,7 +19,7 @@ class ProjectTest extends \PHPUnit_Framework_TestCase
 
     public function testCreate()
     {
-        $this->assertEmpty($this->entity->getUsers());
+        $this->assertCount(0, $this->entity->getUsers());
     }
 
     /**

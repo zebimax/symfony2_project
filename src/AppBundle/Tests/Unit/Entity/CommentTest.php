@@ -27,7 +27,8 @@ class CommentTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->issue = new Issue();
-        $this->object = new Comment($this->issue, new User());
+        $this->object = new Comment();
+        $this->object->setIssue($this->issue);
     }
 
     /**
@@ -58,29 +59,10 @@ class CommentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers AppBundle\Entity\Comment::getActivity
-     */
-    public function testGetActivity()
-    {
-        $this->assertNull($this->object->getActivity());
-    }
-
-    /**
      * @covers AppBundle\Entity\Comment::getIssue
      */
     public function testGetIssue()
     {
         $this->assertEquals($this->issue, $this->object->getIssue());
-    }
-
-    /**
-     * @covers AppBundle\Entity\Comment::prePersist
-     */
-    public function testPrePersist()
-    {
-        $this->object->prePersist();
-        $this->assertEquals(IssueActivity::COMMENT_ISSUE, $this->object->getActivity()->getType());
-        $this->assertEquals($this->object->getUser(), $this->object->getActivity()->getUser());
-        $this->assertGreaterThan(0, count($this->object->getIssue()->getComments()));
     }
 }

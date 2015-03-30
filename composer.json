@@ -42,7 +42,8 @@
         "knplabs/knp-paginator-bundle": "~2.4"
     },
     "require-dev": {
-        "sensio/generator-bundle": "~2.3"
+        "sensio/generator-bundle": "~2.3",
+        "liip/functional-test-bundle": "~1.1"
     },
     "scripts": {
         "post-root-package-install": [

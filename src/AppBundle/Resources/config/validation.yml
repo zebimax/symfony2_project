@@ -39,5 +39,11 @@ AppBundle\Entity\Issue:
             - DateTime: ~
         updated:
             - DateTime: ~
+AppBundle\Entity\Comment:
+    properties:
+        created:
+            - DateTime: ~
+        updated:
+            - DateTime: ~
 
 

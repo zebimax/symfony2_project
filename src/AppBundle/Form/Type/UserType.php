@@ -37,10 +37,12 @@ class UserType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        return [
-            'data_class' => 'AppBundle\Entity\User',
-            'validation_groups' => ['add']
-        ];
+        $resolver->setDefaults(
+            [
+                'data_class' => 'AppBundle\Entity\User',
+                'validation_groups' => ['add']
+            ]
+        );
     }
 
     /**

@@ -24,6 +24,7 @@ class LoadCommentData extends AbstractOrderedContainerAwareFixture
             ->setIssue($issue)
             ->setUser($user)
             ->setBody('test comment');
+        $this->addReference('test_comment', $comment);
 
         $issueActivity = (new IssueActivity($issue, $user))
             ->setType(IssueActivity::COMMENT_ISSUE)

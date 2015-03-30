@@ -37,9 +37,7 @@ class ProjectType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        return [
-            'data_class' => 'AppBundle\Entity\Project'
-        ];
+        $resolver->setDefaults(['data_class' => 'AppBundle\Entity\Project']);
     }
 
     /**

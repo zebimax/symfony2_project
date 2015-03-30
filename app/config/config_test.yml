@@ -14,3 +14,13 @@ web_profiler:
 
 swiftmailer:
     disable_delivery: true
+
+security:
+    firewalls:
+        secured_area:
+            http_basic: ~
+liip_functional_test: ~
+liip_functional_test:
+    authentication:
+        username: "admin"
+        password: "admin"

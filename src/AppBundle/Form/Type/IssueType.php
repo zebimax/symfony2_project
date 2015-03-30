@@ -39,9 +39,7 @@ class IssueType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        return [
-            'data_class' => 'AppBundle\Entity\Issue'
-        ];
+        $resolver->setDefaults(['data_class' => 'AppBundle\Entity\Issue']);
     }
 
     /**
