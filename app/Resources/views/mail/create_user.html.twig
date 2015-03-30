@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{ 'app.titles.mail.create_user' | trans }}{% endblock %}
+{% block body %}
+    <h1>{{ 'app.mail.create_user.invitation' | trans({'%user_name%': user.fullName}) }}</h1>
+
+    <p>{{ 'app.mail.create_user.role' | trans({'%role%': user.getPrimaryRole | renderPrimaryRole }) }}</p>
+    <p>{{ 'app.mail.create_user.username' | trans({'%username%': user.username}) }}</p>
+    <p>{{ 'app.mail.create_user.password' | trans({'%password%': password}) }}</p>
+    <br>
+    <p>{{ 'app.mail.create_user.login' | trans({'%link%': url('app_home')}) | raw }}</p>
+{% endblock %}
