@@ -78,6 +78,16 @@ class UserTypeTest extends \PHPUnit_Framework_TestCase
                     'label' => null
                 ]
             );
+        $builder->expects($this->at(2))->method('add')
+            ->willReturn($builder)
+            ->with(
+                'fullname',
+                'text',
+                [
+                    'required' => true,
+                    'label' => null
+                ]
+            );
         $builder->expects($this->at(3))->method('add')
             ->willReturn($builder)
             ->with(
@@ -86,19 +96,6 @@ class UserTypeTest extends \PHPUnit_Framework_TestCase
                 [
                     'required' => false,
                     'label' => null
-                ]
-            );
-        $builder->expects($this->at(4))->method('add')
-            ->willReturn($builder)
-            ->with(
-                'roles',
-                'entity',
-                [
-                    'required' => true,
-                    'class' => 'AppBundle:Role',
-                    'property' => 'name',
-                    'multiple' => true,
-                    'attr' => array('class' => 'form-control')
                 ]
             );
         $this->object->buildForm($builder, []);

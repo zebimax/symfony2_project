@@ -1,6 +1,7 @@
 <?php
 namespace AppBundle\Tests\Form\Type;
 
+use AppBundle\Entity\Comment;
 use AppBundle\Form\Type\CommentType;
 use Symfony\Component\Form\Test\TypeTestCase;
 
@@ -42,22 +43,32 @@ class CommentTypeTest extends TypeTestCase
         $this->assertEquals('app_comment', $this->object->getName());
     }
 
-    public function testSubmitValidData()
+    public function testSetDefaultOptions()
     {
-        $form = $this->factory->create($this->object);
-        $formData = [
-            'body' => 'test'
-        ];
-        $form->submit($formData);
+        $resolver = $this->getMock('Symfony\Component\OptionsResolver\OptionsResolverInterface');
+        $resolver->expects($this->once())
+            ->method('setDefaults')
+            ->with($this->isType('array'));
+        $this->object->setDefaultOptions($resolver);
+    }
 
-        $this->assertTrue($form->isSynchronized());
-        $this->assertEquals($formData, $form->getData());
+    public function testBuildForm()
+    {
+        $expectedFields = array(
+            'body' => 'textarea'
+        );
+        $builder = $this->getMockBuilder('Symfony\Component\Form\FormBuilder')
+            ->disableOriginalConstructor()
+            ->getMock();
 
-        $view = $form->createView();
-        $children = $view->children;
-
-        foreach (array_keys($formData) as $key) {
-            $this->assertArrayHasKey($key, $children);
+        $counter = 0;
+        foreach ($expectedFields as $fieldName => $formType) {
+            $builder->expects($this->at($counter))
+                ->method('add')
+                ->with($fieldName, $formType)
+                ->will($this->returnSelf());
+            $counter++;
         }
+        $this->object->buildForm($builder, []);
     }
 }

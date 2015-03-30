@@ -30,7 +30,7 @@ class ProjectsRoleVoterTest extends \PHPUnit_Framework_TestCase
      */
     protected $operatorSupportedAttributes = [
         ProjectsRoleVoter::PROJECTS,
-        ProjectsRoleVoter::PROJECTS_LIST,
+        ProjectsRoleVoter::PROJECTS_LIST
     ];
 
     /**
@@ -91,13 +91,9 @@ class ProjectsRoleVoterTest extends \PHPUnit_Framework_TestCase
         $role = (new Role())->setRole($roleName);
         $user = new User();
         $user->addRole($role);
-        if ($expected !== VoterInterface::ACCESS_ABSTAIN) {
-            if ($roleName !== 'ROLE_INVALID' && in_array($attributes[0], $this->managerSupportedAttributes)) {
-                $token->expects($this->at(0))->method('getUser')->willReturn($user);
-                $token->expects($this->at(1))->method('getUser')->willReturn($user);
-            } else {
-                $token->expects($this->once())->method('getUser')->willReturn($user);
-            }
+        if ($expected === VoterInterface::ACCESS_GRANTED) {
+            $token->expects($this->at(0))->method('getUser')->willReturn($user);
+            $token->expects($this->at(1))->method('getUser')->willReturn($user);
         }
         $this->assertEquals($expected, $this->object->vote($token, null, $attributes));
     }
