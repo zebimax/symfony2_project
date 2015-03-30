@@ -78,17 +78,17 @@ class UserTypeTest extends \PHPUnit_Framework_TestCase
                     'label' => null
                 ]
             );
-        $builder->expects($this->at(2))->method('add')
+        $builder->expects($this->at(3))->method('add')
             ->willReturn($builder)
             ->with(
-                'fullname',
-                'text',
+                'timezone',
+                'timezone',
                 [
-                    'required' => true,
+                    'required' => false,
                     'label' => null
                 ]
             );
-        $builder->expects($this->at(3))->method('add')
+        $builder->expects($this->at(4))->method('add')
             ->willReturn($builder)
             ->with(
                 'file',

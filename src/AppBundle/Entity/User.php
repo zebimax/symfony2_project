@@ -98,6 +98,11 @@ class User implements UserInterface, \Serializable
 
     private $temp;
 
+    /**
+     * @ORM\Column(type="string", length=50, nullable = true)
+     */
+    protected $timezone;
+
     public function __construct()
     {
         $this->roles = new ArrayCollection();
@@ -564,6 +569,25 @@ class User implements UserInterface, \Serializable
     public function isAdmin()
     {
         return in_array($this->getPrimaryRole(), [Role::ADMINISTRATOR]);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTimezone()
+    {
+        return $this->timezone;
+    }
+
+    /**
+     * @param mixed $timezone
+     * @return $this
+     */
+    public function setTimezone($timezone)
+    {
+        $this->timezone = $timezone;
+
+        return $this;
     }
 
     /**

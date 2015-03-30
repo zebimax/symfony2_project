@@ -339,4 +339,8 @@ services:
         arguments:
             - @security.password_encoder
             - @hackzilla.password_generator.computer
-
+    app.twig.subscriber:
+      class: AppBundle\EventListener\TwigSubscriber
+      arguments: [@twig, @security.token_storage]
+      tags:
+          - { name: kernel.event_listener, event: kernel.request }

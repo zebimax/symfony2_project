@@ -168,6 +168,7 @@ app:
     comment:
         edit: 'edit comment'
         remove: 'remove comment'
+    timezone: 'Timezone'
 logout_menu:
     logout: 'Logout'
 login_form:

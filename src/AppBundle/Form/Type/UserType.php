@@ -76,6 +76,14 @@ class UserType extends AbstractType
                 ]
             )
             ->add(
+                'timezone',
+                'timezone',
+                [
+                    'required' => false,
+                    'label' => $this->translator->trans('app.timezone')
+                ]
+            )
+            ->add(
                 'file',
                 'file',
                 [
