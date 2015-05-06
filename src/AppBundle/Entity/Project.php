@@ -25,14 +25,14 @@ class Project
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=64)
+     * @ORM\Column(type="string", length=255, unique=true)
      */
     private $label;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=64, unique=true)
+     * @ORM\Column(type="string", length=64)
      */
     private $code;
 

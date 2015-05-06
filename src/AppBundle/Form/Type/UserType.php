@@ -40,7 +40,7 @@ class UserType extends AbstractType
         $resolver->setDefaults(
             [
                 'data_class' => 'AppBundle\Entity\User',
-                'validation_groups' => ['add'],
+                'validation_groups' => ['add', 'Default'],
             ]
         );
     }

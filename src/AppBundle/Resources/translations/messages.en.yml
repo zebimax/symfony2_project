@@ -46,6 +46,8 @@ app:
             update:
                 success: 'User updated'
                 fail: 'Error updating user'
+        error:
+            'oops': 'Oops! Something went wrong!'
     email: 'Email'
     title: 'Simple bug tracker'
     button:
@@ -56,6 +58,7 @@ app:
         project_members: 'Members'
         add_sub_task: 'Add sub task'
         comment: 'Comment'
+        save: 'Save'
     main_menu:
         home: 'Home'
         users:
@@ -90,7 +93,7 @@ app:
         project_members_add: 'Add member to project'
         project_add: 'Add project'
         project_edit: 'Edit project'
-        project_issue_add: 'Add issue'
+        project_issue_add: 'Add issue in project %project_label% [%project_code%]'
         issue_view: 'Issue %issue_code%'
         issue_edit: 'Edit issue %issue_code%'
         issue_list: 'Issues list'
@@ -99,6 +102,7 @@ app:
         mail:
             create_user: 'New user created'
             issue_activity: 'Issue activity'
+        error: '%code% - %text%'
     password: 'Password'
     password_will_be_generated: 'password, If leave empty will be generated'
     tooltip:

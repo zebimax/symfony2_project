@@ -32,15 +32,17 @@ class ProjectController extends Controller
                 try {
                     $projectFormsService->saveProject($project);
                     $message = 'app.messages.project.add.success';
+                    $generateUrl = $this->generateUrl('app_project_view', ['id' => $project->getId()]);
                 } catch (\Exception $e) {
                     $message = 'app.messages.project.add.fail';
+                    $generateUrl = $this->generateUrl('app_project_add');
                 }
                 $this->addFlash(
-                    'flash_project_add',
+                    'flash_project',
                     $this->get('translator.default')->trans($message)
                 );
 
-                return $this->redirect($this->generateUrl('app_project_view', ['id' => $project->getId()]));
+                return $this->redirect($generateUrl);
             }
         }
 
@@ -115,7 +117,7 @@ class ProjectController extends Controller
                     $message = 'app.messages.project.edit.fail';
                 }
                 $this->addFlash(
-                    'flash_project_edit',
+                    'flash_project',
                     $this->get('translator.default')->trans($message)
                 );
 
