@@ -5,20 +5,23 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Comment;
 use AppBundle\Entity\Issue;
 use AppBundle\Entity\User;
+
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
+use Symfony\Component\HttpFoundation\RedirectResponse;
+
 class CommentController extends Controller
 {
     /**
+     * @param Issue $issue
+     *
      * @Template("issue_comments.html.twig")
      * @Security("is_granted('comments_list', issue)")
      *
-     * @param Issue $issue
-     *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|RedirectResponse
      */
     public function listAction(Issue $issue)
     {
@@ -34,13 +37,13 @@ class CommentController extends Controller
     }
 
     /**
+     * @param Comment $comment
+     *
      * @Route("/comment/edit/{id}", name="app_comment_edit")
      * @Template("comment/edit.html.twig")
      * @Security("is_granted('edit', comment)")
      *
-     * @param Comment $comment
-     *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|RedirectResponse
      */
     public function editAction(Comment $comment)
     {
@@ -71,12 +74,12 @@ class CommentController extends Controller
     }
 
     /**
-     * @Route("/comment/remove/{id}", name="app_comment_remove")
-     *
      * @param Comment $comment
+     *
+     * @Route("/comment/remove/{id}", name="app_comment_remove")
      * @Security("is_granted('remove', comment)")
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return RedirectResponse
      */
     public function removeAction(Comment $comment)
     {

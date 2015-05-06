@@ -11,6 +11,8 @@ class SecurityController extends Controller
     /**
      * @Template("form/login.html.twig")
      * @Route("/login", name="login")
+     *
+     * @return array
      */
     public function loginAction()
     {

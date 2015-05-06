@@ -5,11 +5,14 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Issue;
 use AppBundle\Entity\Project;
 use AppBundle\Entity\User;
+
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class ProjectController extends Controller
@@ -19,7 +22,7 @@ class ProjectController extends Controller
      * @Template("project/add.html.twig")
      * @Security("is_granted('projects_add')")
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|RedirectResponse
      */
     public function addAction()
     {
@@ -75,10 +78,10 @@ class ProjectController extends Controller
     }
 
     /**
+     * @param Project $project
+     *
      * @Route("/project/view/{id}", name="app_project_view")
      * @Template("project/view.html.twig")
-     *
-     * @param Project $project
      * @Security("is_granted('view', project)")
      *
      * @return array
@@ -95,10 +98,10 @@ class ProjectController extends Controller
     }
 
     /**
+     * @param Project $project
+     *
      * @Route("/project/edit/{id}", name="app_project_edit")
      * @Template("project/edit.html.twig")
-     *
-     * @param Project $project
      * @Security("is_granted('projects_edit')")
      *
      * @return array
@@ -131,13 +134,12 @@ class ProjectController extends Controller
     }
 
     /**
+     * @param Project $project
+     * @param Request $request
+     *
      * @Route("/project/{id}/members/list", name="app_project_members_list")
      * @Template("project/members.html.twig")
-     *
-     * @param Project $project
      * @Security("is_granted('projects_members_list')")
-     *
-     * @param Request $request
      *
      * @return array
      */
@@ -154,13 +156,13 @@ class ProjectController extends Controller
     }
 
     /**
+     * @param Project $project
+     *
      * @Route("/project/{id}/members/add", name="app_project_add_member")
      * @Security("is_granted('projects_members_add')")
      * @Template(":project:add_member.html.twig")
      *
-     * @param Project $project
-     *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|RedirectResponse
      */
     public function addMemberAction(Project $project)
     {
@@ -192,14 +194,14 @@ class ProjectController extends Controller
     }
 
     /**
+     * @param Project $project
+     * @param User    $user
+     *
      * @Route("/project/{id}/members/remove/{user_id}", name="app_project_remove_member")
      * @Security("is_granted('projects_members_remove')")
      * @ParamConverter("user", class="AppBundle:User", options={"id": "user_id"})
      *
-     * @param Project $project
-     * @param User    $user
-     *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|RedirectResponse
      */
     public function removeMember(Project $project, User $user)
     {
@@ -216,13 +218,13 @@ class ProjectController extends Controller
     }
 
     /**
+     * @param Project $project
+     *
      * @Route("/project/{id}/issues/add", name="app_project_add_issue")
      * @Template("project/add_issue.html.twig")
      * @Security("is_granted('issue_add', project)")
      *
-     * @param Project $project
-     *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|RedirectResponse
      */
     public function addIssueAction(Project $project)
     {

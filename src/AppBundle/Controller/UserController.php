@@ -3,10 +3,13 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\User;
+
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class UserController extends Controller
@@ -15,6 +18,8 @@ class UserController extends Controller
      * @Route("/user/add", name="app_user_add")
      * @Security("is_granted('users_add')")
      * @Template("user/add.html.twig")
+     *
+     * @return array|RedirectResponse
      */
     public function addAction()
     {
@@ -55,13 +60,13 @@ class UserController extends Controller
     }
 
     /**
-     * @Route("/user/list", name="app_user_list")
-     * @Security("is_granted('users_list')")
-     *
      * @param Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/user/list", name="app_user_list")
+     * @Security("is_granted('users_list')")
      * @Template("user/list.html.twig")
+     *
+     * @return array
      */
     public function listAction(Request $request)
     {
@@ -76,10 +81,11 @@ class UserController extends Controller
     /**
      * @param User $userObject
      *
-     * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/user/edit/{id}", name="app_user_edit")
      * @Template("user/edit.html.twig")
      * @Security("is_granted('edit', userObject)")
+     *
+     * @return array|RedirectResponse
      */
     public function editAction(User $userObject)
     {
@@ -117,10 +123,11 @@ class UserController extends Controller
     /**
      * @param User $userObject
      *
-     * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/user/view/{id}", name="app_user_view")
      * @Template("user/view.html.twig")
      * @Security("is_granted('view', userObject)")
+     *
+     * @return array
      */
     public function viewAction(User $userObject)
     {

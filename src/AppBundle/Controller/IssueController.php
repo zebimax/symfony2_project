@@ -6,20 +6,23 @@ use AppBundle\DBAL\IssueTypeEnumType;
 use AppBundle\Entity\Comment;
 use AppBundle\Entity\Issue;
 use AppBundle\Entity\User;
+
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class IssueController extends Controller
 {
     /**
+     * @param Request $request
+     *
      * @Route("/issue/list", name="app_issue_list")
      * @Template("issue/list.html.twig")
      * @Security("is_granted('issues_list')")
-     *
-     * @param Request $request
      *
      * @return array
      */
@@ -38,10 +41,10 @@ class IssueController extends Controller
     }
 
     /**
+     * @param Issue $issue
+     *
      * @Route("/issue/view/{id}", name="app_issue_view")
      * @Template("issue/view.html.twig")
-     *
-     * @param Issue $issue
      * @Security("is_granted('view', issue)")
      *
      * @return array
@@ -57,13 +60,13 @@ class IssueController extends Controller
     }
 
     /**
+     * @param Issue $issue
+     *
      * @Route("/issue/{id}/sub_task/add", name="app_issue_add_sub_task")
      * @Template("issue/add_sub_task.html.twig")
      * @Security("is_granted('add_sub_task', issue)")
      *
-     * @param Issue $issue
-     *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|RedirectResponse
      */
     public function addSubTaskAction(Issue $issue)
     {
@@ -108,10 +111,11 @@ class IssueController extends Controller
     /**
      * @param Issue $issue
      *
-     * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/issue/edit/{id}", name="app_issue_edit")
      * @Template("issue/edit.html.twig")
      * @Security("is_granted('edit', issue)")
+     *
+     * @return array|RedirectResponse
      */
     public function editAction(Issue $issue)
     {
@@ -145,12 +149,12 @@ class IssueController extends Controller
     }
 
     /**
+     * @param Issue $issue
+     *
      * @Route("/issue/{id}/comment/add", name="app_issue_add_comment")
      * @Security("is_granted('add_comment', issue)")
      *
-     * @param Issue $issue
-     *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|RedirectResponse
      */
     public function addCommentAction(Issue $issue)
     {
