@@ -25,7 +25,8 @@ class ProjectFormsService extends AbstractFormService
                     $carry[$item['id']] = $item['username'];
 
                     return $carry;
-                }
+                },
+                []
             )]
         );
     }

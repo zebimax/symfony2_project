@@ -1,0 +1,10 @@
+{% extends 'default/index.html.twig' %}
+{% block title %}
+    {{ 'app.titles.error' | trans({'%code%' : status_code, '%text%' : status_text }) }}
+{% endblock %}
+{% block page_header %}{{ 'app.messages.error.oops' | trans }}{%  endblock %}
+{% block page_content %}
+    <div class="row">
+        <h2 class="text-center text-error">{{ 'app.titles.error' | trans({'%code%' : status_code, '%text%' : status_text }) }}</h2>
+    </div>
+{% endblock %}

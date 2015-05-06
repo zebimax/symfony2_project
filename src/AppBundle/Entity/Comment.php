@@ -28,6 +28,13 @@ class Comment extends AbstractIssueEvent
     private $body;
 
     /**
+     *  @var \DateTime
+     *
+     * @ORM\Column(type="datetime")
+     */
+    private $updated;
+
+    /**
      * Set body.
      *
      * @param string $body
@@ -69,5 +76,43 @@ class Comment extends AbstractIssueEvent
         $this->issue = $issue;
 
         return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getUpdated()
+    {
+        return $this->updated;
+    }
+
+    /**
+     * @param \DateTime $updated
+     *
+     * @return $this
+     */
+    public function setUpdated($updated)
+    {
+        $this->updated = $updated;
+
+        return $this;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function prePersist()
+    {
+        $dateTime      = new \DateTime('now', new \DateTimeZone('UTC'));
+        $this->updated = $dateTime;
+        $this->created = $dateTime;
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function preUpdate()
+    {
+        $this->updated = new \DateTime('now', new \DateTimeZone('UTC'));
     }
 }

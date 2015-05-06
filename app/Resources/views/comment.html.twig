@@ -1,10 +1,17 @@
 <div class="list-group">
-    <div class="list-group-item active">{{ comment.user.username }}:</div>
+    <div class="list-group-item active">
+        {% set created =  comment.created | date('m/d/Y H:i:s') %}
+        {{ comment.user.username }}
+        {{ 'app.messages.comment.commented_at' | trans ({ '%created%' : created}) }}
+        {% if created != comment.updated | date('m/d/Y H:i:s') %}
+        {{ 'app.messages.comment.edited_at' | trans ({ '%updated%' : comment.updated | date('m/d/Y H:i:s')}) }}
+        {% endif %}:
+    </div>
     <div class="list-group-item">
         {{ comment.body }}
     </div>
     {% if is_granted('edit', comment) %}
-        <a href="{{ path('app_comment_edit', {'id': comment.id}) }}">{{ 'app.comment.edit' | trans }}</a>
+        <a href="{{ path('app_comment_edit', {'id': comment.id }) }}">{{ 'app.comment.edit' | trans }}</a>
     {% endif %}
     {% if is_granted('remove', comment) %}
         <a href="{{ path('app_comment_remove', {'id': comment.id}) }}">{{ 'app.comment.remove' | trans }}</a>

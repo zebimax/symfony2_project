@@ -22,12 +22,16 @@
             <tr>
                 <th>{{ 'projects.code' | trans }}</th>
                 <th>{{ 'projects.label' | trans }}</th>
+                <th>{{ 'projects.created' | trans }}</th>
+                <th>{{ 'projects.updated' | trans }}</th>
                 <th>{{ 'app.list.actions' | trans }}</th>
             </tr>
             {% for project in projects %}
                 <tr>
                     <td>{{ project.code }}</td>
                     <td>{{ project.label }}</td>
+                    <td>{{ project.created | date('m/d/Y H:i:s') }}</td>
+                    <td>{{ project.updated | date('m/d/Y H:i:s') }}</td>
                     <td class="text-center">
                         {% if app.user and is_granted('view', project) %}
                             <a href="{{ path('app_project_view', {'id': project.id}) }}" rel="tooltip" title="{{ 'app.tooltip.project_view' | trans }}">

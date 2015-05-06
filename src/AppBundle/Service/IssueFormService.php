@@ -24,16 +24,19 @@ class IssueFormService extends AbstractFormService implements EventDispatcherAwa
     use EventDispatcherAwareTrait;
 
     /**
-     * @param Issue $issue
-     * @param User  $user
-     * @param Issue $parent
+     * @param Issue   $issue
+     * @param User    $user
+     * @param Project $project
+     * @param Issue   $parent
      *
      * @return FormInterface
      */
-    public function getIssueForm(Issue $issue, User $user, Issue $parent = null)
+    public function getIssueForm(Issue $issue, User $user, Project $project, Issue $parent = null)
     {
         $currentStatus = $issue->getStatus();
         $builder = $this->factory->createBuilder('app_issue', $issue);
+
+        $this->addAssigneeField($builder, $project);
         if ($parent !== null) {
             $issue->setType(IssueTypeEnumType::SUB_TASK)->setParent($parent);
         }
@@ -253,5 +256,26 @@ class IssueFormService extends AbstractFormService implements EventDispatcherAwa
             IssueActivityEvent::ISSUE_ACTIVITY,
             new IssueActivityEvent($activity)
         );
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     * @param Project              $project
+     */
+    private function addAssigneeField(FormBuilderInterface $builder, Project $project)
+    {
+        $builder->add(
+            'assignee',
+            'entity',
+            [
+                'class' => 'AppBundle:User',
+                'property' => 'username',
+                'label' => $this->translator->trans('app.issue.assignee'),
+                'choices' => $project->getUsers(),
+                'required' => false,
+                'attr' => ['class' => 'form-control'],
+            ]
+        );
+
     }
 }

@@ -60,7 +60,7 @@ class CommentController extends Controller
                     'flash_issue_actions',
                     $this->get('translator.default')->trans($message)
                 );
-                $this->redirect($this->generateUrl('app_issue_view', ['id' => $comment->getIssue()->getId()]));
+                return $this->redirect($this->generateUrl('app_issue_view', ['id' => $comment->getIssue()->getId()]));
             }
         }
 

@@ -39,6 +39,8 @@ app:
             remove:
                 success: 'comment removed'
                 fail: 'Error removing comment'
+            commented_at: 'commented at %created%'
+            edited_at: 'edited at %updated%'
         user:
             add:
                 success: 'User created'
@@ -213,6 +215,8 @@ role:
     manager: 'Manager'
     operator: 'Operator'
 projects:
+    created: 'Сreated'
+    updated: 'Updated'
     projects: 'Projects'
     code: 'Code'
     label: 'Label'
@@ -223,3 +227,5 @@ projects:
     add_project: 'Create new project'
     edit: 'Edit project'
     add_issue: 'Create issue'
+    buttons:
+        back_to_project: 'Back to project'

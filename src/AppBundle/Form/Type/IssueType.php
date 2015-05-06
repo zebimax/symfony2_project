@@ -85,18 +85,6 @@ class IssueType extends AbstractType
                     'required' => true,
                     'label' => $this->translator->trans('app.issue.priority'),
                 ]
-            )
-            ->add(
-                'assignee',
-                'entity',
-                array(
-                    'label' => $this->translator->trans('app.issue.assignee'),
-                    'property_path' => 'assignee',
-                    'class'         => 'AppBundle:User',
-                    'property'      => 'username',
-                    'required' => false,
-                    'attr' => array('class' => 'form-control'),
-                )
             );
     }
 }

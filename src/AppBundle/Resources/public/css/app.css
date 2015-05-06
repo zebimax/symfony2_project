@@ -12,3 +12,6 @@
 span.badge {
     background-color: #F0DC79;
 }
+.required:after {
+    content: " *";
+}

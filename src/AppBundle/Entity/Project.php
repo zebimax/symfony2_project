@@ -13,6 +13,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Project
 {
+    const DEFAULT_CODE = 'project_';
+    const CODE_LENGTH = 5;
     /**
      * @var int
      *
@@ -51,9 +53,24 @@ class Project
      */
     private $summary;
 
+    /**
+     *  @var \DateTime
+     *
+     * @ORM\Column(type="datetime")
+     */
+    private $created;
+
+    /**
+     *  @var \DateTime
+     *
+     * @ORM\Column(type="datetime")
+     */
+    private $updated;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
+        $this->created = new \DateTime('now', new \DateTimeZone('UTC'));
     }
 
     /**
@@ -143,20 +160,22 @@ class Project
 
     /**
      * @ORM\PrePersist
-     * @ORM\PreUpdate
      */
     public function prePersist()
     {
-        $parts = preg_split("/[\s,_-]+/", $this->label);
-        $this->code = strtoupper(
+        $parts = preg_split('/[\W]+/', $this->label, self::CODE_LENGTH, PREG_SPLIT_NO_EMPTY);
+        $code = strtoupper(
             array_reduce(
                 $parts,
                 function ($carry, $item) {
-                    return $carry.$item[0];
+                    return $carry . $item[0];
                 },
                 ''
             )
         );
+        $this->code = !empty($code) ? $code : self::DEFAULT_CODE;
+
+        $this->updated = new \DateTime('now', new \DateTimeZone('UTC'));
     }
 
     /**
@@ -173,5 +192,45 @@ class Project
     public function setSummary($summary)
     {
         $this->summary = $summary;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    /**
+     * @param \DateTime $created
+     *
+     * @return $this
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getUpdated()
+    {
+        return $this->updated;
+    }
+
+    /**
+     * @param \DateTime $updated
+     *
+     * @return $this
+     */
+    public function setUpdated($updated)
+    {
+        $this->updated = $updated;
+
+        return $this;
     }
 }

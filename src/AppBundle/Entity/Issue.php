@@ -145,8 +145,7 @@ class Issue
         $this->children = new ArrayCollection();
         $this->activities = new ArrayCollection();
         $this->comments = new ArrayCollection();
-        $this->created = new \DateTime();
-        $this->updated = new \DateTime();
+        $this->created = new \DateTime('now', new \DateTimeZone('UTC'));
     }
 
     /**
@@ -331,7 +330,6 @@ class Issue
      * Set status.
      *
      * @param string $status
-     * @param User   $user
      *
      * @return Issue
      */

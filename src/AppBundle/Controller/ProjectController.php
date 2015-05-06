@@ -181,7 +181,7 @@ class ProjectController extends Controller
                     $this->get('translator.default')->trans($message)
                 );
 
-                return $this->redirect($this->generateUrl('app_project_add_member', ['id' => $project->getId()]));
+                return $this->redirect($this->generateUrl('app_project_members_list', ['id' => $project->getId()]));
             }
         }
 
@@ -230,7 +230,7 @@ class ProjectController extends Controller
         $issue = new Issue();
         /** @var User $user */
         $user = $this->getUser();
-        $form = $issueFormService->getIssueForm($issue, $user);
+        $form = $issueFormService->getIssueForm($issue, $user, $project);
         if ($this->get('request')->getMethod() === 'POST') {
             $form->submit($this->get('request'));
 

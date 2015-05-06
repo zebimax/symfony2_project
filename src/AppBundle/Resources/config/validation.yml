@@ -34,6 +34,10 @@ AppBundle\Entity\Project:
             - Length:
                   max: 255
                   min: 2
+        created:
+            - DateTime: ~
+        updated:
+            - DateTime: ~
 
 AppBundle\Entity\Issue:
     properties:

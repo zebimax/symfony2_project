@@ -79,7 +79,7 @@ class IssueController extends Controller
         $subTask = new Issue();
         /** @var User $user */
         $user = $this->getUser();
-        $form = $issueFormService->getIssueForm($subTask, $user, $issue);
+        $form = $issueFormService->getIssueForm($subTask, $user, $issue->getProject(), $issue);
         if ($this->get('request')->getMethod() === 'POST') {
             $form->submit($this->get('request'));
 
@@ -118,7 +118,7 @@ class IssueController extends Controller
         /** @var User $user */
         $user = $this->getUser();
         $issueFormService = $this->container->get('app.services.issue_form');
-        $form = $issueFormService->getIssueForm($issue, $user);
+        $form = $issueFormService->getIssueForm($issue, $user, $issue->getProject());
 
         if ($this->get('request')->getMethod() === 'POST') {
             $form->submit($this->get('request'));
@@ -146,7 +146,6 @@ class IssueController extends Controller
 
     /**
      * @Route("/issue/{id}/comment/add", name="app_issue_add_comment")
-     * @Template("issue/add_comment.html.twig")
      * @Security("is_granted('add_comment', issue)")
      *
      * @param Issue $issue
@@ -175,11 +174,14 @@ class IssueController extends Controller
                 } catch (\Exception $e) {
                     $message = 'app.messages.issue.add_comment.fail';
                 }
-                $this->addFlash(
-                    'flash_issue_actions',
-                    $this->get('translator.default')->trans($message)
-                );
+            } else {
+                $message = $form->getErrors(true);
             }
+
+            $this->addFlash(
+                'flash_issue_actions',
+                $this->get('translator.default')->trans($message)
+            );
         }
 
         return $this->redirect($redirectUrl);
