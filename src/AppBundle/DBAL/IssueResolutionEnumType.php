@@ -29,7 +29,7 @@ class IssueResolutionEnumType extends EnumType
     {
         return [
             self::FIXED,
-            self::WON_T_DO,
+            self::WON_T_FIX,
             self::DUPLICATE,
             self::INCOMPLETE,
             self::CANNOT_REPRODUCE,
