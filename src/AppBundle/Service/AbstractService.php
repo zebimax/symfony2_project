@@ -11,7 +11,7 @@ use Doctrine\ORM\EntityManager;
 
 use Symfony\Component\Translation\TranslatorInterface;
 
-abstract class AbstractControllerService
+abstract class AbstractService
 {
     /** @var EntityManager */
     protected $manager;

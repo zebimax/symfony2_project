@@ -12,7 +12,7 @@ use Doctrine\ORM\EntityManager;
 
 use Symfony\Component\Translation\TranslatorInterface;
 
-class UserService extends AbstractControllerService
+class UserService extends AbstractService
 {
     const USERS_LIMIT = 10;
 

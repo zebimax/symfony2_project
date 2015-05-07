@@ -15,7 +15,7 @@ use Knp\Component\Pager\PaginatorInterface;
 
 use Symfony\Component\Translation\TranslatorInterface;
 
-class ProjectService extends AbstractControllerService
+class ProjectService extends AbstractService
 {
     /** @var PaginatorInterface */
     protected $paginator;

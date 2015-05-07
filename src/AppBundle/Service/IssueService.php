@@ -13,7 +13,7 @@ use Doctrine\ORM\EntityManager;
 
 use Symfony\Component\Translation\TranslatorInterface;
 
-class IssueService extends AbstractControllerService
+class IssueService extends AbstractService
 {
     /** @var PaginatorInterface */
     protected $paginator;
