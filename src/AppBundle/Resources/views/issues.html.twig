@@ -1,0 +1,16 @@
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title" id="panel-title">{{ issues_panel_title }}</h3>
+    </div>
+    <div class="panel-body">
+        <div class="list-group">
+            {% for issue in issues %}
+                <p class="list-group-item">
+                    <a href="{{ path('app_issue_view', {'id': issue.id}) }}">{{ issue.summary }}</a>
+                    <span class="badge"><a href="{{ path('app_issue_view', {'id': issue.id}) }}">{{issue.code}}</a></span>
+                </p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+

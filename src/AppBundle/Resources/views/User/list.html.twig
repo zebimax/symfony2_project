@@ -1,0 +1,19 @@
+{% extends '@App/Default/index.html.twig' %}
+
+{% block title %}
+    {{ 'app.titles.users_list' | trans }}
+{% endblock %}
+{% block page_header %}{{ 'user.users' | trans }}{%  endblock %}
+{% block page_content %}
+    {% for flashMessage in app.session.flashbag.get('flash_user_actions') %}
+        <div class="alert alert-warning" role="alert">{{ flashMessage }}</div>
+    {% endfor %}
+    <div class="row">
+        <div class="col-md-6">
+            <a class="btn btn-primary" href="{{ path('app_user_add') }}">{{ 'user.add_user' | trans }}</a>
+        </div>
+    </div>
+    <br/>
+    {% include '@App/users_list.html.twig' %}
+{%  endblock %}
+

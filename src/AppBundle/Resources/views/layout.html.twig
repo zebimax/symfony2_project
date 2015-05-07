@@ -1,0 +1,19 @@
+{% extends '@App/base.html.twig' %}
+{% block title %}{{'app.title' | trans}}{% endblock %}
+{% block stylesheets %}
+    {% stylesheets '@bootstrap_css' '@AppBundle/Resources/public/css/app.css' filter='cssrewrite' %}
+    <link href="{{ asset_url }}"  rel="stylesheet" media="screen">
+    {% endstylesheets %}
+{%  endblock %}
+{% block javascripts %}
+    {% javascripts
+    '@jquery'
+    '@bootstrap_js' %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
+
+{% block body %}
+    {% block menu %}{% endblock %}
+    {% block page %}{% endblock %}
+{% endblock %}

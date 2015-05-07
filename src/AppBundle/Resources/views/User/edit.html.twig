@@ -1,0 +1,20 @@
+{% extends '@App/Default/index.html.twig' %}
+{% block title %}
+    {{ 'app.titles.user_edit' | trans }}
+{% endblock %}
+{% block page_header %}{{ 'user.edit_user' | trans }}{%  endblock %}
+{% block page_content %}
+    {% for flashMessage in app.session.flashbag.get('flash_user_edit') %}
+        <div class="alert alert-info" role="alert">{{ flashMessage }}</div>
+    {% endfor %}
+    {% set avatar_src = 'bundles/app/images/avatar_empty.gif' %}
+    {% if user.getWebPath != false %}
+        {% set avatar_src = user.getWebPath %}
+    {% endif %}
+    <img src="{{ asset(avatar_src) }}" alt="{{ user.username }}" class="spaced img-responsive img-100" />
+    <form method="post" {{ form_enctype(form) }}>
+        {{ form_widget(form) }}
+        <input type="submit" class="btn btn-primary" value="{{ 'user.save_user' | trans }}"/>
+        <a class="btn btn-danger" href="{{ path('app_user_list') }}">{{ 'app.button.cancel' | trans }}</a>
+    </form>
+{%  endblock %}

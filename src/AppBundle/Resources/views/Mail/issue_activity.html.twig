@@ -1,0 +1,9 @@
+{% extends '@App/base.html.twig' %}
+{% block title %}{{ 'app.titles.mail.issue_activity' | trans }}{% endblock %}
+{% block body %}
+    <h1>{{ 'app.mail.issue_activity.event' | trans({'%issue_code%': activity.issue.code}) }}</h1>
+    <p>{{ activity | getActivityMessage }}</p>
+    <br>
+    <p>{{ 'app.mail.issue_activity.issue_link' | trans({'%issue_link%': url('app_issue_view', {'id': activity.issue.id})}) | raw }}</p>
+    <p>{{ 'app.mail.issue_activity.user_link' | trans({'%user_link%': url('app_user_view', {'id': activity.user.id})}) | raw }}</p>
+{% endblock %}

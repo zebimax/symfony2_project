@@ -1,0 +1,7 @@
+<nav class="navbar navbar-default" role="navigation">
+    <div class="collapse navbar-collapse navbar-ex1-collapse">
+        {{ knp_menu_render('main', { 'style': 'navbar' }) }}
+        {{ knp_menu_render('logout', { 'style': 'navbar-right' }) }}
+        <p class="navbar-text navbar-right">{{ app.user.username }}</p>
+    </div>
+</nav>

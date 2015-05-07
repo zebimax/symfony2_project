@@ -1,0 +1,28 @@
+{% extends '@App/Default/index.html.twig' %}
+{% block title %}
+    {{ 'app.titles.issue_view' | trans({'%issue_code%': issue.code}) }}
+{% endblock %}
+{% block page_header %}
+    {{ 'app.titles.issue_view' | trans({'%issue_code%': issue.code}) }}
+{%  endblock %}
+{% block page_content %}
+    {% for flashMessage in app.session.flashbag.get('flash_issue_actions') %}
+        <div class="alert alert-warning" role="alert">{{ flashMessage }}</div>
+    {% endfor %}
+    <table class="table">
+        <tr>
+            <td colspan="2">{% include '@App/issue.html.twig' %}</td>
+        </tr>
+        <tr>
+            {% if issue.type == constant('AppBundle\\DBAL\\IssueTypeEnumType::STORY') and issue.children | length %}
+                <td>{% include '@App/issues.html.twig' with {'issues_panel_title': 'app.issue.sub_tasks' | trans, 'issues': issue.children} %}</td>
+            {% endif %}
+            <td>{% include '@App/activities.html.twig' %}</td>
+        </tr>
+        {% if is_granted('comments_list', issue) %}
+            <tr>
+                <td colspan="2">{{ render(controller('AppBundle:Comment:list', {'id': issue.id})) }}</td>
+            </tr>
+        {% endif %}
+    </table>
+{%  endblock %}

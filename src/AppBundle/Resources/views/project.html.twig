@@ -1,0 +1,38 @@
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title" id="panel-title">{{ 'projects.info' | trans }}</h3>
+        <h3 class="panel-title" id="panel-title">
+            {{ 'projects.created' | trans }}:{{ project.created | date('m/d/Y H:i:s') }}
+        </h3>
+        <h3 class="panel-title" id="panel-title">
+            {{ 'projects.updated' | trans }}:{{ project.updated | date('m/d/Y H:i:s') }}
+        </h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="list-group">
+                    <li class="list-group-item">{{ project.code }}</li>
+                    <li class="list-group-item">{{ project.label }}</li>
+                    <li class="list-group-item">{{ project.summary }}</li>
+                </ul>
+            </div>
+        </div>
+            <div class="row">
+                {% if app.user and is_granted('projects_edit') %}
+                    <div class="col-md-9">
+                        <a class="btn btn-primary" href="{{ path('app_project_edit', {'id': project.id}) }}">{{'app.button.edit' | trans}}</a>
+                    </div>
+                {% endif %}
+                <div class="col-md-3">
+                    {% if app.user and is_granted('issue_add', project) %}
+                        <a class="btn btn-primary" href="{{ path('app_project_add_issue', {'id': project.id}) }}">{{'projects.add_issue' | trans}}</a>
+                    {% endif %}
+                    {% if app.user and is_granted('projects_members_list') %}
+                        <a class="btn btn-primary" href="{{ path('app_project_members_list', {'id': project.id}) }}">{{'app.button.project_members' | trans}}</a>
+                    {% endif %}
+                </div>
+
+            </div>
+    </div>
+</div>

@@ -1,0 +1,21 @@
+{% extends '@App/Default/index.html.twig' %}
+{% block title %}
+    {{ 'app.titles.project_view' | trans({'%project_code%': project.code, '%project_label%': project.label}) }}
+{% endblock %}
+{% block page_header %}
+    {{ 'app.titles.project_view' | trans({'%project_code%': project.code, '%project_label%': project.label}) }}
+{%  endblock %}
+{% block page_content %}
+    {% for flashMessage in app.session.flashbag.get('flash_project') %}
+        <div class="alert alert-info" role="alert">{{ flashMessage }}</div>
+    {% endfor %}
+    <table class="table">
+        <tr>
+            <td colspan="2">{% include '@App/project.html.twig' %}</td>
+        </tr>
+        <tr>
+            <td>{% include '@App/issues.html.twig' with {'issues_panel_title': 'projects.issues' | trans } %}</td>
+            <td>{% include '@App/activities.html.twig' %}</td>
+        </tr>
+    </table>
+{%  endblock %}
