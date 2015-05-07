@@ -27,17 +27,17 @@ class ProjectController extends Controller
     public function addAction()
     {
         $projectFormsService = $this->get('app.services.project_forms');
-        $project = new Project();
-        $form = $projectFormsService->getProjectForm($project);
+        $project             = new Project();
+        $form                = $projectFormsService->getProjectForm($project);
         if ($this->get('request')->getMethod() === 'POST') {
             $form->submit($this->get('request'));
             if ($form->isValid()) {
                 try {
                     $projectFormsService->saveProject($project);
-                    $message = 'app.messages.project.add.success';
+                    $message     = 'app.messages.project.add.success';
                     $generateUrl = $this->generateUrl('app_project_view', ['id' => $project->getId()]);
                 } catch (\Exception $e) {
-                    $message = 'app.messages.project.add.fail';
+                    $message     = 'app.messages.project.add.fail';
                     $generateUrl = $this->generateUrl('app_project_add');
                 }
                 $this->addFlash(
@@ -91,8 +91,8 @@ class ProjectController extends Controller
         $projectService = $this->get('app.services.project');
 
         return [
-            'project' => $project,
-            'issues' => $projectService->getProjectIssues($project),
+            'project'    => $project,
+            'issues'     => $projectService->getProjectIssues($project),
             'activities' => $projectService->getProjectActivities($project),
         ];
     }
@@ -109,7 +109,7 @@ class ProjectController extends Controller
     public function editAction(Project $project)
     {
         $projectFormsService = $this->get('app.services.project_forms');
-        $form = $projectFormsService->getProjectForm($project);
+        $form                = $projectFormsService->getProjectForm($project);
         if ($this->get('request')->getMethod() === 'POST') {
             $form->submit($this->get('request'));
             if ($form->isValid()) {
@@ -147,7 +147,7 @@ class ProjectController extends Controller
     {
         return [
             'project' => $project,
-            'users' => $this->get('app.services.project')->getMembers(
+            'users'   => $this->get('app.services.project')->getMembers(
                 $project,
                 $request->query->get($this->container->getParameter('app.page_name'), 1),
                 $this->container->getParameter('app.services.project.members_list_limit')
@@ -167,7 +167,7 @@ class ProjectController extends Controller
     public function addMemberAction(Project $project)
     {
         $projectFormsService = $this->container->get('app.services.project_forms');
-        $form = $projectFormsService->getMembersForm($project);
+        $form                = $projectFormsService->getMembersForm($project);
         if ($this->get('request')->getMethod() === 'POST') {
             $form->submit($this->get('request'));
 
@@ -189,7 +189,7 @@ class ProjectController extends Controller
 
         return [
             'project' => $project,
-            'form' => $form->createView(),
+            'form'    => $form->createView(),
         ];
     }
 
@@ -229,7 +229,7 @@ class ProjectController extends Controller
     public function addIssueAction(Project $project)
     {
         $issueFormService = $this->container->get('app.services.issue_form');
-        $issue = new Issue();
+        $issue            = new Issue();
         /** @var User $user */
         $user = $this->getUser();
         $form = $issueFormService->getIssueForm($issue, $user, $project);
@@ -254,7 +254,7 @@ class ProjectController extends Controller
 
         return [
             'project' => $project,
-            'form' => $form->createView(),
+            'form'    => $form->createView(),
         ];
     }
 }

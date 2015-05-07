@@ -28,8 +28,8 @@ class MenuBuilder
         TranslatorInterface $translator,
         AuthorizationCheckerInterface $authorizationChecker
     ) {
-        $this->factory = $factory;
-        $this->translator = $translator;
+        $this->factory              = $factory;
+        $this->translator           = $translator;
         $this->authorizationChecker = $authorizationChecker;
     }
 
@@ -52,7 +52,7 @@ class MenuBuilder
     public function createLogoutMenu()
     {
         $menu = $this->factory->createItem('root');
-        $menu->addChild($this->translator->trans('logout_menu.logout'), array('route' => 'logout'));
+        $menu->addChild($this->translator->trans('logout_menu.logout'), ['route' => 'logout']);
 
         return $menu;
     }

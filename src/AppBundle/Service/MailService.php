@@ -33,14 +33,14 @@ class MailService
     public function __construct(TranslatorInterface $translator, Swift_Mailer $mailer, TwigEngine $engine, $from)
     {
         $this->translator = $translator;
-        $this->mailer = $mailer;
+        $this->mailer     = $mailer;
         $this->templating = $engine;
-        $this->fromEmail = $from;
+        $this->fromEmail  = $from;
     }
 
     /**
      * @param User $user
-     * @param $password
+     * @param      $password
      */
     public function sendCreateUserMail(User $user, $password)
     {
@@ -48,10 +48,10 @@ class MailService
             $this->fromEmail,
             $user->getEmail(),
             [
-                'subject' => $this->translator->trans('app.mail.create_user.subject'),
+                'subject'  => $this->translator->trans('app.mail.create_user.subject'),
                 'template' => '@App/Mail/create_user.html.twig',
-                'params' => [
-                    'user' => $user,
+                'params'   => [
+                    'user'     => $user,
                     'password' => $password,
                 ],
             ]
@@ -69,9 +69,9 @@ class MailService
                     $this->fromEmail,
                     $user->getEmail(),
                     [
-                        'subject' => $this->translator->trans('app.mail.issue_activity.subject'),
+                        'subject'  => $this->translator->trans('app.mail.issue_activity.subject'),
                         'template' => '@App/Mail/issue_activity.html.twig',
-                        'params' => ['activity' => $activity],
+                        'params'   => ['activity' => $activity],
                     ]
                 );
             },
@@ -80,8 +80,8 @@ class MailService
     }
 
     /**
-     * @param $from
-     * @param $to
+     * @param       $from
+     * @param       $to
      * @param array $messageParams
      */
     protected function sendMessage($from, $to, array $messageParams)

@@ -21,14 +21,14 @@ class SecurityController extends Controller
         $error = $authenticationUtils->getLastAuthenticationError();
 
         $lastUsername = $authenticationUtils->getLastUsername();
-        $form = $this->createForm('app_login');
+        $form         = $this->createForm('app_login');
 
         $formView = $form->createView();
 
         return [
-                'last_username' => $lastUsername,
-                'error'         => $error,
-                'form'          => $formView,
-            ];
+            'last_username' => $lastUsername,
+            'error'         => $error,
+            'form'          => $formView,
+        ];
     }
 }

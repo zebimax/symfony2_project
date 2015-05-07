@@ -63,8 +63,8 @@ class ProjectsRoleVoter extends AbstractSupportedRoleVoter
     }
 
     /**
-     * @param User $user
-     * @param $attribute
+     * @param User   $user
+     * @param string $attribute
      *
      * @return bool
      */

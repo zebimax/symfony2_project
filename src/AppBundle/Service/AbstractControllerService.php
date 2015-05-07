@@ -25,7 +25,7 @@ abstract class AbstractControllerService
      */
     public function __construct(EntityManager $manager, TranslatorInterface $translator)
     {
-        $this->manager = $manager;
+        $this->manager    = $manager;
         $this->translator = $translator;
     }
 

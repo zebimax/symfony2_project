@@ -12,9 +12,9 @@ class LoadRoleData extends AbstractOrderedContainerAwareFixture
      */
     public function load(ObjectManager $manager)
     {
-        $admin = (new Role())->setName('role.administrator')->setRole(Role::ADMINISTRATOR);
+        $admin       = (new Role())->setName('role.administrator')->setRole(Role::ADMINISTRATOR);
         $roleManager = (new Role())->setName('role.manager')->setRole(Role::MANAGER);
-        $operator = (new Role())->setName('role.operator')->setRole(Role::OPERATOR);
+        $operator    = (new Role())->setName('role.operator')->setRole(Role::OPERATOR);
 
         $manager->persist($admin);
         $manager->persist($roleManager);

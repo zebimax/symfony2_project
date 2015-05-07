@@ -28,7 +28,7 @@ class Comment extends AbstractIssueEvent
     private $body;
 
     /**
-     *  @var \DateTime
+     * @var \DateTime
      *
      * @ORM\Column(type="datetime")
      */

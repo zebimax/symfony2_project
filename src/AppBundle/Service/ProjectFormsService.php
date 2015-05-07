@@ -53,7 +53,7 @@ class ProjectFormsService extends AbstractFormService
     public function addMember(Project $project, FormInterface $form)
     {
         /* @var User $user */
-        $id = $form->get('users')->getData();
+        $id   = $form->get('users')->getData();
         $user = $this->getUsersRepository()->find($id);
         $project->addUser($user);
         $this->manager->persist($project);

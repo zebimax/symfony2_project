@@ -23,10 +23,10 @@ class UserFormService extends AbstractFormService
                 'entity',
                 [
                     'required' => true,
-                    'class' => 'AppBundle:Role',
+                    'class'    => 'AppBundle:Role',
                     'property' => 'name',
                     'multiple' => true,
-                    'attr' => ['class' => 'form-control'],
+                    'attr'     => ['class' => 'form-control'],
                 ]
             );
         }

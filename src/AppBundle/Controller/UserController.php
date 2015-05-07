@@ -26,9 +26,9 @@ class UserController extends Controller
         /** @var User $currentUser */
         $currentUser = $this->getUser();
 
-        $user = new User();
+        $user            = new User();
         $userFormService = $this->container->get('app.services.user_form');
-        $form = $userFormService->getUserForm($user, $currentUser);
+        $form            = $userFormService->getUserForm($user, $currentUser);
 
         if ($this->get('request')->getMethod() === 'POST') {
             $form->submit($this->get('request'));
@@ -93,7 +93,7 @@ class UserController extends Controller
         $currentUser = $this->getUser();
 
         $userFormService = $this->container->get('app.services.user_form');
-        $form = $userFormService->getUserForm($userObject, $currentUser);
+        $form            = $userFormService->getUserForm($userObject, $currentUser);
 
         if ($this->get('request')->getMethod() === 'POST') {
             $form->submit($this->get('request'));
@@ -134,9 +134,9 @@ class UserController extends Controller
         $service = $this->get('app.services.user');
 
         return [
-            'issues' => $service->getUserAssignedIssues($userObject->getId()),
+            'issues'     => $service->getUserAssignedIssues($userObject->getId()),
             'activities' => $service->getUserActivities($userObject->getId()),
-            'user' => $userObject,
+            'user'       => $userObject,
         ];
     }
 }

@@ -48,8 +48,8 @@ class CommentType extends AbstractType
             'textarea',
             [
                 'required' => true,
-                'label' => false,
-                'attr' => ['placeholder' => $this->translator->trans('app.placeholders.your_comment')],
+                'label'    => false,
+                'attr'     => ['placeholder' => $this->translator->trans('app.placeholders.your_comment')],
             ]
         );
     }

@@ -18,9 +18,9 @@ class ProjectMemberType extends AbstractType
                 'users',
                 'choice',
                 [
-                    'choices' => $options['data'],
-                    'required' => true,
-                    'attr' => array('class' => 'form-control'),
+                    'choices'     => $options['data'],
+                    'required'    => true,
+                    'attr'        => ['class' => 'form-control'],
                     'constraints' => new Choice(['choices' => array_keys($options['data'])]),
                 ]
             );

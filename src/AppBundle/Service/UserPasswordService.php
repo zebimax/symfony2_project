@@ -36,7 +36,7 @@ class UserPasswordService implements EventDispatcherAwareInterface
         ComputerPasswordGenerator $passwordGenerator
     ) {
         $this->passwordGenerator = $passwordGenerator;
-        $this->passwordEncoder = $passwordEncoder;
+        $this->passwordEncoder   = $passwordEncoder;
     }
 
     /**

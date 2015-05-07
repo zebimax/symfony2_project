@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Project
 {
     const DEFAULT_CODE = 'project_';
-    const CODE_LENGTH = 5;
+    const CODE_LENGTH  = 5;
     /**
      * @var int
      *
@@ -54,14 +54,14 @@ class Project
     private $summary;
 
     /**
-     *  @var \DateTime
+     * @var \DateTime
      *
      * @ORM\Column(type="datetime")
      */
     private $created;
 
     /**
-     *  @var \DateTime
+     * @var \DateTime
      *
      * @ORM\Column(type="datetime")
      */
@@ -69,7 +69,7 @@ class Project
 
     public function __construct()
     {
-        $this->users = new ArrayCollection();
+        $this->users   = new ArrayCollection();
         $this->created = new \DateTime('now', new \DateTimeZone('UTC'));
     }
 
@@ -163,8 +163,8 @@ class Project
      */
     public function prePersist()
     {
-        $parts = preg_split('/[\W]+/', $this->label, self::CODE_LENGTH, PREG_SPLIT_NO_EMPTY);
-        $code = strtoupper(
+        $parts      = preg_split('/[\W]+/', $this->label, self::CODE_LENGTH, PREG_SPLIT_NO_EMPTY);
+        $code       = strtoupper(
             array_reduce(
                 $parts,
                 function ($carry, $item) {

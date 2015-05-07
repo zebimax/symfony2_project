@@ -43,7 +43,7 @@ class IssueActivity extends AbstractIssueEvent
      */
     public function __construct(Issue $issue, User $user)
     {
-        $this->user = $user;
+        $this->user  = $user;
         $this->issue = $issue;
         parent::__construct();
     }

@@ -113,9 +113,9 @@ class User implements UserInterface, \Serializable
      */
     public function __construct()
     {
-        $this->roles = new ArrayCollection();
+        $this->roles    = new ArrayCollection();
         $this->projects = new ArrayCollection();
-        $this->issues = new ArrayCollection();
+        $this->issues   = new ArrayCollection();
         $this->isActive = true;
     }
 
@@ -478,7 +478,7 @@ class User implements UserInterface, \Serializable
         if (is_file($this->getAbsolutePath())) {
             // store the old name to delete after the update
             $this->tempFile = $this->getAbsolutePath();
-            $this->avatar = null;
+            $this->avatar   = null;
         } else {
             $this->avatar = 'initial';
         }
@@ -518,7 +518,7 @@ class User implements UserInterface, \Serializable
         // which the UploadedFile move() method does
         $this->getFile()->move(
             $this->getUploadRootDir(),
-            $this->id.'.'.$this->getFile()->guessExtension()
+            $this->id . '.' . $this->getFile()->guessExtension()
         );
 
         $this->setFile(null);
@@ -549,7 +549,7 @@ class User implements UserInterface, \Serializable
     {
         return null === $this->avatar
             ? null
-            : $this->getUploadRootDir().'/'.$this->id.'.'.$this->avatar;
+            : $this->getUploadRootDir() . '/' . $this->id . '.' . $this->avatar;
     }
 
     /**
@@ -569,7 +569,7 @@ class User implements UserInterface, \Serializable
     {
         return null === $this->avatar
             ? null
-            : $this->getUploadDir().'/'.$this->id.'.'.$this->avatar;
+            : $this->getUploadDir() . '/' . $this->id . '.' . $this->avatar;
     }
 
     /**
@@ -615,7 +615,7 @@ class User implements UserInterface, \Serializable
     {
         // the absolute directory path where uploaded
         // documents should be saved
-        return __DIR__.'/../../../web/'.$this->getUploadDir();
+        return __DIR__ . '/../../../web/' . $this->getUploadDir();
     }
 
     /**

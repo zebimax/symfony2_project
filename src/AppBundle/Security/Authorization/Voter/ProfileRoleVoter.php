@@ -6,10 +6,11 @@ use AppBundle\Entity\Role;
 
 class ProfileRoleVoter extends AbstractSupportedRoleVoter
 {
-    const PROFILE = 'profile';
+    const PROFILE      = 'profile';
     const PROFILE_EDIT = 'profile_edit';
     const PROFILE_VIEW = 'profile_view';
-    const HOME = 'home';
+    const HOME         = 'home';
+
     /**
      * @inheritdoc
      */
@@ -19,6 +20,7 @@ class ProfileRoleVoter extends AbstractSupportedRoleVoter
 
         return $this;
     }
+
     /**
      * @inheritdoc
      */

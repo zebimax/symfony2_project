@@ -12,7 +12,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class ProjectVoter extends AbstractRoleVoter
 {
-    const VIEW = 'view';
+    const VIEW      = 'view';
     const ISSUE_ADD = 'issue_add';
 
     /**

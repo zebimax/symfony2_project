@@ -11,11 +11,11 @@ use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 
 class IssueVoter extends AbstractRoleVoter
 {
-    const EDIT = 'edit';
-    const VIEW = 'view';
-    const ADD_SUB_TASK = 'add_sub_task';
+    const EDIT          = 'edit';
+    const VIEW          = 'view';
+    const ADD_SUB_TASK  = 'add_sub_task';
     const COMMENTS_LIST = 'comments_list';
-    const ADD_COMMENT = 'add_comment';
+    const ADD_COMMENT   = 'add_comment';
 
     /**
      * @inheritdoc

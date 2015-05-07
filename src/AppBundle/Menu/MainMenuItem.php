@@ -107,7 +107,7 @@ class MainMenuItem implements MainMenuItemInterface
                 }
             }
         }
-        $this->name = $configs['name'];
+        $this->name  = $configs['name'];
         $this->label = $configs['label'];
     }
 }

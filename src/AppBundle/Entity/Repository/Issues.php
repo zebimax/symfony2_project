@@ -73,7 +73,7 @@ class Issues extends EntityRepository
      */
     public function getUserProjectsIssues($userId)
     {
-        $queryBuilder = $this->getEntityManager()->createQueryBuilder();
+        $queryBuilder         = $this->getEntityManager()->createQueryBuilder();
         $userProjectsSubQuery = $queryBuilder
             ->from('AppBundle:Project', 'p1')
             ->select('p1.id')

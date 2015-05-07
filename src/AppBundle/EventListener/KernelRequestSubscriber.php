@@ -27,7 +27,7 @@ class KernelRequestSubscriber implements EventSubscriberInterface
      */
     public function __construct(\Twig_Environment $twig, TokenStorageInterface $tokenStorage)
     {
-        $this->twig = $twig;
+        $this->twig         = $twig;
         $this->tokenStorage = $tokenStorage;
     }
 

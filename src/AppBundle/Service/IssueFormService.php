@@ -31,13 +31,13 @@ class IssueFormService extends AbstractFormService implements EventDispatcherAwa
     public function getIssueForm(Issue $issue, User $user, Project $project)
     {
         $currentStatus = $issue->getStatus();
-        $builder = $this->factory->createBuilder('app_issue', $issue);
+        $builder       = $this->factory->createBuilder('app_issue', $issue);
         $this->addAssigneeField($builder, $project);
         $builder->addEventListener(
             FormEvents::SUBMIT,
             function (FormEvent $event) use ($currentStatus, $user) {
                 /** @var Issue $issue */
-                $issue = $event->getData();
+                $issue     = $event->getData();
                 $newStatus = $issue->getStatus();
                 if (!in_array($currentStatus, [null, $newStatus])) {
                     $this->addChangeStatusActivity(
@@ -55,7 +55,7 @@ class IssueFormService extends AbstractFormService implements EventDispatcherAwa
             FormEvents::SUBMIT,
             function (FormEvent $event) {
                 /** @var Issue $issue */
-                $issue = $event->getData();
+                $issue    = $event->getData();
                 $assignee = $issue->getAssignee();
                 if ($assignee !== null) {
                     $this->addCollaborator($issue, $assignee);
@@ -67,9 +67,9 @@ class IssueFormService extends AbstractFormService implements EventDispatcherAwa
     }
 
     /**
-     * @param param Issue $issue
-     * @param Project     $project
-     * @param User        $user
+     * @param         param Issue $issue
+     * @param Project $project
+     * @param User    $user
      */
     public function createIssue(Issue $issue, Project $project, User $user)
     {
@@ -141,12 +141,12 @@ class IssueFormService extends AbstractFormService implements EventDispatcherAwa
             'assignee',
             'entity',
             [
-                'class' => 'AppBundle:User',
+                'class'    => 'AppBundle:User',
                 'property' => 'username',
-                'label' => $this->translator->trans('app.issue.assignee'),
-                'choices' => $project->getUsers(),
+                'label'    => $this->translator->trans('app.issue.assignee'),
+                'choices'  => $project->getUsers(),
                 'required' => false,
-                'attr' => ['class' => 'form-control'],
+                'attr'     => ['class' => 'form-control'],
             ]
         );
     }

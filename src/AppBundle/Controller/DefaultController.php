@@ -21,11 +21,11 @@ class DefaultController extends Controller
     public function indexAction()
     {
         /** @var User $user */
-        $user = $this->getUser();
+        $user    = $this->getUser();
         $service = $this->get('app.services.user');
 
         return [
-            'issues' => $service->getUserIssues($user->getId()),
+            'issues'     => $service->getUserIssues($user->getId()),
             'activities' => $service->getUserActivities($user->getId()),
         ];
     }

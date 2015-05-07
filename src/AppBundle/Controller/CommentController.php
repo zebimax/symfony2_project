@@ -26,14 +26,14 @@ class CommentController extends Controller
     public function listAction(Issue $issue)
     {
         /** @var User $user */
-        $user = $this->getUser();
+        $user    = $this->getUser();
         $comment = new Comment();
         $comment->setUser($user)->setIssue($issue);
         $form = $this->get('app.services.comment')->getCommentForm($comment);
 
         return [
             'issue' => $issue,
-            'form' => $form->createView(),
+            'form'  => $form->createView(),
         ];
     }
 
@@ -49,7 +49,7 @@ class CommentController extends Controller
     public function editAction(Comment $comment)
     {
         $commentService = $this->get('app.services.comment');
-        $form = $commentService->getCommentForm($comment);
+        $form           = $commentService->getCommentForm($comment);
 
         if ($this->get('request')->getMethod() === 'POST') {
             $form->submit($this->get('request'));
@@ -71,7 +71,7 @@ class CommentController extends Controller
 
         return [
             'issue' => $comment->getIssue(),
-            'form' => $form->createView(),
+            'form'  => $form->createView(),
         ];
     }
 

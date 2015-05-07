@@ -20,26 +20,26 @@ class LoadIssueData extends AbstractOrderedContainerAwareFixture
      */
     public function load(ObjectManager $manager)
     {
-        $bugParams =  [
-            'summary' => 'Test bug summary',
+        $bugParams = [
+            'summary'     => 'Test bug summary',
             'description' => 'Test description of bug',
-            'type' => IssueTypeEnumType::BUG,
-            'reporter' => 'user_manager',
-            'project' => 'test_project',
-            'assignee' => 'user_operator',
-            'priority' => IssuePriorityEnumType::TRIVIAL,
+            'type'        => IssueTypeEnumType::BUG,
+            'reporter'    => 'user_manager',
+            'project'     => 'test_project',
+            'assignee'    => 'user_operator',
+            'priority'    => IssuePriorityEnumType::TRIVIAL,
         ];
 
         $bug = $this->createEntityInstance($bugParams);
         $manager->persist($bug);
 
         $storyParams = [
-            'summary' => 'Test story summary',
+            'summary'     => 'Test story summary',
             'description' => 'Test description of story',
-            'type' => IssueTypeEnumType::STORY,
-            'reporter' => 'user_manager',
-            'priority' => IssuePriorityEnumType::MAJOR,
-            'project' => 'test_project',
+            'type'        => IssueTypeEnumType::STORY,
+            'reporter'    => 'user_manager',
+            'priority'    => IssuePriorityEnumType::MAJOR,
+            'project'     => 'test_project',
         ];
 
         $story = $this->createEntityInstance($storyParams);
@@ -47,15 +47,15 @@ class LoadIssueData extends AbstractOrderedContainerAwareFixture
         $this->addReference('issue_story', $story);
 
         $subTaskParams = [
-            'summary' => 'Test sub_task summary',
+            'summary'     => 'Test sub_task summary',
             'description' => 'Test description of sub_task',
-            'type' => IssueTypeEnumType::SUB_TASK,
-            'reporter' => 'user_manager',
-            'priority' => IssuePriorityEnumType::MAJOR,
-            'project' => 'test_project',
-            'parent' => 'issue_story',
+            'type'        => IssueTypeEnumType::SUB_TASK,
+            'reporter'    => 'user_manager',
+            'priority'    => IssuePriorityEnumType::MAJOR,
+            'project'     => 'test_project',
+            'parent'      => 'issue_story',
         ];
-        $subTask = $this->createEntityInstance($subTaskParams);
+        $subTask       = $this->createEntityInstance($subTaskParams);
         $manager->persist($subTask);
         $this->addReference('issue_sub_task', $story);
 

@@ -13,7 +13,7 @@ class LoadUserData extends AbstractOrderedContainerAwareFixture
      */
     public function load(ObjectManager $manager)
     {
-        $admin = new User();
+        $admin   = new User();
         $encoder = $this->container->get('security.encoder_factory')->getEncoder($admin);
 
         $admin->setUsername('admin')

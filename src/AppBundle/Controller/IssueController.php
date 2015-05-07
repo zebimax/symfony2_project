@@ -54,7 +54,7 @@ class IssueController extends Controller
         $issueService = $this->get('app.services.issue');
 
         return [
-            'issue' => $issue,
+            'issue'      => $issue,
             'activities' => $issueService->getIssueActivities($issue),
         ];
     }
@@ -76,7 +76,7 @@ class IssueController extends Controller
                 'flash_issue_actions',
                 $translator->trans('app.errors.issue.not_story_add_sub_task_error')
             );
-            $this->redirect($this->generateUrl('app_issue_view').['id' => $issue->getId()]);
+            $this->redirect($this->generateUrl('app_issue_view') . ['id' => $issue->getId()]);
         }
         $subTask = new Issue();
         /** @var User $user */
@@ -84,7 +84,7 @@ class IssueController extends Controller
         $subTask->setType(IssueTypeEnumType::SUB_TASK)->setParent($issue);
 
         $issueFormService = $this->container->get('app.services.issue_form');
-        $form = $issueFormService->getIssueForm($subTask, $user, $issue->getProject());
+        $form             = $issueFormService->getIssueForm($subTask, $user, $issue->getProject());
         if ($this->get('request')->getMethod() === 'POST') {
             $form->submit($this->get('request'));
 
@@ -106,7 +106,7 @@ class IssueController extends Controller
 
         return [
             'project' => $issue->getProject(),
-            'form' => $form->createView(),
+            'form'    => $form->createView(),
         ];
     }
 
@@ -122,9 +122,9 @@ class IssueController extends Controller
     public function editAction(Issue $issue)
     {
         /** @var User $user */
-        $user = $this->getUser();
+        $user             = $this->getUser();
         $issueFormService = $this->container->get('app.services.issue_form');
-        $form = $issueFormService->getIssueForm($issue, $user, $issue->getProject());
+        $form             = $issueFormService->getIssueForm($issue, $user, $issue->getProject());
 
         if ($this->get('request')->getMethod() === 'POST') {
             $form->submit($this->get('request'));
@@ -146,7 +146,7 @@ class IssueController extends Controller
 
         return [
             'issue' => $issue,
-            'form' => $form->createView(),
+            'form'  => $form->createView(),
         ];
     }
 
@@ -165,11 +165,11 @@ class IssueController extends Controller
             $redirectUrl = $this->generateUrl('app_home');
         }
         /** @var User $user */
-        $user = $this->getUser();
+        $user    = $this->getUser();
         $comment = new Comment();
         $comment->setUser($user)->setIssue($issue);
         $commentService = $this->get('app.services.comment');
-        $form = $commentService->getCommentForm($comment);
+        $form           = $commentService->getCommentForm($comment);
 
         if ($this->get('request')->getMethod() === 'POST') {
             $form->submit($this->get('request'));

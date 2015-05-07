@@ -40,7 +40,7 @@ class UserType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => 'AppBundle\Entity\User',
+                'data_class'        => 'AppBundle\Entity\User',
                 'validation_groups' => ['add', 'Default'],
             ]
         );
@@ -61,7 +61,7 @@ class UserType extends AbstractType
                     'password',
                     [
                         'required' => false,
-                        'label' => $this->translator->trans('app.password_will_be_generated'),
+                        'label'    => $this->translator->trans('app.password_will_be_generated'),
                     ]
                 );
             }
@@ -72,7 +72,7 @@ class UserType extends AbstractType
                 'email',
                 [
                     'required' => true,
-                    'label' => $this->translator->trans('app.email'),
+                    'label'    => $this->translator->trans('app.email'),
                 ]
             )
             ->add(
@@ -80,7 +80,7 @@ class UserType extends AbstractType
                 'text',
                 [
                     'required' => true,
-                    'label' => $this->translator->trans('app.username'),
+                    'label'    => $this->translator->trans('app.username'),
                 ]
             )
             ->add(
@@ -88,7 +88,7 @@ class UserType extends AbstractType
                 'text',
                 [
                     'required' => true,
-                    'label' => $this->translator->trans('app.fullName'),
+                    'label'    => $this->translator->trans('app.fullName'),
                 ]
             )
             ->add(
@@ -96,7 +96,7 @@ class UserType extends AbstractType
                 'timezone',
                 [
                     'required' => false,
-                    'label' => $this->translator->trans('app.timezone'),
+                    'label'    => $this->translator->trans('app.timezone'),
                 ]
             )
             ->add(
@@ -104,7 +104,7 @@ class UserType extends AbstractType
                 'file',
                 [
                     'required' => false,
-                    'label' => $this->translator->trans('app.avatar'),
+                    'label'    => $this->translator->trans('app.avatar'),
                 ]
             );
     }

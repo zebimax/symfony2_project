@@ -55,7 +55,7 @@ class IssueType extends AbstractType
     {
         $formFactory = $builder->getFormFactory();
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($formFactory) {
-            $form = $event->getForm();
+            $form  = $event->getForm();
             $issue = $event->getData();
             if ($issue instanceof Issue) {
                 if ($issue->getParent() === null && $this->isIssueTypeChangeable($issue)) {
@@ -75,7 +75,7 @@ class IssueType extends AbstractType
                 'text',
                 [
                     'required' => true,
-                    'label' => $this->translator->trans('app.summary'),
+                    'label'    => $this->translator->trans('app.summary'),
                 ]
             )
             ->add(
@@ -83,7 +83,7 @@ class IssueType extends AbstractType
                 'textarea',
                 [
                     'required' => false,
-                    'label' => $this->translator->trans('app.description'),
+                    'label'    => $this->translator->trans('app.description'),
                 ]
             )
             ->add(
@@ -104,8 +104,8 @@ class IssueType extends AbstractType
                             $this->translator->trans('app.issue.priorities.blocker'),
                         ]
                     ),
-                    'required' => true,
-                    'label' => $this->translator->trans('app.issue.priority'),
+                    'required'    => true,
+                    'label'       => $this->translator->trans('app.issue.priority'),
                 ]
             );
     }
@@ -134,8 +134,8 @@ class IssueType extends AbstractType
                             $this->translator->trans('app.issue.types.task'),
                         ]
                     ),
-                    'required' => true,
-                    'label' => $this->translator->trans('app.issue.type'),
+                    'required'    => true,
+                    'label'       => $this->translator->trans('app.issue.type'),
                 ]
             );
     }
@@ -172,8 +172,8 @@ class IssueType extends AbstractType
                             $this->translator->trans('app.issue.resolutions.won_t_fix'),
                         ]
                     ),
-                    'required' => false,
-                    'label' => $this->translator->trans('app.issue.resolution'),
+                    'required'    => false,
+                    'label'       => $this->translator->trans('app.issue.resolution'),
                 ]
             );
     }
@@ -202,8 +202,8 @@ class IssueType extends AbstractType
                             $this->translator->trans('app.issue.statuses.closed'),
                         ]
                     ),
-                    'required' => true,
-                    'label' => $this->translator->trans('app.issue.status'),
+                    'required'    => true,
+                    'label'       => $this->translator->trans('app.issue.status'),
                 ]
             );
     }

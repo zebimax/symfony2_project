@@ -33,9 +33,9 @@ class LoginType extends AbstractType
                 'username',
                 'text',
                 [
-                    'required' => true,
-                    'label' => $this->translator->trans('login_form.username'),
-                    'constraints'   => [
+                    'required'    => true,
+                    'label'       => $this->translator->trans('login_form.username'),
+                    'constraints' => [
                         new NotBlank(),
                     ],
                 ]
@@ -44,9 +44,9 @@ class LoginType extends AbstractType
                 'password',
                 'password',
                 [
-                    'required' => true,
-                    'label' => $this->translator->trans('login_form.password'),
-                    'constraints'   => [
+                    'required'    => true,
+                    'label'       => $this->translator->trans('login_form.password'),
+                    'constraints' => [
                         new NotBlank(),
                     ],
                 ]

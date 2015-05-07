@@ -14,6 +14,8 @@ abstract class AbstractOrderedContainerAwareFixture extends AbstractFixture impl
     OrderedFixtureInterface
 {
     use ContainerAwareTrait;
+
     abstract public function getOrder();
+
     abstract public function load(ObjectManager $manager);
 }

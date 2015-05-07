@@ -112,14 +112,14 @@ class Issue
     private $project;
 
     /**
-     *  @var \DateTime
+     * @var \DateTime
      *
      * @ORM\Column(type="datetime")
      */
     private $created;
 
     /**
-     *  @var \DateTime
+     * @var \DateTime
      *
      * @ORM\Column(type="datetime")
      */
@@ -142,10 +142,10 @@ class Issue
     public function __construct()
     {
         $this->collaborators = new ArrayCollection();
-        $this->children = new ArrayCollection();
-        $this->activities = new ArrayCollection();
-        $this->comments = new ArrayCollection();
-        $this->created = new \DateTime('now', new \DateTimeZone('UTC'));
+        $this->children      = new ArrayCollection();
+        $this->activities    = new ArrayCollection();
+        $this->comments      = new ArrayCollection();
+        $this->created       = new \DateTime('now', new \DateTimeZone('UTC'));
     }
 
     /**
@@ -571,7 +571,7 @@ class Issue
      */
     public function getCode()
     {
-        return $this->project->getCode().'-'.$this->id;
+        return $this->project->getCode() . '-' . $this->id;
     }
 
     /**
