@@ -14,7 +14,7 @@ class DefaultController extends Controller
 {
     /**
      * @Route("/", name="app_home")
-     * @Template("default/index.html.twig")
+     * @Template
      *
      * @return Response
      */

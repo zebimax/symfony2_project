@@ -26,10 +26,7 @@ abstract class EnumType extends Type
     }
 
     /**
-     * @param mixed            $value
-     * @param AbstractPlatform $platform
-     *
-     * @return mixed
+     * {@inheritDoc}
      */
     public function convertToPHPValue($value, AbstractPlatform $platform)
     {
@@ -37,10 +34,7 @@ abstract class EnumType extends Type
     }
 
     /**
-     * @param mixed            $value
-     * @param AbstractPlatform $platform
-     *
-     * @return mixed
+     * {@inheritDoc}
      */
     public function convertToDatabaseValue($value, AbstractPlatform $platform)
     {

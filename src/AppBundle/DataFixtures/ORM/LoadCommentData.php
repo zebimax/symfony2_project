@@ -6,6 +6,7 @@ use AppBundle\Entity\Comment;
 use AppBundle\Entity\Issue;
 use AppBundle\Entity\IssueActivity;
 use AppBundle\Entity\User;
+
 use Doctrine\Common\Persistence\ObjectManager;
 
 class LoadCommentData extends AbstractOrderedContainerAwareFixture

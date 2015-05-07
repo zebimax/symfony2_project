@@ -9,8 +9,9 @@ use AppBundle\Entity\Issue;
 use AppBundle\Entity\IssueActivity;
 use AppBundle\Entity\Project;
 use AppBundle\Entity\Role;
-use Doctrine\Common\Persistence\ObjectManager;
 use AppBundle\Entity\User;
+
+use Doctrine\Common\Persistence\ObjectManager;
 
 class LoadIssueData extends AbstractOrderedContainerAwareFixture
 {
@@ -72,7 +73,7 @@ class LoadIssueData extends AbstractOrderedContainerAwareFixture
     }
 
     /**
-     * @param $name
+     * @param string $name
      *
      * @return Role
      */
@@ -131,6 +132,10 @@ class LoadIssueData extends AbstractOrderedContainerAwareFixture
         return $issue;
     }
 
+    /**
+     * @param Issue $issue
+     * @param User  $user
+     */
     private function addCreateActivity(Issue $issue, User $user)
     {
         $issue->addActivity(

@@ -3,8 +3,8 @@
 namespace AppBundle\DataFixtures\ORM;
 
 use AppBundle\Entity\Role;
-use Doctrine\Common\Persistence\ObjectManager;
 use AppBundle\Entity\User;
+use Doctrine\Common\Persistence\ObjectManager;
 
 class LoadUserData extends AbstractOrderedContainerAwareFixture
 {
@@ -56,7 +56,7 @@ class LoadUserData extends AbstractOrderedContainerAwareFixture
     }
 
     /**
-     * @param $name
+     * @param string $name
      *
      * @return Role
      */

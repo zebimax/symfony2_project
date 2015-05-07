@@ -8,9 +8,8 @@ use Symfony\Component\EventDispatcher\Event;
 class IssueActivityEvent extends Event
 {
     const ISSUE_ACTIVITY = 'app.issue_activity';
-    /**
-     * @var IssueActivity
-     */
+
+    /** @var IssueActivity */
     protected $activity;
 
     /**

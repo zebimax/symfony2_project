@@ -7,6 +7,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 class UserIdParameterProvider implements ParameterProviderInterface
 {
+    /** @var int */
     private $userId;
 
     /**
@@ -19,6 +20,7 @@ class UserIdParameterProvider implements ParameterProviderInterface
             $this->userId = $user->getId();
         }
     }
+
     /**
      * @return array
      */

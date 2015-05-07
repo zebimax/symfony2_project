@@ -92,17 +92,25 @@ class User implements UserInterface, \Serializable
     private $isActive;
 
     /**
-     * @var UploadedFile
-     */
-    protected $file;
-
-    private $temp;
-
-    /**
      * @ORM\Column(type="string", length=50, nullable = true)
      */
-    protected $timezone;
+    private $timezone;
 
+    /**
+     * @var UploadedFile
+     */
+    private $file;
+
+    /**
+     * store the old name of avatar file to delete after the update
+     *
+     * @var null|string
+     */
+    private $tempFile;
+
+    /**
+     *  Constructor
+     */
     public function __construct()
     {
         $this->roles = new ArrayCollection();
@@ -420,12 +428,11 @@ class User implements UserInterface, \Serializable
      */
     public function getPrimaryRole()
     {
-        $hasRoleAdmin = $hasRoleManager = $hasRoleOperator = false;
+        $hasRoleManager = $hasRoleOperator = false;
         foreach ($this->roles as $role) {
             /** @var Role $role */
             if (Role::ADMINISTRATOR === $role->getRole()) {
-                $hasRoleAdmin = true;
-                break;
+                return Role::ADMINISTRATOR;
             }
             if (Role::MANAGER === $role->getRole()) {
                 $hasRoleManager = true;
@@ -435,9 +442,7 @@ class User implements UserInterface, \Serializable
                 $hasRoleOperator = true;
             }
         }
-        if ($hasRoleAdmin) {
-            return Role::ADMINISTRATOR;
-        } elseif ($hasRoleManager) {
+        if ($hasRoleManager) {
             return Role::MANAGER;
         } else {
             return $hasRoleOperator ? Role::OPERATOR : null;
@@ -445,7 +450,7 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @return mixed
+     * @return array
      */
     public function getRolesArray()
     {
@@ -472,7 +477,7 @@ class User implements UserInterface, \Serializable
         // check if we have an old image path
         if (is_file($this->getAbsolutePath())) {
             // store the old name to delete after the update
-            $this->temp = $this->getAbsolutePath();
+            $this->tempFile = $this->getAbsolutePath();
             $this->avatar = null;
         } else {
             $this->avatar = 'initial';
@@ -501,11 +506,11 @@ class User implements UserInterface, \Serializable
         }
 
         // check if we have an old image
-        if (null !== $this->temp) {
+        if (null !== $this->tempFile) {
             // delete the old image
-            unlink($this->temp);
-            // clear the temp image path
-            $this->temp = null;
+            unlink($this->tempFile);
+            // clear the tempFile image path
+            $this->tempFile = null;
         }
 
         // you must throw an exception here if the file cannot be moved
@@ -524,7 +529,7 @@ class User implements UserInterface, \Serializable
      */
     public function storeFilenameForRemove()
     {
-        $this->temp = $this->getAbsolutePath();
+        $this->tempFile = $this->getAbsolutePath();
     }
 
     /**
@@ -532,8 +537,8 @@ class User implements UserInterface, \Serializable
      */
     public function removeUpload()
     {
-        if (null !== $this->temp) {
-            unlink($this->temp);
+        if (null !== $this->tempFile) {
+            unlink($this->tempFile);
         }
     }
 
@@ -584,7 +589,7 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @return mixed
+     * @return null|string
      */
     public function getTimezone()
     {
@@ -592,7 +597,7 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @param mixed $timezone
+     * @param string $timezone
      *
      * @return $this
      */

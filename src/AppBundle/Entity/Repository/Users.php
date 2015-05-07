@@ -2,12 +2,14 @@
 
 namespace AppBundle\Entity\Repository;
 
+use AppBundle\Entity\User;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
 
 class Users extends EntityRepository
 {
     /**
-     * @return \Doctrine\ORM\QueryBuilder
+     * @return QueryBuilder
      */
     public function getListQuery()
     {
@@ -15,9 +17,9 @@ class Users extends EntityRepository
     }
 
     /**
-     * @param $projectId
+     * @param int $projectId
      *
-     * @return array
+     * @return User[]
      */
     public function getNotProjectUsers($projectId)
     {

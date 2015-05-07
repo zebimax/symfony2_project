@@ -3,8 +3,8 @@
 namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Security\Core\Role\RoleInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\Role\RoleInterface;
 
 /**
  * @ORM\Table(name="bt_role")
@@ -110,7 +110,7 @@ class Role implements RoleInterface
     /**
      * Get users.
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return ArrayCollection User[]
      */
     public function getUsers()
     {

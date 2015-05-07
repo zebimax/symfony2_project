@@ -1,25 +1,5 @@
-{% extends 'layout.html.twig' %}
-{% block menu %}
-    {% include 'menu.html.twig' %}
-{%  endblock %}
-{% block page %}
-    <div class="container">
-        <div class="row">
-            <h1 class="text-center">{% block page_header %}{{ 'app.dashboard' | trans }}{%  endblock %}</h1>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                {% block page_content %}
-                    <table class="table">
-                        <tr>
-                            <td>{% include 'issues.html.twig' with {'issues_panel_title': 'app.dashboard_items.related_issues' | trans } %}</td>
-                            <td>{% include 'activities.html.twig' %}</td>
-                        </tr>
-                    </table>
-                {%  endblock %}
-            </div>
-        </div>
-    </div>
-{%  endblock %}
+{% extends 'base.html.twig' %}
 
-
+{% block body %}
+    Homepage.
+{% endblock %}

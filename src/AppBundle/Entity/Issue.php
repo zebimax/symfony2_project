@@ -413,13 +413,13 @@ class Issue
     }
 
     /**
-     * Remove collaborators.
+     * Remove collaborator.
      *
-     * @param User $collaborators
+     * @param User $collaborator
      */
-    public function removeCollaborator(User $collaborators)
+    public function removeCollaborator(User $collaborator)
     {
-        $this->collaborators->removeElement($collaborators);
+        $this->collaborators->removeElement($collaborator);
     }
 
     /**

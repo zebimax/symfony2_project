@@ -37,9 +37,6 @@ class LoginTypeTest extends \PHPUnit_Framework_TestCase
                 'label' => $this->translator->trans('login_form.username'),
                 'constraints'   => [
                     new NotBlank(),
-                    new Length(
-                        ['min' => LoginType::MIN_USERNAME_LENGTH]
-                    ),
                 ],
             ]
         );
@@ -54,9 +51,6 @@ class LoginTypeTest extends \PHPUnit_Framework_TestCase
                 'label' => $this->translator->trans('login_form.password'),
                 'constraints'   => [
                     new NotBlank(),
-                    new Length(
-                        ['min' => LoginType::MIN_PASSWORD_LENGTH]
-                    ),
                 ],
             ]
         );

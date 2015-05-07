@@ -17,7 +17,7 @@ class UserController extends Controller
     /**
      * @Route("/user/add", name="app_user_add")
      * @Security("is_granted('users_add')")
-     * @Template("user/add.html.twig")
+     * @Template
      *
      * @return array|RedirectResponse
      */
@@ -64,7 +64,7 @@ class UserController extends Controller
      *
      * @Route("/user/list", name="app_user_list")
      * @Security("is_granted('users_list')")
-     * @Template("user/list.html.twig")
+     * @Template
      *
      * @return array
      */
@@ -82,7 +82,7 @@ class UserController extends Controller
      * @param User $userObject
      *
      * @Route("/user/edit/{id}", name="app_user_edit")
-     * @Template("user/edit.html.twig")
+     * @Template
      * @Security("is_granted('edit', userObject)")
      *
      * @return array|RedirectResponse
@@ -124,7 +124,7 @@ class UserController extends Controller
      * @param User $userObject
      *
      * @Route("/user/view/{id}", name="app_user_view")
-     * @Template("user/view.html.twig")
+     * @Template
      * @Security("is_granted('view', userObject)")
      *
      * @return array

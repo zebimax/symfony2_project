@@ -3,13 +3,13 @@
 namespace AppBundle\Service;
 
 use AppBundle\Entity\Comment;
-use AppBundle\Entity\Issue;
 use AppBundle\Entity\IssueActivity;
-use AppBundle\Entity\User;
 use AppBundle\EventListener\Event\IssueActivityEvent;
 use AppBundle\EventListener\EventDispatcher\EventDispatcherAwareInterface;
 use AppBundle\EventListener\EventDispatcher\EventDispatcherAwareTrait;
 use AppBundle\Service\Form\AbstractFormService;
+
+use Symfony\Component\Form\Form;
 
 class CommentService extends AbstractFormService implements EventDispatcherAwareInterface
 {
@@ -17,33 +17,21 @@ class CommentService extends AbstractFormService implements EventDispatcherAware
 
     /**
      * @param Comment $comment
-     * @param Issue   $issue
-     * @param User    $user
      *
-     * @return \Symfony\Component\Form\Form
+     * @return Form
      */
-    public function getCommentForm(Comment $comment, Issue $issue = null, User $user = null)
+    public function getCommentForm(Comment $comment)
     {
-        $builder = $this->factory->createBuilder('app_comment', $comment);
-        if ($user !== null && $comment->getUser() === null) {
-            $comment->setUser($user);
-        }
-        if ($issue !== null && $comment->getIssue() === null) {
-            $comment->setIssue($issue);
-        }
-
-        return $builder->getForm();
+        return $this->factory->createBuilder('app_comment', $comment)->getForm();
     }
 
     /**
      * @param Comment $comment
-     * @param Issue   $issue
-     * @param User    $user
      */
-    public function createComment(Comment $comment, Issue $issue, User $user)
+    public function addComment(Comment $comment)
     {
-        $comment->setUser($user)->setIssue($issue);
-
+        $issue         = $comment->getIssue();
+        $user          = $comment->getUser();
         $issueActivity = (new IssueActivity($issue, $user))
             ->setType(IssueActivity::COMMENT_ISSUE)
             ->setCreated($comment->getCreated());

@@ -5,6 +5,7 @@ namespace AppBundle\Twig;
 class IssueExtension extends AbstractExtension
 {
     const DEFAULT_MAX_DESCRIPTION = 100;
+
     /**
      * {@inheritdoc}
      */
@@ -28,7 +29,7 @@ class IssueExtension extends AbstractExtension
     }
 
     /**
-     * @param $status
+     * @param string $status
      *
      * @return string
      */
@@ -38,7 +39,7 @@ class IssueExtension extends AbstractExtension
     }
 
     /**
-     * @param $type
+     * @param string $type
      *
      * @return string
      */
@@ -48,7 +49,7 @@ class IssueExtension extends AbstractExtension
     }
 
     /**
-     * @param $priority
+     * @param string $priority
      *
      * @return string
      */
@@ -58,7 +59,7 @@ class IssueExtension extends AbstractExtension
     }
 
     /**
-     * @param $resolution
+     * @param string $resolution
      *
      * @return string
      */
@@ -68,7 +69,7 @@ class IssueExtension extends AbstractExtension
     }
 
     /**
-     * @param $description
+     * @param string $description
      * @param int $maxLen
      *
      * @return string

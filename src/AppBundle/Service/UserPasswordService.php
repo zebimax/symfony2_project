@@ -6,7 +6,9 @@ use AppBundle\Entity\User;
 use AppBundle\EventListener\Event\CreateUserEvent;
 use AppBundle\EventListener\EventDispatcher\EventDispatcherAwareInterface;
 use AppBundle\EventListener\EventDispatcher\EventDispatcherAwareTrait;
+
 use Hackzilla\PasswordGenerator\Generator\ComputerPasswordGenerator;
+
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserPasswordService implements EventDispatcherAwareInterface
@@ -39,7 +41,7 @@ class UserPasswordService implements EventDispatcherAwareInterface
 
     /**
      * @param User $user
-     * @param $plainPassword
+     * @param string $plainPassword
      * @param int  $length
      */
     public function setUserPassword(User $user, $plainPassword, $length = self::DEFAULT_PASSWORD_LENGTH)

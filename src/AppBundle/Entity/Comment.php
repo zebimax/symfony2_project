@@ -104,8 +104,8 @@ class Comment extends AbstractIssueEvent
     public function prePersist()
     {
         $dateTime      = new \DateTime('now', new \DateTimeZone('UTC'));
-        $this->updated = $dateTime;
         $this->created = $dateTime;
+        $this->updated = clone $dateTime;
     }
 
     /**

@@ -19,7 +19,7 @@ class ProjectController extends Controller
 {
     /**
      * @Route("/project/add", name="app_project_add")
-     * @Template("project/add.html.twig")
+     * @Template
      * @Security("is_granted('projects_add')")
      *
      * @return array|RedirectResponse
@@ -56,7 +56,7 @@ class ProjectController extends Controller
 
     /**
      * @Route("/project/list", name="app_project_list")
-     * @Template("project/list.html.twig")
+     * @Template
      * @Security("is_granted('projects_list')")
      *
      * @param Request $request
@@ -81,7 +81,7 @@ class ProjectController extends Controller
      * @param Project $project
      *
      * @Route("/project/view/{id}", name="app_project_view")
-     * @Template("project/view.html.twig")
+     * @Template
      * @Security("is_granted('view', project)")
      *
      * @return array
@@ -101,7 +101,7 @@ class ProjectController extends Controller
      * @param Project $project
      *
      * @Route("/project/edit/{id}", name="app_project_edit")
-     * @Template("project/edit.html.twig")
+     * @Template
      * @Security("is_granted('projects_edit')")
      *
      * @return array
@@ -138,7 +138,7 @@ class ProjectController extends Controller
      * @param Request $request
      *
      * @Route("/project/{id}/members/list", name="app_project_members_list")
-     * @Template("project/members.html.twig")
+     * @Template
      * @Security("is_granted('projects_members_list')")
      *
      * @return array
@@ -160,7 +160,7 @@ class ProjectController extends Controller
      *
      * @Route("/project/{id}/members/add", name="app_project_add_member")
      * @Security("is_granted('projects_members_add')")
-     * @Template(":project:add_member.html.twig")
+     * @Template
      *
      * @return array|RedirectResponse
      */
@@ -179,7 +179,7 @@ class ProjectController extends Controller
                     $message = 'app.messages.project.add_member.fail';
                 }
                 $this->addFlash(
-                    'flash_project_member_add',
+                    'flash_project_members',
                     $this->get('translator.default')->trans($message)
                 );
 
@@ -212,7 +212,7 @@ class ProjectController extends Controller
             $message = 'app.messages.comment.remove.fail';
         }
 
-        $this->addFlash('flash_project_member_remove', $this->get('translator.default')->trans($message));
+        $this->addFlash('flash_project_members', $this->get('translator.default')->trans($message));
 
         return $this->redirect($this->generateUrl('app_project_members_list', ['id' => $project->getId()]));
     }
@@ -221,7 +221,7 @@ class ProjectController extends Controller
      * @param Project $project
      *
      * @Route("/project/{id}/issues/add", name="app_project_add_issue")
-     * @Template("project/add_issue.html.twig")
+     * @Template
      * @Security("is_granted('issue_add', project)")
      *
      * @return array|RedirectResponse

@@ -3,11 +3,13 @@
 namespace AppBundle\Service\Form;
 
 use AppBundle\Service\AbstractControllerService;
+
 use Doctrine\ORM\EntityManager;
+
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
-class AbstractFormService extends AbstractControllerService
+abstract class AbstractFormService extends AbstractControllerService
 {
     /** @var FormFactoryInterface */
     protected $factory;

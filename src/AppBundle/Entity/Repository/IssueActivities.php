@@ -2,14 +2,15 @@
 
 namespace AppBundle\Entity\Repository;
 
+use AppBundle\Entity\IssueActivity;
 use Doctrine\ORM\EntityRepository;
 
 class IssueActivities extends EntityRepository
 {
     /**
-     * @param $userId
+     * @param int $userId
      *
-     * @return array
+     * @return IssueActivity[]
      */
     public function getUserActivities($userId)
     {
@@ -25,9 +26,9 @@ class IssueActivities extends EntityRepository
     }
 
     /**
-     * @param $projectId
+     * @param int $projectId
      *
-     * @return array
+     * @return IssueActivity[]
      */
     public function getProjectActivities($projectId)
     {
@@ -43,9 +44,9 @@ class IssueActivities extends EntityRepository
     }
 
     /**
-     * @param $issueId
+     * @param int $issueId
      *
-     * @return array
+     * @return IssueActivity[]
      */
     public function getIssueActivities($issueId)
     {

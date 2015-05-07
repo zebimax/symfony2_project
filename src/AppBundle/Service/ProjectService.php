@@ -2,10 +2,17 @@
 
 namespace AppBundle\Service;
 
+use AppBundle\Entity\Issue;
+use AppBundle\Entity\IssueActivity;
 use AppBundle\Entity\Project;
 use AppBundle\Entity\User;
+
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\QueryBuilder;
+
+use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
+
 use Symfony\Component\Translation\TranslatorInterface;
 
 class ProjectService extends AbstractControllerService
@@ -29,10 +36,10 @@ class ProjectService extends AbstractControllerService
 
     /**
      * @param User $user
-     * @param $page
-     * @param $limit
+     * @param int $page
+     * @param int $limit
      *
-     * @return \Knp\Component\Pager\Pagination\PaginationInterface
+     * @return PaginationInterface
      */
     public function getProjectsList(User $user, $page, $limit)
     {
@@ -46,7 +53,7 @@ class ProjectService extends AbstractControllerService
     }
 
     /**
-     * @return \Doctrine\ORM\QueryBuilder
+     * @return QueryBuilder
      */
     public function getAllProjectsQuery()
     {
@@ -56,7 +63,7 @@ class ProjectService extends AbstractControllerService
     /**
      * @param Project $project
      *
-     * @return array
+     * @return Issue[]
      */
     public function getProjectIssues(Project $project)
     {
@@ -65,8 +72,7 @@ class ProjectService extends AbstractControllerService
 
     /**
      * @param Project $project
-     *
-     * @return array
+     * @return IssueActivity[]
      */
     public function getProjectActivities(Project $project)
     {
@@ -75,10 +81,10 @@ class ProjectService extends AbstractControllerService
 
     /**
      * @param Project $project
-     * @param $page
-     * @param $limit
+     * @param int $page
+     * @param int $limit
      *
-     * @return \Knp\Component\Pager\Pagination\PaginationInterface
+     * @return PaginationInterface
      */
     public function getMembers(Project $project, $page, $limit)
     {
@@ -92,7 +98,6 @@ class ProjectService extends AbstractControllerService
     public function removeMember(Project $project, User $user)
     {
         $project->removeUser($user);
-        $this->manager->persist($project);
         $this->manager->flush();
     }
 }

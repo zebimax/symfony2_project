@@ -34,6 +34,9 @@ class AbstractIssueEvent
      */
     protected $user;
 
+    /**
+     * Constructor
+     */
     public function __construct()
     {
         $this->created = new \DateTime();

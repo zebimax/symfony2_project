@@ -2,8 +2,14 @@
 
 namespace AppBundle\Service;
 
-use Doctrine\ORM\EntityManager;
+use AppBundle\Entity\Issue;
+use AppBundle\Entity\IssueActivity;
+
+use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
+
+use Doctrine\ORM\EntityManager;
+
 use Symfony\Component\Translation\TranslatorInterface;
 
 class UserService extends AbstractControllerService
@@ -30,10 +36,10 @@ class UserService extends AbstractControllerService
     }
 
     /**
-     * @param $page
-     * @param $limit
+     * @param int $page
+     * @param int $limit
      *
-     * @return \Knp\Component\Pager\Pagination\PaginationInterface
+     * @return PaginationInterface
      */
     public function getUsersList($page, $limit)
     {
@@ -45,9 +51,8 @@ class UserService extends AbstractControllerService
     }
 
     /**
-     * @param $userId
-     *
-     * @return array
+     * @param int $userId
+     * @return Issue[]
      */
     public function getUserIssues($userId)
     {
@@ -55,9 +60,8 @@ class UserService extends AbstractControllerService
     }
 
     /**
-     * @param $userId
-     *
-     * @return array
+     * @param int $userId
+     * @return Issue[]
      */
     public function getUserAssignedIssues($userId)
     {
@@ -65,9 +69,8 @@ class UserService extends AbstractControllerService
     }
 
     /**
-     * @param $userId
-     *
-     * @return array
+     * @param int $userId
+     * @return IssueActivity[]
      */
     public function getUserActivities($userId)
     {

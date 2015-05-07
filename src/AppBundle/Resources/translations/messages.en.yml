@@ -2,7 +2,7 @@ app:
     dashboard: 'System Dashboard'
     messages:
         please_login: 'Please login'
-        user_edit_success: 'User updated'
+        user_edit_success: 'User saved'
         total_items: 'Total'
         activities:
             templates:
@@ -17,7 +17,7 @@ app:
                 success: 'User was added to project'
                 fail: 'Unexpected error while adding user to project'
             edit:
-                    success: 'Project updated'
+                    success: 'Project saved'
                     fail: 'Unexpected error while editing project'
             add:
                     success: 'New project created'
@@ -27,14 +27,14 @@ app:
                     fail: 'Unexpected error while creating issue'
         issue:
             edit:
-                success: 'Issue updated'
+                success: 'Issue saved'
                 fail: 'Unexpected error while editing issue'
             add_comment:
                     fail: 'Fail to add comment'
                     success: 'Comment added'
         comment:
             update:
-                success: 'comment updated'
+                success: 'comment saved'
                 fail: 'Error updating comment'
             remove:
                 success: 'comment removed'
@@ -46,7 +46,7 @@ app:
                 success: 'User created'
                 fail: 'Error creating user'
             update:
-                success: 'User updated'
+                success: 'User saved'
                 fail: 'Error updating user'
         error:
             'oops': 'Oops! Something went wrong!'

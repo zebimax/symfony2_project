@@ -5,6 +5,7 @@ namespace AppBundle\Security\Authorization\Voter;
 use AppBundle\Entity\Project;
 use AppBundle\Entity\Role;
 use AppBundle\Entity\User;
+
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 use Symfony\Component\Security\Core\User\UserInterface;

@@ -11,6 +11,7 @@ class MainMenuItem implements MainMenuItemInterface
 
     /** @var string */
     protected $label;
+
     /** @var string */
     protected $route;
 
@@ -31,7 +32,7 @@ class MainMenuItem implements MainMenuItemInterface
     }
 
     /**
-     * @return MainMenuItemInterface[]
+     * {@inheritdoc}
      */
     public function getSubItems()
     {
@@ -39,7 +40,7 @@ class MainMenuItem implements MainMenuItemInterface
     }
 
     /**
-     * @return mixed
+     * {@inheritdoc}
      */
     public function getName()
     {
@@ -47,7 +48,7 @@ class MainMenuItem implements MainMenuItemInterface
     }
 
     /**
-     * @return mixed
+     * {@inheritdoc}
      */
     public function getLabel()
     {
@@ -55,7 +56,7 @@ class MainMenuItem implements MainMenuItemInterface
     }
 
     /**
-     * @return array
+     * {@inheritdoc}
      */
     public function getRouteParameters()
     {
@@ -63,7 +64,7 @@ class MainMenuItem implements MainMenuItemInterface
     }
 
     /**
-     * @return mixed
+     * {@inheritdoc}
      */
     public function getRoute()
     {

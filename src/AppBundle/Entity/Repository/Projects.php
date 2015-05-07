@@ -3,13 +3,14 @@
 namespace AppBundle\Entity\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
 
 class Projects extends EntityRepository
 {
     /**
-     * @param $userId
+     * @param int $userId
      *
-     * @return \Doctrine\ORM\QueryBuilder
+     * @return QueryBuilder
      */
     public function getUserProjectsQuery($userId)
     {
@@ -21,7 +22,7 @@ class Projects extends EntityRepository
     }
 
     /**
-     * @return \Doctrine\ORM\QueryBuilder
+     * @return QueryBuilder
      */
     public function getAllProjectsQuery()
     {

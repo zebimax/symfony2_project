@@ -3,13 +3,15 @@
 namespace AppBundle\EventListener;
 
 use AppBundle\Entity\User;
+
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+
 use Twig_Extension_Core;
 
-class TwigSubscriber implements EventSubscriberInterface
+class KernelRequestSubscriber implements EventSubscriberInterface
 {
     const EVENT_PRIORITY = 8;
 

@@ -16,16 +16,6 @@ class IssueActivity extends AbstractIssueEvent
     const COMMENT_ISSUE       = 'comment_issue';
 
     /**
-     * @param Issue $issue
-     * @param User  $user
-     */
-    public function __construct(Issue $issue, User $user)
-    {
-        $this->user = $user;
-        $this->issue = $issue;
-        parent::__construct();
-    }
-    /**
      * @var string
      *
      * @ORM\Column(type="string", length=64)
@@ -48,8 +38,15 @@ class IssueActivity extends AbstractIssueEvent
     protected $issue;
 
     /**
-     * @var int
+     * @param Issue $issue
+     * @param User  $user
      */
+    public function __construct(Issue $issue, User $user)
+    {
+        $this->user = $user;
+        $this->issue = $issue;
+        parent::__construct();
+    }
 
     /**
      * Set type.

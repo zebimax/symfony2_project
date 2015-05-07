@@ -25,7 +25,7 @@ interface MainMenuItemInterface
     public function getLabel();
 
     /**
-     * @return string
+     * @return null|string
      */
     public function getRoute();
 }

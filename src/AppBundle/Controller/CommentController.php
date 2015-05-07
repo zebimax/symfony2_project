@@ -18,7 +18,7 @@ class CommentController extends Controller
     /**
      * @param Issue $issue
      *
-     * @Template("issue_comments.html.twig")
+     * @Template
      * @Security("is_granted('comments_list', issue)")
      *
      * @return array|RedirectResponse
@@ -28,7 +28,8 @@ class CommentController extends Controller
         /** @var User $user */
         $user = $this->getUser();
         $comment = new Comment();
-        $form = $this->get('app.services.comment')->getCommentForm($comment, $issue, $user);
+        $comment->setUser($user)->setIssue($issue);
+        $form = $this->get('app.services.comment')->getCommentForm($comment);
 
         return [
             'issue' => $issue,
@@ -40,7 +41,7 @@ class CommentController extends Controller
      * @param Comment $comment
      *
      * @Route("/comment/edit/{id}", name="app_comment_edit")
-     * @Template("comment/edit.html.twig")
+     * @Template
      * @Security("is_granted('edit', comment)")
      *
      * @return array|RedirectResponse

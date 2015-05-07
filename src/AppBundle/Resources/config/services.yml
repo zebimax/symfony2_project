@@ -349,9 +349,12 @@ services:
     app.services.mail_service:
         class: AppBundle\Service\MailService
         arguments:
-            - @service_container
+            - @translator.default
+            - @mailer
+            - @templating
+            - "%app.mail.default_email%"
     app.twig.subscriber:
-      class: AppBundle\EventListener\TwigSubscriber
+      class: AppBundle\EventListener\KernelRequestSubscriber
       arguments: [@twig, @security.token_storage]
       tags:
           - { name: kernel.event_listener, event: kernel.request }

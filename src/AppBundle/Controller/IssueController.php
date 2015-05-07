@@ -21,7 +21,7 @@ class IssueController extends Controller
      * @param Request $request
      *
      * @Route("/issue/list", name="app_issue_list")
-     * @Template("issue/list.html.twig")
+     * @Template
      * @Security("is_granted('issues_list')")
      *
      * @return array
@@ -44,7 +44,7 @@ class IssueController extends Controller
      * @param Issue $issue
      *
      * @Route("/issue/view/{id}", name="app_issue_view")
-     * @Template("issue/view.html.twig")
+     * @Template
      * @Security("is_granted('view', issue)")
      *
      * @return array
@@ -63,7 +63,7 @@ class IssueController extends Controller
      * @param Issue $issue
      *
      * @Route("/issue/{id}/sub_task/add", name="app_issue_add_sub_task")
-     * @Template("issue/add_sub_task.html.twig")
+     * @Template
      * @Security("is_granted('add_sub_task', issue)")
      *
      * @return array|RedirectResponse
@@ -78,11 +78,13 @@ class IssueController extends Controller
             );
             $this->redirect($this->generateUrl('app_issue_view').['id' => $issue->getId()]);
         }
-        $issueFormService = $this->container->get('app.services.issue_form');
         $subTask = new Issue();
         /** @var User $user */
         $user = $this->getUser();
-        $form = $issueFormService->getIssueForm($subTask, $user, $issue->getProject(), $issue);
+        $subTask->setType(IssueTypeEnumType::SUB_TASK)->setParent($issue);
+
+        $issueFormService = $this->container->get('app.services.issue_form');
+        $form = $issueFormService->getIssueForm($subTask, $user, $issue->getProject());
         if ($this->get('request')->getMethod() === 'POST') {
             $form->submit($this->get('request'));
 
@@ -112,7 +114,7 @@ class IssueController extends Controller
      * @param Issue $issue
      *
      * @Route("/issue/edit/{id}", name="app_issue_edit")
-     * @Template("issue/edit.html.twig")
+     * @Template
      * @Security("is_granted('edit', issue)")
      *
      * @return array|RedirectResponse
@@ -165,15 +167,15 @@ class IssueController extends Controller
         /** @var User $user */
         $user = $this->getUser();
         $comment = new Comment();
-
+        $comment->setUser($user)->setIssue($issue);
         $commentService = $this->get('app.services.comment');
-        $form = $commentService->getCommentForm($comment, $issue, $user);
+        $form = $commentService->getCommentForm($comment);
 
         if ($this->get('request')->getMethod() === 'POST') {
             $form->submit($this->get('request'));
             if ($form->isValid()) {
                 try {
-                    $commentService->createComment($comment, $issue, $user);
+                    $commentService->addComment($comment);
                     $message = 'app.messages.issue.add_comment.success';
                 } catch (\Exception $e) {
                     $message = 'app.messages.issue.add_comment.fail';

@@ -5,6 +5,9 @@ namespace AppBundle\Service;
 use AppBundle\Entity\Project;
 use AppBundle\Entity\User;
 use AppBundle\Service\Form\AbstractFormService;
+
+use Doctrine\ORM\ORMException;
+
 use Symfony\Component\Form\FormInterface;
 
 class ProjectFormsService extends AbstractFormService
@@ -12,7 +15,7 @@ class ProjectFormsService extends AbstractFormService
     /**
      * @param Project $project
      *
-     * @return \Symfony\Component\Form\FormInterface
+     * @return FormInterface
      */
     public function getMembersForm(Project $project)
     {
@@ -45,7 +48,7 @@ class ProjectFormsService extends AbstractFormService
      * @param Project       $project
      * @param FormInterface $form
      *
-     * @throws \Doctrine\ORM\ORMException
+     * @throws ORMException
      */
     public function addMember(Project $project, FormInterface $form)
     {

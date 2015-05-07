@@ -11,7 +11,7 @@ class IssueStatusEnumType extends EnumType
     const TYPE_NAME = 'issue_status_enum';
 
     /**
-     * @return string
+     * {@inheritDoc}
      */
     public function getName()
     {
@@ -19,7 +19,7 @@ class IssueStatusEnumType extends EnumType
     }
 
     /**
-     * @return array
+     * {@inheritDoc}
      */
     public function getValues()
     {

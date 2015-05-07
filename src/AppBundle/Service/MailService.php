@@ -4,19 +4,38 @@ namespace AppBundle\Service;
 
 use AppBundle\Entity\IssueActivity;
 use AppBundle\Entity\User;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+
+use Swift_Mailer;
+
+use Symfony\Bundle\TwigBundle\TwigEngine;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class MailService
 {
-    /** @var ContainerInterface */
-    protected $container;
+    /** @var TranslatorInterface */
+    protected $translator;
+
+    /** @var TwigEngine */
+    protected $templating;
+
+    /** @var Swift_Mailer */
+    protected $mailer;
+
+    /** @var string */
+    protected $fromEmail;
 
     /**
-     * @param ContainerInterface $container
+     * @param TranslatorInterface $translator
+     * @param Swift_Mailer        $mailer
+     * @param TwigEngine          $engine
+     * @param string              $from
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(TranslatorInterface $translator, Swift_Mailer $mailer, TwigEngine $engine, $from)
     {
-        $this->container = $container;
+        $this->translator = $translator;
+        $this->mailer = $mailer;
+        $this->templating = $engine;
+        $this->fromEmail = $from;
     }
 
     /**
@@ -26,11 +45,11 @@ class MailService
     public function sendCreateUserMail(User $user, $password)
     {
         $this->sendMessage(
-            $this->container->getParameter('app.mail.default_email'),
+            $this->fromEmail,
             $user->getEmail(),
             [
-                'subject' => $this->container->get('translator')->trans('app.mail.create_user.subject'),
-                'template' => 'mail/create_user.html.twig',
+                'subject' => $this->translator->trans('app.mail.create_user.subject'),
+                'template' => '@App/Mail/create_user.html.twig',
                 'params' => [
                     'user' => $user,
                     'password' => $password,
@@ -47,11 +66,11 @@ class MailService
         array_map(
             function (User $user) use ($activity) {
                 $this->sendMessage(
-                    $this->container->getParameter('app.mail.default_email'),
+                    $this->fromEmail,
                     $user->getEmail(),
                     [
-                        'subject' => $this->container->get('translator')->trans('app.mail.issue_activity.subject'),
-                        'template' => 'mail/issue_activity.html.twig',
+                        'subject' => $this->translator->trans('app.mail.issue_activity.subject'),
+                        'template' => '@App/Mail/issue_activity.html.twig',
                         'params' => ['activity' => $activity],
                     ]
                 );
@@ -73,12 +92,12 @@ class MailService
             ->setTo($to)
             ->setSubject($messageParams['subject'])
             ->setBody(
-                $this->container->get('templating')->render(
+                $this->templating->render(
                     $messageParams['template'],
                     $messageParams['params']
                 )
             )
             ->setContentType('text/html');
-        $this->container->get('mailer')->send($message);
+        $this->mailer->send($message);
     }
 }

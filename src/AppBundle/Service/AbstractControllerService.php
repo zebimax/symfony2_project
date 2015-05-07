@@ -3,10 +3,15 @@
 namespace AppBundle\Service;
 
 use AppBundle\Entity\Repository\IssueActivities;
+use AppBundle\Entity\Repository\Issues;
+use AppBundle\Entity\Repository\Projects;
+use AppBundle\Entity\Repository\Users;
+
 use Doctrine\ORM\EntityManager;
+
 use Symfony\Component\Translation\TranslatorInterface;
 
-class AbstractControllerService
+abstract class AbstractControllerService
 {
     /** @var EntityManager */
     protected $manager;
@@ -25,7 +30,7 @@ class AbstractControllerService
     }
 
     /**
-     * @return \AppBundle\Entity\Repository\Projects
+     * @return Projects
      */
     protected function getProjectsRepository()
     {
@@ -33,7 +38,7 @@ class AbstractControllerService
     }
 
     /**
-     * @return \AppBundle\Entity\Repository\Issues
+     * @return Issues
      */
     protected function getIssuesRepository()
     {
@@ -49,7 +54,7 @@ class AbstractControllerService
     }
 
     /**
-     * @return \AppBundle\Entity\Repository\Users
+     * @return Users
      */
     protected function getUsersRepository()
     {
