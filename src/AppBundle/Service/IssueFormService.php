@@ -149,6 +149,5 @@ class IssueFormService extends AbstractFormService implements EventDispatcherAwa
                 'attr' => ['class' => 'form-control'],
             ]
         );
-
     }
 }

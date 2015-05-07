@@ -4,7 +4,6 @@ namespace AppBundle\Tests\Unit\Form\Type;
 
 use AppBundle\Form\Type\LoginType;
 use Symfony\Component\Translation\TranslatorInterface;
-use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class LoginTypeTest extends \PHPUnit_Framework_TestCase
@@ -35,7 +34,7 @@ class LoginTypeTest extends \PHPUnit_Framework_TestCase
             [
                 'required' => true,
                 'label' => $this->translator->trans('login_form.username'),
-                'constraints'   => [
+                'constraints' => [
                     new NotBlank(),
                 ],
             ]
@@ -49,7 +48,7 @@ class LoginTypeTest extends \PHPUnit_Framework_TestCase
             [
                 'required' => true,
                 'label' => $this->translator->trans('login_form.password'),
-                'constraints'   => [
+                'constraints' => [
                     new NotBlank(),
                 ],
             ]

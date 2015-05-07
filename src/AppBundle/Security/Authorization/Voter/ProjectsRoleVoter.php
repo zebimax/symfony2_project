@@ -9,12 +9,12 @@ use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 
 class ProjectsRoleVoter extends AbstractSupportedRoleVoter
 {
-    const PROJECTS = 'projects';
-    const PROJECTS_LIST =  'projects_list';
-    const PROJECTS_ADD =  'projects_add';
-    const PROJECTS_EDIT = 'projects_edit';
-    const PROJECTS_MEMBERS_LIST = 'projects_members_list';
-    const PROJECTS_MEMBERS_ADD = 'projects_members_add';
+    const PROJECTS                = 'projects';
+    const PROJECTS_LIST           = 'projects_list';
+    const PROJECTS_ADD            = 'projects_add';
+    const PROJECTS_EDIT           = 'projects_edit';
+    const PROJECTS_MEMBERS_LIST   = 'projects_members_list';
+    const PROJECTS_MEMBERS_ADD    = 'projects_members_add';
     const PROJECTS_MEMBERS_DELETE = 'projects_members_remove';
 
     /**

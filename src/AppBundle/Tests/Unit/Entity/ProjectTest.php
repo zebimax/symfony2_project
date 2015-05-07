@@ -55,7 +55,7 @@ class ProjectTest extends \PHPUnit_Framework_TestCase
     {
         return [
             'label' => ['label', 'test_label', 'test_label'],
-            'summary'    => ['summary', 'test_summary', 'test_summary'],
+            'summary' => ['summary', 'test_summary', 'test_summary'],
         ];
     }
 

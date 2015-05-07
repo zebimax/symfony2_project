@@ -3,9 +3,7 @@
 namespace AppBundle\Service\Form;
 
 use AppBundle\Service\AbstractControllerService;
-
 use Doctrine\ORM\EntityManager;
-
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 

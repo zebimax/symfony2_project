@@ -6,9 +6,9 @@ use AppBundle\Entity\Role;
 
 class UsersRoleVoter extends AbstractSupportedRoleVoter
 {
-    const USERS = 'users';
-    const USERS_LIST =  'users_list';
-    const USERS_ADD = 'users_add';
+    const USERS      = 'users';
+    const USERS_LIST = 'users_list';
+    const USERS_ADD  = 'users_add';
 
     /**
      * @inheritdoc

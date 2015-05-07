@@ -36,8 +36,8 @@ class ProjectService extends AbstractControllerService
 
     /**
      * @param User $user
-     * @param int $page
-     * @param int $limit
+     * @param int  $page
+     * @param int  $limit
      *
      * @return PaginationInterface
      */
@@ -72,6 +72,7 @@ class ProjectService extends AbstractControllerService
 
     /**
      * @param Project $project
+     *
      * @return IssueActivity[]
      */
     public function getProjectActivities(Project $project)
@@ -81,8 +82,8 @@ class ProjectService extends AbstractControllerService
 
     /**
      * @param Project $project
-     * @param int $page
-     * @param int $limit
+     * @param int     $page
+     * @param int     $limit
      *
      * @return PaginationInterface
      */

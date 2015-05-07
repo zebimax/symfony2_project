@@ -34,8 +34,8 @@ class IssueService extends AbstractControllerService
 
     /**
      * @param User $user
-     * @param int $page
-     * @param int $limit
+     * @param int  $page
+     * @param int  $limit
      *
      * @return PaginationInterface
      */

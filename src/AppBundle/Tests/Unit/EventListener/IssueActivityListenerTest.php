@@ -1,4 +1,5 @@
 <?php
+
 namespace AppBundle\Tests\Unit\EventListener;
 
 use AppBundle\Entity\Issue;

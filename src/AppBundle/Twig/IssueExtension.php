@@ -35,7 +35,7 @@ class IssueExtension extends AbstractExtension
      */
     public function getStatus($status)
     {
-        return $this->translator->trans('app.issue.statuses.' . $status);
+        return $this->translator->trans('app.issue.statuses.'.$status);
     }
 
     /**
@@ -45,7 +45,7 @@ class IssueExtension extends AbstractExtension
      */
     public function getType($type)
     {
-        return $this->translator->trans('app.issue.types.' . $type);
+        return $this->translator->trans('app.issue.types.'.$type);
     }
 
     /**
@@ -55,7 +55,7 @@ class IssueExtension extends AbstractExtension
      */
     public function getPriority($priority)
     {
-        return $this->translator->trans('app.issue.priorities.' . $priority);
+        return $this->translator->trans('app.issue.priorities.'.$priority);
     }
 
     /**
@@ -65,12 +65,12 @@ class IssueExtension extends AbstractExtension
      */
     public function getResolution($resolution)
     {
-        return $this->translator->trans('app.issue.resolutions.' . $resolution);
+        return $this->translator->trans('app.issue.resolutions.'.$resolution);
     }
 
     /**
      * @param string $description
-     * @param int $maxLen
+     * @param int    $maxLen
      *
      * @return string
      */

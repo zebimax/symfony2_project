@@ -102,14 +102,14 @@ class User implements UserInterface, \Serializable
     private $file;
 
     /**
-     * store the old name of avatar file to delete after the update
+     * store the old name of avatar file to delete after the update.
      *
      * @var null|string
      */
     private $tempFile;
 
     /**
-     *  Constructor
+     *  Constructor.
      */
     public function __construct()
     {

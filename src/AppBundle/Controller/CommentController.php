@@ -9,8 +9,8 @@ use AppBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class CommentController extends Controller
@@ -64,6 +64,7 @@ class CommentController extends Controller
                     'flash_issue_actions',
                     $this->get('translator.default')->trans($message)
                 );
+
                 return $this->redirect($this->generateUrl('app_issue_view', ['id' => $comment->getIssue()->getId()]));
             }
         }

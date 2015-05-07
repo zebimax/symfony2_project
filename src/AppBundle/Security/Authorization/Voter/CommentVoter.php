@@ -11,7 +11,7 @@ use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 
 class CommentVoter extends AbstractRoleVoter
 {
-    const EDIT = 'edit';
+    const EDIT   = 'edit';
     const REMOVE = 'remove';
 
     /**

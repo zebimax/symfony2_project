@@ -50,7 +50,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     {
         return [
             'avatar' => ['avatar', 'test_avatar', 'test_avatar'],
-            'email'    => ['email', 'test@mail.com', 'test@mail.com'],
+            'email' => ['email', 'test@mail.com', 'test@mail.com'],
             'fullname' => ['fullname', 'test_fullname', 'test_fullname'],
             'isActive' => ['isActive', false, false],
             'password' => ['password', 'test_password', 'test_password'],

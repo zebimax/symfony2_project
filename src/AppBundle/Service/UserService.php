@@ -52,6 +52,7 @@ class UserService extends AbstractControllerService
 
     /**
      * @param int $userId
+     *
      * @return Issue[]
      */
     public function getUserIssues($userId)
@@ -61,6 +62,7 @@ class UserService extends AbstractControllerService
 
     /**
      * @param int $userId
+     *
      * @return Issue[]
      */
     public function getUserAssignedIssues($userId)
@@ -70,6 +72,7 @@ class UserService extends AbstractControllerService
 
     /**
      * @param int $userId
+     *
      * @return IssueActivity[]
      */
     public function getUserActivities($userId)

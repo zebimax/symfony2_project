@@ -24,7 +24,7 @@ abstract class AbstractRoleVoter implements VoterInterface
 
     /**
      * @param UserInterface $user
-     * @param string $checkRole
+     * @param string        $checkRole
      *
      * @return bool
      */

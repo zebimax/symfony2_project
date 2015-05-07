@@ -35,7 +35,7 @@ class AbstractIssueEvent
     protected $user;
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {

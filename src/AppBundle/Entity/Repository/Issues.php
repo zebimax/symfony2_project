@@ -10,7 +10,7 @@ use Doctrine\ORM\QueryBuilder;
 class Issues extends EntityRepository
 {
     /**
-     * get issues where user is collaborator
+     * get issues where user is collaborator.
      *
      * @param int $userId
      *
@@ -19,6 +19,7 @@ class Issues extends EntityRepository
     public function getNotClosedUserIssues($userId)
     {
         $queryBuilder = $this->getNotClosedIssuesQueryBuilder();
+
         return $queryBuilder
             ->join('i.collaborators', 'u')
             ->andWhere($queryBuilder->expr()->eq('u.id', ':userId'))
@@ -28,7 +29,7 @@ class Issues extends EntityRepository
     }
 
     /**
-     * get issues where user is assignee
+     * get issues where user is assignee.
      *
      * @param int $userId
      *
@@ -37,6 +38,7 @@ class Issues extends EntityRepository
     public function getNotClosedUserAssignedIssues($userId)
     {
         $queryBuilder = $this->getNotClosedIssuesQueryBuilder();
+
         return $queryBuilder
             ->andWhere($queryBuilder->expr()->eq('i.assignee', ':userId'))
             ->getQuery()
@@ -52,6 +54,7 @@ class Issues extends EntityRepository
     public function getProjectIssues($projectId)
     {
         $queryBuilder = $this->createQueryBuilder('i');
+
         return $queryBuilder
             ->select(['i'])
             ->join('i.project', 'p')
@@ -62,7 +65,7 @@ class Issues extends EntityRepository
     }
 
     /**
-     * get issues of projects where user is a member
+     * get issues of projects where user is a member.
      *
      * @param int $userId
      *
@@ -94,6 +97,7 @@ class Issues extends EntityRepository
     private function getNotClosedIssuesQueryBuilder()
     {
         $queryBuilder = $this->createQueryBuilder('i');
+
         return $queryBuilder
             ->select(['i'])
             ->where($queryBuilder->expr()->neq('i.status', ':statusClosed'))

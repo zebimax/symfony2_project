@@ -16,7 +16,7 @@ class UserFormService extends AbstractFormService
      */
     public function getUserForm(User $user, User $currentUser)
     {
-        $builder =  $this->factory->create('app_user', $user);
+        $builder = $this->factory->create('app_user', $user);
         if ($currentUser->isAdmin()) {
             $builder->add(
                 'roles',

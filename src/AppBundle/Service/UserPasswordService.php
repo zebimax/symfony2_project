@@ -40,9 +40,9 @@ class UserPasswordService implements EventDispatcherAwareInterface
     }
 
     /**
-     * @param User $user
+     * @param User   $user
      * @param string $plainPassword
-     * @param int  $length
+     * @param int    $length
      */
     public function setUserPassword(User $user, $plainPassword, $length = self::DEFAULT_PASSWORD_LENGTH)
     {

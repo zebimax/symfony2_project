@@ -32,7 +32,7 @@ class ActivityExtension extends AbstractExtension
      */
     public function getActivityMessage(IssueActivity $activity)
     {
-        $map =  [
+        $map = [
             IssueActivity::CREATE_ISSUE => 'app.messages.activities.templates.create_issue',
             IssueActivity::CHANGE_ISSUE_STATUS => 'app.messages.activities.templates.change_issue_activity',
             IssueActivity::COMMENT_ISSUE => 'app.messages.activities.templates.comment_issue',

@@ -6,9 +6,9 @@ use AppBundle\Entity\Role;
 
 class IssuesRoleVoter extends AbstractSupportedRoleVoter
 {
-    const ISSUES = 'issues';
-    const ISSUES_LIST =  'issues_list';
-    const ISSUES_ADD =  'issues_add';
+    const ISSUES      = 'issues';
+    const ISSUES_LIST = 'issues_list';
+    const ISSUES_ADD  = 'issues_add';
 
     /**
      * @inheritdoc

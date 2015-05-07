@@ -85,7 +85,7 @@ class IssueActivityTest extends \PHPUnit_Framework_TestCase
         $created = new DateTime();
 
         return [
-            'type'    => ['type', IssueActivity::CREATE_ISSUE, IssueActivity::CREATE_ISSUE],
+            'type' => ['type', IssueActivity::CREATE_ISSUE, IssueActivity::CREATE_ISSUE],
             'created' => ['created', $created, $created],
         ];
     }
