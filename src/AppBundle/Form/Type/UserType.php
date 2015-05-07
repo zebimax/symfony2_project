@@ -52,20 +52,23 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $formFactory = $builder->getFormFactory();
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($formFactory) {
-            $form = $event->getForm();
-            $user = $event->getData();
-            if ($user instanceof User && $user->getId() === null) {
-                $form->add(
-                    'password',
-                    'password',
-                    [
-                        'required' => false,
-                        'label'    => $this->translator->trans('app.password_will_be_generated'),
-                    ]
-                );
+        $builder->addEventListener(
+            FormEvents::PRE_SET_DATA,
+            function (FormEvent $event) use ($formFactory) {
+                $form = $event->getForm();
+                $user = $event->getData();
+                if ($user instanceof User && $user->getId() === null) {
+                    $form->add(
+                        'password',
+                        'password',
+                        [
+                            'required' => false,
+                            'label'    => $this->translator->trans('app.password_will_be_generated'),
+                        ]
+                    );
+                }
             }
-        });
+        );
         $builder
             ->add(
                 'email',

@@ -54,7 +54,7 @@ class ProjectControllerTest extends WebTestCase
         $operator = $this->getReference('user_operator');
         $crawler = $this->client->request('GET', sprintf('/project/%d/members/list', $project->getId()));
         $this->assertTrue(
-            $crawler->filter(sprintf('html:contains("%s")', $operator->getEmail()))->count() > 0
+            $crawler->filter(sprintf('html:contains("%s")', $operator->getUsername()))->count() > 0
         );
     }
 

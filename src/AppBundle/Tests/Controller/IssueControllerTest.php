@@ -57,7 +57,7 @@ class IssueControllerTest extends WebTestCase
         $id = $story->getId();
         $crawler = $this->client->request('GET', '/issue/edit/'.$id);
         $summary = 'Edited summary';
-        $form = $crawler->selectButton('Edit')->form(['app_issue[summary]' => $summary]);
+        $form = $crawler->selectButton('Save')->form(['app_issue[summary]' => $summary]);
         $this->client->followRedirects();
         $crawler = $this->client->submit($form);
         $this->assertTrue(

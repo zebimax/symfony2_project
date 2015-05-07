@@ -49,7 +49,7 @@ class UserTypeTest extends \PHPUnit_Framework_TestCase
         $builder = $this->getMockBuilder('Symfony\Component\Form\FormBuilder')
             ->disableOriginalConstructor()
             ->getMock();
-        $builder->expects($this->at(0))->method('add')
+        $builder->expects($this->at(2))->method('add')
             ->willReturn($builder)
             ->with(
                 'email',
@@ -59,7 +59,7 @@ class UserTypeTest extends \PHPUnit_Framework_TestCase
                     'label' => null,
                 ]
             );
-        $builder->expects($this->at(1))->method('add')
+        $builder->expects($this->at(3))->method('add')
             ->willReturn($builder)
             ->with(
                 'username',
@@ -69,7 +69,7 @@ class UserTypeTest extends \PHPUnit_Framework_TestCase
                     'label' => null,
                 ]
             );
-        $builder->expects($this->at(2))->method('add')
+        $builder->expects($this->at(4))->method('add')
             ->willReturn($builder)
             ->with(
                 'fullname',
@@ -79,7 +79,7 @@ class UserTypeTest extends \PHPUnit_Framework_TestCase
                     'label' => null,
                 ]
             );
-        $builder->expects($this->at(3))->method('add')
+        $builder->expects($this->at(5))->method('add')
             ->willReturn($builder)
             ->with(
                 'timezone',
@@ -89,7 +89,7 @@ class UserTypeTest extends \PHPUnit_Framework_TestCase
                     'label' => null,
                 ]
             );
-        $builder->expects($this->at(4))->method('add')
+        $builder->expects($this->at(6))->method('add')
             ->willReturn($builder)
             ->with(
                 'file',

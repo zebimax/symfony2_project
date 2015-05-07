@@ -2,7 +2,7 @@
 {% block title %}
     {{ 'app.titles.issue_sub_task_add' | trans }}
 {% endblock %}
-{% block page_header %}{{ 'app.titles.project_issue_add' | trans }}{%  endblock %}
+{% block page_header %}{{ 'app.titles.project_issue_add' | trans({'%project_code%': project.code, '%project_label%': project.label}) }}{%  endblock %}
 {% block page_content %}
     <form method="post" {{ form_enctype(form) }}>
         {{ form_widget(form) }}

@@ -47,13 +47,12 @@ class IssueTypeTest extends TypeTestCase
             'summary' => 'text',
             'description' => 'textarea',
             'priority' => 'choice',
-            'assignee' => 'entity',
         );
         $builder = $this->getMockBuilder('Symfony\Component\Form\FormBuilder')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $counter = 0;
+        $counter = 2;
         foreach ($expectedFields as $fieldName => $formType) {
             $builder->expects($this->at($counter))
                 ->method('add')

@@ -54,21 +54,24 @@ class IssueType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $formFactory = $builder->getFormFactory();
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($formFactory) {
-            $form  = $event->getForm();
-            $issue = $event->getData();
-            if ($issue instanceof Issue) {
-                if ($issue->getParent() === null && $this->isIssueTypeChangeable($issue)) {
-                    $this->addTypeField($form);
-                }
-                if ($issue->getStatus() !== null) {
-                    $this->addStatusField($form);
-                }
-                if ($issue->getStatus() === IssueStatusEnumType::CLOSED) {
-                    $this->addResolutionField($form);
+        $builder->addEventListener(
+            FormEvents::PRE_SET_DATA,
+            function (FormEvent $event) use ($formFactory) {
+                $form  = $event->getForm();
+                $issue = $event->getData();
+                if ($issue instanceof Issue) {
+                    if ($issue->getParent() === null && $this->isIssueTypeChangeable($issue)) {
+                        $this->addTypeField($form);
+                    }
+                    if ($issue->getStatus() !== null) {
+                        $this->addStatusField($form);
+                    }
+                    if ($issue->getStatus() === IssueStatusEnumType::CLOSED) {
+                        $this->addResolutionField($form);
+                    }
                 }
             }
-        });
+        );
         $builder
             ->add(
                 'summary',

@@ -43,7 +43,7 @@ class ProjectTest extends \PHPUnit_Framework_TestCase
     {
         $this->entity->setLabel('First letter from each word in upper case');
         $this->entity->prePersist();
-        $this->assertEquals('FLFEWIUC', $this->entity->getCode());
+        $this->assertEquals('FLFEW', $this->entity->getCode());
     }
 
     /**
