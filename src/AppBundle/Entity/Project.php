@@ -179,6 +179,13 @@ class Project
     }
 
     /**
+     * @ORM\PreUpdate
+     */
+    public function preUpdate()
+    {
+        $this->updated = new \DateTime('now', new \DateTimeZone('UTC'));
+    }
+    /**
      * @return string
      */
     public function getSummary()
