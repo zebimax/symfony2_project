@@ -170,6 +170,7 @@ services:
                 label: %app.main_menu_items_labels.issue%
             sub_items:
                 - @app.main_menu_issue_list_item
+                - @app.main_menu_issue_add_item
     app.main_menu_project_item:
         class:      AppBundle\Menu\MainMenuItem
         factory: [@app.main_menu_item.factory, createMainMenuItem]

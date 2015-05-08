@@ -79,18 +79,19 @@ class IssueController extends Controller
             $this->redirect($this->generateUrl('app_issue_view') . ['id' => $issue->getId()]);
         }
         $subTask = new Issue();
+        $subTask->setProject($issue->getProject());
         /** @var User $user */
         $user = $this->getUser();
         $subTask->setType(IssueTypeEnumType::SUB_TASK)->setParent($issue);
 
         $issueFormService = $this->container->get('app.services.issue_form');
-        $form             = $issueFormService->getIssueForm($subTask, $user, $issue->getProject());
+        $form             = $issueFormService->getIssueForm($subTask, $user);
         if ($this->get('request')->getMethod() === 'POST') {
             $form->submit($this->get('request'));
 
             if ($form->isValid()) {
                 try {
-                    $issueFormService->createIssue($subTask, $issue->getProject(), $user);
+                    $issueFormService->addIssue($subTask, $user);
                     $message = 'app.messages.project.add_issue.success';
                 } catch (\Exception $e) {
                     $message = 'app.messages.project.add_issue.fail';
@@ -105,8 +106,8 @@ class IssueController extends Controller
         }
 
         return [
-            'project' => $issue->getProject(),
-            'form'    => $form->createView(),
+            'issue' => $issue,
+            'form'  => $form->createView(),
         ];
     }
 
@@ -124,7 +125,7 @@ class IssueController extends Controller
         /** @var User $user */
         $user             = $this->getUser();
         $issueFormService = $this->container->get('app.services.issue_form');
-        $form             = $issueFormService->getIssueForm($issue, $user, $issue->getProject());
+        $form             = $issueFormService->getIssueForm($issue, $user);
 
         if ($this->get('request')->getMethod() === 'POST') {
             $form->submit($this->get('request'));
@@ -191,5 +192,45 @@ class IssueController extends Controller
         }
 
         return $this->redirect($redirectUrl);
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @Route("/issue/add", name="app_issue_add")
+     * @Template
+     * @Security("is_granted('issues_add')")
+     *
+     * @return array|RedirectResponse
+     */
+    public function addAction(Request $request)
+    {
+        $issueFormService = $this->container->get('app.services.issue_form');
+        $issue            = new Issue();
+        /** @var User $user */
+        $user = $this->getUser();
+        $form = $issueFormService->getIssueForm($issue, $user);
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            try {
+                $issueFormService->addIssue($issue, $user);
+                $message     = 'app.messages.project.add_issue.success';
+                $generateUrl = $this->generateUrl('app_issue_view', ['id' => $issue->getId()]);
+            } catch (\Exception $e) {
+                $message     = 'app.messages.project.add_issue.fail';
+                $generateUrl = $this->generateUrl('app_issue_add');
+            }
+            $this->addFlash(
+                'flash_issue_actions',
+                $this->get('translator.default')->trans($message)
+            );
+
+            return $this->redirect($generateUrl);
+        }
+
+        return [
+            'issue' => $issue,
+            'form'  => $form->createView(),
+        ];
     }
 }

@@ -230,15 +230,16 @@ class ProjectController extends Controller
     {
         $issueFormService = $this->container->get('app.services.issue_form');
         $issue            = new Issue();
+        $issue->setProject($project);
         /** @var User $user */
         $user = $this->getUser();
-        $form = $issueFormService->getIssueForm($issue, $user, $project);
+        $form = $issueFormService->getIssueForm($issue, $user);
         if ($this->get('request')->getMethod() === 'POST') {
             $form->submit($this->get('request'));
 
             if ($form->isValid()) {
                 try {
-                    $issueFormService->createIssue($issue, $project, $user);
+                    $issueFormService->addIssue($issue, $user);
                     $message = 'app.messages.project.add_issue.success';
                 } catch (\Exception $e) {
                     $message = 'app.messages.project.add_issue.fail';
@@ -253,8 +254,8 @@ class ProjectController extends Controller
         }
 
         return [
-            'project' => $project,
-            'form'    => $form->createView(),
+            'issue' => $issue,
+            'form'  => $form->createView(),
         ];
     }
 }

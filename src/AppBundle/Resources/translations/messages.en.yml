@@ -25,6 +25,7 @@ app:
             add_issue:
                     success: 'New issue created'
                     fail: 'Unexpected error while creating issue'
+            select_project: 'Select project'
         issue:
             edit:
                 success: 'Issue saved'
@@ -105,6 +106,7 @@ app:
             create_user: 'New user created'
             issue_activity: 'Issue activity'
         error: '%code% - %text%'
+        issue_create: 'Create issue'
     password: 'Password'
     password_will_be_generated: 'password, If leave empty will be generated'
     tooltip:
@@ -165,6 +167,7 @@ app:
         last_update: 'Last updated'
         sub_tasks: 'Story sub tasks'
         story: 'Story'
+        create_issue: 'Create issue'
     project: 'Project'
     description: 'Description'
     assignee: 'Assignee'

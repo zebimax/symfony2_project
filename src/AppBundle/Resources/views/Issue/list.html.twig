@@ -5,6 +5,15 @@
 {% endblock %}
 {% block page_header %}{{ 'app.issue.issues' | trans }}{%  endblock %}
 {% block page_content %}
+    {% if app.user and is_granted('issues_add') %}
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-1">
+                    <a class="btn btn-primary" href="{{ path('app_issue_add') }}">{{'app.issue.create_issue' | trans}}</a>
+                </div>
+            </div>
+        </div>
+    {% endif %}
     {% if issues | length %}
         <table class="table table-bordered table-condensed table-striped">
             <tr>

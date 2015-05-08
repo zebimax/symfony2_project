@@ -1,12 +1,12 @@
 {% extends '@App/Default/index.html.twig' %}
 {% block title %}
-    {{ 'app.titles.project_issue_add' | trans }}
+    {{ 'app.titles.project_issue_add' | trans({'%project_label%': issue.project.label, '%project_code%': issue.project.code})}}
 {% endblock %}
-{% block page_header %}{{ 'app.titles.project_issue_add' | trans({'%project_label%': project.label, '%project_code%': project.code})}}{%  endblock %}
+{% block page_header %}{{ 'app.titles.project_issue_add' | trans({'%project_label%': issue.project.label, '%project_code%': issue.project.code})}}{%  endblock %}
 {% block page_content %}
     <form method="post" {{ form_enctype(form) }}>
         {{ form_widget(form) }}
         <input type="submit" class="btn btn-primary" value="{{ 'app.button.add' | trans }}"/>
-        <a class="btn btn-danger" href="{{ path('app_project_view', {id: project.id}) }}">{{ 'app.button.cancel' | trans }}</a>
+        <a class="btn btn-danger" href="{{ path('app_project_view', {id: issue.project.id}) }}">{{ 'app.button.cancel' | trans }}</a>
     </form>
 {%  endblock %}

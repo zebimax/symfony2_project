@@ -22,17 +22,35 @@ class IssueFormService extends AbstractFormService implements EventDispatcherAwa
     use EventDispatcherAwareTrait;
 
     /**
-     * @param Issue   $issue
-     * @param User    $user
-     * @param Project $project
+     * @param Issue $issue
+     * @param User  $user
      *
      * @return FormInterface
      */
-    public function getIssueForm(Issue $issue, User $user, Project $project)
+    public function getIssueForm(Issue $issue, User $user)
     {
+        $builder = $this->factory->createBuilder('app_issue', $issue);
+        if (null === $project = $issue->getProject()) {
+            $this->addProjectField($builder, $user);
+            $builder->get('project')->addEventListener(
+                FormEvents::POST_SUBMIT,
+                function (FormEvent $event) use ($builder) {
+                    /** @var null|Project $project */
+                    $project = $this->getProjectsRepository()->find($event->getData());
+                    $this->addAssigneeField($event->getForm()->getParent(), $project);
+                }
+            );
+        }
+        $builder->addEventListener(
+            FormEvents::PRE_SET_DATA,
+            function (FormEvent $event) {
+                /** @var Issue $issue */
+                $issue = $event->getData();
+                $this->addAssigneeField($event->getForm(), $issue->getProject());
+            }
+        );
+
         $currentStatus = $issue->getStatus();
-        $builder       = $this->factory->createBuilder('app_issue', $issue);
-        $this->addAssigneeField($builder, $project);
         $builder->addEventListener(
             FormEvents::SUBMIT,
             function (FormEvent $event) use ($currentStatus, $user) {
@@ -68,10 +86,9 @@ class IssueFormService extends AbstractFormService implements EventDispatcherAwa
 
     /**
      * @param         param Issue $issue
-     * @param Project $project
      * @param User    $user
      */
-    public function createIssue(Issue $issue, Project $project, User $user)
+    public function addIssue(Issue $issue, User $user)
     {
         $activity = (new IssueActivity($issue, $user))
             ->setType(IssueActivity::CREATE_ISSUE)
@@ -79,7 +96,6 @@ class IssueFormService extends AbstractFormService implements EventDispatcherAwa
         $issue
             ->addCollaborator($user)
             ->setReporter($user)
-            ->setProject($project)
             ->setStatus(IssueStatusEnumType::OPEN)
             ->addActivity($activity);
 
@@ -132,10 +148,10 @@ class IssueFormService extends AbstractFormService implements EventDispatcherAwa
     }
 
     /**
-     * @param FormBuilderInterface $builder
-     * @param Project              $project
+     * @param FormInterface $builder
+     * @param Project       $project
      */
-    private function addAssigneeField(FormBuilderInterface $builder, Project $project)
+    private function addAssigneeField(FormInterface $builder, Project $project = null)
     {
         $builder->add(
             'assignee',
@@ -144,9 +160,31 @@ class IssueFormService extends AbstractFormService implements EventDispatcherAwa
                 'class'    => 'AppBundle:User',
                 'property' => 'username',
                 'label'    => $this->translator->trans('app.issue.assignee'),
-                'choices'  => $project->getUsers(),
+                'choices'  => $project ? $project->getUsers() : [],
                 'required' => false,
                 'attr'     => ['class' => 'form-control'],
+            ]
+        );
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     * @param User                 $user
+     */
+    private function addProjectField(FormBuilderInterface $builder, User $user)
+    {
+        $builder->add(
+            'project',
+            'entity',
+            [
+                'class'       => 'AppBundle:Project',
+                'property'    => 'label',
+                'label'       => $this->translator->trans('app.project'),
+                'choices'     => $user->getProjects(),
+                'required'    => true,
+                'placeholder' => $this->translator->trans('app.messages.project.select_project'),
+                'empty_data'  => null,
+                'attr'        => ['class' => 'form-control'],
             ]
         );
     }
