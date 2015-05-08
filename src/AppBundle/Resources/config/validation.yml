@@ -28,6 +28,8 @@ AppBundle\Entity\Role:
             - Choice: { choices: [ROLE_OPERATOR, ROLE_MANAGER, ROLE_ADMINISTRATOR] }
 
 AppBundle\Entity\Project:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: label
     properties:
         label:
             - NotBlank: ~
