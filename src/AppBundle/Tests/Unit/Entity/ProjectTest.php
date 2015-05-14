@@ -41,9 +41,14 @@ class ProjectTest extends \PHPUnit_Framework_TestCase
 
     public function testPrePersist()
     {
-        $this->entity->setLabel('First letter from each word in upper case');
-        $this->entity->prePersist();
-        $this->assertEquals('FLFEW', $this->entity->getCode());
+        $code = 'code';
+        $this->entity
+            ->setCode($code)
+            ->prePersist();
+
+        $this->assertEquals(strtoupper($code), $this->entity->getCode());
+        $dateTime     = new \DateTime('now', new \DateTimeZone('UTC'));
+        $this->assertEquals(00000, $dateTime->diff($this->entity->getUpdated())->format('%y%m%d%h%i'));
     }
 
     /**

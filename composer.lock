@@ -1,7 +1,7 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
     "hash": "ae31f031da10173af566f1f270aad027",
@@ -17,7 +17,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/braincrafted/bootstrap-bundle/zipball/121961d7b31f4de7a7100e0c84e283c249246885",
+                "url": "https://api.github.com/repos/braincrafted/bootstrap-bundle/zipball/dd53559cfe15428f07ac3681826573fab1557bd9",
                 "reference": "121961d7b31f4de7a7100e0c84e283c249246885",
                 "shasum": ""
             },

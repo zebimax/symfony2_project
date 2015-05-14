@@ -11,16 +11,19 @@ class ProjectControllerTest extends WebTestCase
     {
         $crawler = $this->client->request('GET', '/project/add');
         $label = 'new test label';
+        $code = 'code';
         $summary = 'test project summary';
         $form = $crawler->selectButton('Add')->form(
             [
                 'app_project[label]' => $label,
+                'app_project[code]' => $code,
                 'app_project[summary]' => $summary,
             ]
         );
         $this->client->followRedirects();
         $crawler = $this->client->submit($form);
         $this->assertTrue($crawler->filter(sprintf('html:contains("%s")', $label))->count() > 0);
+        $this->assertTrue($crawler->filter(sprintf('html:contains("%s")', strtoupper($code)))->count() > 0);
         $this->assertTrue($crawler->filter(sprintf('html:contains("%s")', $summary))->count() > 0);
     }
 
