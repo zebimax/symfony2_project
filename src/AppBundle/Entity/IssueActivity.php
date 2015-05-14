@@ -20,14 +20,14 @@ class IssueActivity extends AbstractIssueEvent
      *
      * @ORM\Column(type="string", length=64)
      */
-    private $type;
+    protected $type;
 
     /**
      * @var array
      *
      * @ORM\Column(type="json_array", nullable=true)
      */
-    private $details;
+    protected $details;
 
     /**
      * @var Issue

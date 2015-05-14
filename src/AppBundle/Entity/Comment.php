@@ -25,14 +25,14 @@ class Comment extends AbstractIssueEvent
      *
      * @ORM\Column(name="body", type="text")
      */
-    private $body;
+    protected $body;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(type="datetime")
      */
-    private $updated;
+    protected $updated;
 
     /**
      * Set body.

@@ -16,7 +16,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 class LoadIssueData extends AbstractOrderedContainerAwareFixture
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function load(ObjectManager $manager)
     {
@@ -87,7 +87,7 @@ class LoadIssueData extends AbstractOrderedContainerAwareFixture
      *
      * @return Issue
      */
-    private function createEntityInstance(array $params = [])
+    protected function createEntityInstance(array $params = [])
     {
         /** @var User $reporter */
         $reporter = $this->getReference($params['reporter']);
@@ -136,7 +136,7 @@ class LoadIssueData extends AbstractOrderedContainerAwareFixture
      * @param Issue $issue
      * @param User  $user
      */
-    private function addCreateActivity(Issue $issue, User $user)
+    protected function addCreateActivity(Issue $issue, User $user)
     {
         $issue->addActivity(
             (new IssueActivity($issue, $user))

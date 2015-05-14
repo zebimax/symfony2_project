@@ -20,49 +20,49 @@ class Issue
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(type="string", length=255)
      */
-    private $summary;
+    protected $summary;
 
     /**
      * @var string
      *
      * @ORM\Column(type="text", nullable=true)
      */
-    private $description;
+    protected $description;
 
     /**
      * @var string
      *
      * @ORM\Column(type="issue_type_enum")
      */
-    private $type;
+    protected $type;
 
     /**
      * @var string
      *
      * @ORM\Column(type="issue_priority_enum")
      */
-    private $priority;
+    protected $priority;
 
     /**
      * @var string
      *
      * @ORM\Column(type="issue_resolution_enum", nullable=true)
      */
-    private $resolution;
+    protected $resolution;
 
     /**
      * @var string
      *
      * @ORM\Column(type="issue_status_enum")
      */
-    private $status;
+    protected $status;
 
     /**
      * @var User
@@ -70,7 +70,7 @@ class Issue
      * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(onDelete="SET NULL")
      */
-    private $reporter;
+    protected $reporter;
 
     /**
      * @var User
@@ -78,7 +78,7 @@ class Issue
      * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(onDelete="SET NULL")
      */
-    private $assignee;
+    protected $assignee;
 
     /**
      * @var ArrayCollection User[]
@@ -86,7 +86,7 @@ class Issue
      * @ORM\ManyToMany(targetEntity="User", inversedBy="issues", indexBy="id")
      * @ORM\JoinTable(name="bt_user_to_issue")
      */
-    private $collaborators;
+    protected $collaborators;
 
     /**
      * @var Issue
@@ -94,14 +94,14 @@ class Issue
      * @ORM\ManyToOne(targetEntity="Issue", inversedBy="children")
      * @ORM\JoinColumn(onDelete="CASCADE")
      **/
-    private $parent;
+    protected $parent;
 
     /**
      * @var ArrayCollection Issue[]
      *
      * @ORM\OneToMany(targetEntity="Issue", mappedBy="parent")
      **/
-    private $children;
+    protected $children;
 
     /**
      * @var Project
@@ -109,35 +109,35 @@ class Issue
      * @ORM\ManyToOne(targetEntity="Project")
      * @ORM\JoinColumn(onDelete="SET NULL")
      */
-    private $project;
+    protected $project;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(type="datetime")
      */
-    private $created;
+    protected $created;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(type="datetime")
      */
-    private $updated;
+    protected $updated;
 
     /**
      * @var ArrayCollection IssueActivity[]
      *
      * @ORM\OneToMany(targetEntity="IssueActivity", mappedBy="issue", indexBy="id", cascade={"persist"})
      **/
-    private $activities;
+    protected $activities;
 
     /**
      * @var ArrayCollection Comment[]
      *
      * @ORM\OneToMany(targetEntity="Comment", mappedBy="issue")
      **/
-    private $comments;
+    protected $comments;
 
     public function __construct()
     {

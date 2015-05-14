@@ -12,7 +12,7 @@ class IssuePriorityEnumType extends EnumType
     const TYPE_NAME = 'issue_priority_enum';
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getName()
     {
@@ -20,7 +20,7 @@ class IssuePriorityEnumType extends EnumType
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getValues()
     {

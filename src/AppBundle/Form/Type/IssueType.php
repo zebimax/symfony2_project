@@ -53,10 +53,9 @@ class IssueType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $formFactory = $builder->getFormFactory();
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA,
-            function (FormEvent $event) use ($formFactory) {
+            function (FormEvent $event) {
                 $form  = $event->getForm();
                 $issue = $event->getData();
                 if ($issue instanceof Issue) {
@@ -66,7 +65,7 @@ class IssueType extends AbstractType
                     if ($issue->getStatus() !== null) {
                         $this->addStatusField($form);
                     }
-                    if ($issue->getStatus() === IssueStatusEnumType::CLOSED) {
+                    if ($issue->getStatus() === IssueStatusEnumType::IN_PROGRESS) {
                         $this->addResolutionField($form);
                     }
                 }
@@ -216,10 +215,13 @@ class IssueType extends AbstractType
      *
      * @return bool
      */
-    private function isIssueTypeChangeable(Issue $issue)
+    protected function isIssueTypeChangeable(Issue $issue)
     {
-        return (!in_array($issue->getType(), [IssueTypeEnumType::STORY, IssueTypeEnumType::SUB_TASK]))
-        || (($issue->getType() === IssueTypeEnumType::STORY)
-            && $issue->getChildren()->isEmpty());
+        return
+            !in_array(
+                $issue->getType(),
+                [IssueTypeEnumType::STORY, IssueTypeEnumType::SUB_TASK]
+            ) ||
+            (($issue->getType() === IssueTypeEnumType::STORY) && $issue->getChildren()->isEmpty());
     }
 }

@@ -22,21 +22,21 @@ class Project
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(type="string", length=255, unique=true)
      */
-    private $label;
+    protected $label;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=64)
+     * @ORM\Column(type="string", length=64, unique=true)
      */
-    private $code;
+    protected $code;
 
     /**
      * @var ArrayCollection User[]
@@ -44,28 +44,28 @@ class Project
      * @ORM\ManyToMany(targetEntity="User", inversedBy="projects", indexBy="id", cascade={"persist"})
      * @ORM\JoinTable(name="bt_project_to_user")
      */
-    private $users;
+    protected $users;
 
     /**
      * @var string
      *
      * @ORM\Column(type="text", nullable=true)
      */
-    private $summary;
+    protected $summary;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(type="datetime")
      */
-    private $created;
+    protected $created;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(type="datetime")
      */
-    private $updated;
+    protected $updated;
 
     public function __construct()
     {
@@ -160,31 +160,14 @@ class Project
 
     /**
      * @ORM\PrePersist
+     * @ORM\PreUpdate
      */
     public function prePersist()
     {
-        $parts      = preg_split('/[\W]+/', $this->label, self::CODE_LENGTH, PREG_SPLIT_NO_EMPTY);
-        $code       = strtoupper(
-            array_reduce(
-                $parts,
-                function ($carry, $item) {
-                    return $carry . $item[0];
-                },
-                ''
-            )
-        );
-        $this->code = !empty($code) ? $code : self::DEFAULT_CODE;
-
         $this->updated = new \DateTime('now', new \DateTimeZone('UTC'));
+        $this->code = strtoupper($this->code);
     }
 
-    /**
-     * @ORM\PreUpdate
-     */
-    public function preUpdate()
-    {
-        $this->updated = new \DateTime('now', new \DateTimeZone('UTC'));
-    }
     /**
      * @return string
      */
@@ -239,5 +222,13 @@ class Project
         $this->updated = $updated;
 
         return $this;
+    }
+
+    /**
+     * @param string $code
+     */
+    public function setCode($code)
+    {
+        $this->code = $code;
     }
 }

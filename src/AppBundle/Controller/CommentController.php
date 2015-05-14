@@ -21,7 +21,7 @@ class CommentController extends Controller
      * @Template
      * @Security("is_granted('comments_list', issue)")
      *
-     * @return array|RedirectResponse
+     * @return array
      */
     public function listAction(Issue $issue)
     {

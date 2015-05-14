@@ -12,7 +12,7 @@ class IssueTypeEnumType extends EnumType
     const TYPE_NAME = 'issue_type_enum';
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getName()
     {
@@ -20,7 +20,7 @@ class IssueTypeEnumType extends EnumType
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getValues()
     {

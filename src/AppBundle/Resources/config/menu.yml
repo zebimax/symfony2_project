@@ -1,0 +1,176 @@
+parameters:
+        app.main_menu_items.issue: 'main_menu.issues'
+        app.main_menu_items.project: 'main_menu.projects'
+        app.main_menu_items.user: 'main_menu.users'
+        app.main_menu_items.profile: 'main_menu.profile'
+        app.main_menu_items_labels.home: 'app.main_menu.home'
+        app.main_menu_items_labels.issue: 'app.main_menu.issues.root'
+        app.main_menu_items_labels.project: 'app.main_menu.projects.root'
+        app.main_menu_items_labels.user: 'app.main_menu.users.root'
+        app.main_menu_items_labels.profile: 'app.main_menu.profile.root'
+        app.main_menu_items_labels.issue.list: 'app.main_menu.issues.list'
+        app.main_menu_items_labels.issue.add: 'app.main_menu.issues.add'
+        app.main_menu_items_labels.user.list: 'app.main_menu.users.list'
+        app.main_menu_items_labels.user.add: 'app.main_menu.users.add'
+        app.main_menu_items_labels.project.list: 'app.main_menu.projects.list'
+        app.main_menu_items_labels.project.add: 'app.main_menu.projects.add'
+        app.main_menu_items_labels.profile.edit: 'app.main_menu.profile.edit'
+        app.main_menu_items_labels.profile.view: 'app.main_menu.profile.view'
+        app.main_menu_items_names.home: 'home'
+        app.main_menu_items_names.issue: 'issues'
+        app.main_menu_items_names.project: 'projects'
+        app.main_menu_items_names.user: 'users'
+        app.main_menu_items_names.profile: 'profile'
+        app.main_menu_items_names.issue.list: 'issues_list'
+        app.main_menu_items_names.issue.add: 'issues_add'
+        app.main_menu_items_names.user.list: 'users_list'
+        app.main_menu_items_names.user.add: 'users_add'
+        app.main_menu_items_names.project.list: 'projects_list'
+        app.main_menu_items_names.project.add: 'projects_add'
+        app.main_menu_items_names.profile.edit: 'profile_edit'
+        app.main_menu_items_names.profile.view: 'profile_view'
+
+services:
+    app.main_menu_item.factory:
+        class: AppBundle\Menu\MainMenuItemFactory
+
+    app.main_menu.user_id_parameter_provider:
+        class:      AppBundle\Menu\Route\UserIdParameterProvider
+        arguments:
+            - @security.token_storage
+
+    app.main_menu_manager:
+        class:      AppBundle\Menu\MainMenuManager
+        public:     true
+        arguments:
+            - [@app.main_menu_home_item, @app.main_menu_issue_item, @app.main_menu_project_item, @app.main_menu_user_item, @app.main_menu_profile_item]
+
+    app.main_menu_home_item:
+        class:      AppBundle\Menu\MainMenuItem
+        factory: [@app.main_menu_item.factory, createMainMenuItem]
+        arguments:
+            config:
+                name: %app.main_menu_items_names.home%
+                label: %app.main_menu_items_labels.home%
+                route: 'app_home'
+
+    app.main_menu_issue_item:
+        class:      AppBundle\Menu\MainMenuItem
+        factory: [@app.main_menu_item.factory, createMainMenuItem]
+        arguments:
+            config:
+                name: %app.main_menu_items_names.issue%
+                label: %app.main_menu_items_labels.issue%
+            sub_items:
+                - @app.main_menu_issue_list_item
+                - @app.main_menu_issue_add_item
+
+    app.main_menu_project_item:
+        class:      AppBundle\Menu\MainMenuItem
+        factory: [@app.main_menu_item.factory, createMainMenuItem]
+        arguments:
+            config:
+                name: %app.main_menu_items_names.project%
+                label: %app.main_menu_items_labels.project%
+            sub_items:
+                - @app.main_menu_project_list_item
+                - @app.main_menu_project_add_item
+
+    app.main_menu_profile_item:
+        class:      AppBundle\Menu\MainMenuItem
+        factory: [@app.main_menu_item.factory, createMainMenuItem]
+        arguments:
+            config:
+                name: %app.main_menu_items_names.profile%
+                label: %app.main_menu_items_labels.profile%
+            sub_items:
+                - @app.main_menu_profile_edit_item
+                - @app.main_menu_profile_view_item
+
+    app.main_menu_user_item:
+        class:      AppBundle\Menu\MainMenuItem
+        factory: [@app.main_menu_item.factory, createMainMenuItem]
+        arguments:
+            config:
+                name: %app.main_menu_items_names.user%
+                label: %app.main_menu_items_labels.user%
+            sub_items:
+                - @app.main_menu_user_list_item
+                - @app.main_menu_user_add_item
+
+    app.main_menu_issue_list_item:
+        class:      AppBundle\Menu\MainMenuItem
+        factory: [@app.main_menu_item.factory, createMainMenuItem]
+        arguments:
+            config:
+                name: %app.main_menu_items_names.issue.list%
+                label: %app.main_menu_items_labels.issue.list%
+                route: 'app_issue_list'
+
+    app.main_menu_issue_add_item:
+        class:      AppBundle\Menu\MainMenuItem
+        factory: [@app.main_menu_item.factory, createMainMenuItem]
+        arguments:
+            config:
+                name: %app.main_menu_items_names.issue.add%
+                label: %app.main_menu_items_labels.issue.add%
+                route: 'app_issue_add'
+
+    app.main_menu_user_list_item:
+        class:      AppBundle\Menu\MainMenuItem
+        factory: [@app.main_menu_item.factory, createMainMenuItem]
+        arguments:
+            config:
+                name: %app.main_menu_items_names.user.list%
+                label: %app.main_menu_items_labels.user.list%
+                route: 'app_user_list'
+
+    app.main_menu_user_add_item:
+        class:      AppBundle\Menu\MainMenuItem
+        factory: [@app.main_menu_item.factory, createMainMenuItem]
+        arguments:
+            config:
+                name: %app.main_menu_items_names.user.add%
+                label: %app.main_menu_items_labels.user.add%
+                route: 'app_user_add'
+
+    app.main_menu_project_list_item:
+        class:      AppBundle\Menu\MainMenuItem
+        factory: [@app.main_menu_item.factory, createMainMenuItem]
+        arguments:
+            config:
+                name: %app.main_menu_items_names.project.list%
+                label: %app.main_menu_items_labels.project.list%
+                route: 'app_project_list'
+
+    app.main_menu_project_add_item:
+        class:      AppBundle\Menu\MainMenuItem
+        factory: [@app.main_menu_item.factory, createMainMenuItem]
+        arguments:
+            config:
+                name: %app.main_menu_items_names.project.add%
+                label: %app.main_menu_items_labels.project.add%
+                route: 'app_project_add'
+
+    app.main_menu_profile_edit_item:
+        class:      AppBundle\Menu\MainMenuItem
+        factory: [@app.main_menu_item.factory, createMainMenuItem]
+        arguments:
+            config:
+                name: %app.main_menu_items_names.profile.edit%
+                label: %app.main_menu_items_labels.profile.edit%
+                route: 'app_user_edit'
+                route_parameters:
+                    - @app.main_menu.user_id_parameter_provider
+
+    app.main_menu_profile_view_item:
+        class:      AppBundle\Menu\MainMenuItem
+        factory: [@app.main_menu_item.factory, createMainMenuItem]
+        arguments:
+            config:
+                name: %app.main_menu_items_names.profile.view%
+                label: %app.main_menu_items_labels.profile.view%
+                route: 'app_user_view'
+                route_parameters:
+                    - @app.main_menu.user_id_parameter_provider
+

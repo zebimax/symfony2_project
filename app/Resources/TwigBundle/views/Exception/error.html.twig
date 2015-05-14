@@ -1,10 +1,22 @@
-{% extends 'default/index.html.twig' %}
+{% extends 'AppBundle::layout.html.twig' %}
 {% block title %}
     {{ 'app.titles.error' | trans({'%code%' : status_code, '%text%' : status_text }) }}
 {% endblock %}
-{% block page_header %}{{ 'app.messages.error.oops' | trans }}{%  endblock %}
-{% block page_content %}
-    <div class="row">
-        <h2 class="text-center text-error">{{ 'app.titles.error' | trans({'%code%' : status_code, '%text%' : status_text }) }}</h2>
+{% block page %}
+    <div class="container">
+        <div class="row">
+            <h1 class="text-center">
+                {% block page_header %}{{ 'app.messages.error.oops' | trans }}{%  endblock %}
+            </h1>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                {% block page_content %}
+                    <div class="row">
+                        <h2 class="text-center text-error">{{ 'app.titles.error' | trans({'%code%' : status_code, '%text%' : status_text }) }}</h2>
+                    </div>
+                {% endblock %}
+            </div>
+        </div>
     </div>
-{% endblock %}
+{%  endblock %}

@@ -118,7 +118,7 @@ class IssueFormService extends AbstractFormService implements EventDispatcherAwa
      * @param User  $user
      * @param array $details
      */
-    private function addChangeStatusActivity(Issue $issue, User $user, array $details)
+    protected function addChangeStatusActivity(Issue $issue, User $user, array $details)
     {
         $activity = (new IssueActivity($issue, $user))
             ->setType(IssueActivity::CHANGE_ISSUE_STATUS)
@@ -131,7 +131,7 @@ class IssueFormService extends AbstractFormService implements EventDispatcherAwa
      * @param Issue $issue
      * @param User  $user
      */
-    private function addCollaborator(Issue $issue, User $user)
+    protected function addCollaborator(Issue $issue, User $user)
     {
         $issue->addCollaborator($user);
     }
@@ -139,7 +139,7 @@ class IssueFormService extends AbstractFormService implements EventDispatcherAwa
     /**
      * @param IssueActivity $activity
      */
-    private function dispatchActivity(IssueActivity $activity)
+    protected function dispatchActivity(IssueActivity $activity)
     {
         $this->dispatcher->dispatch(
             IssueActivityEvent::ISSUE_ACTIVITY,
@@ -151,7 +151,7 @@ class IssueFormService extends AbstractFormService implements EventDispatcherAwa
      * @param FormInterface $builder
      * @param Project       $project
      */
-    private function addAssigneeField(FormInterface $builder, Project $project = null)
+    protected function addAssigneeField(FormInterface $builder, Project $project = null)
     {
         $builder->add(
             'assignee',
@@ -171,7 +171,7 @@ class IssueFormService extends AbstractFormService implements EventDispatcherAwa
      * @param FormBuilderInterface $builder
      * @param User                 $user
      */
-    private function addProjectField(FormBuilderInterface $builder, User $user)
+    protected function addProjectField(FormBuilderInterface $builder, User $user)
     {
         $builder->add(
             'project',

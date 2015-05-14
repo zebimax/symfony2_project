@@ -1,0 +1,11 @@
+parameters:
+    app.services.user.list_limit: 10
+    app.services.project.list_limit: 10
+    app.services.project.members_list_limit: 10
+    app.services.issue.list_limit: 10
+    app.page_name: 'page'
+    app.user_password_length: 10
+    app.mail.default_email: s2bugtracker@gmail.com
+    app.page_range: 5
+    app.group_by_distinct: true
+    app.pagination_template: KnpPaginatorBundle:Pagination:sliding.html.twig

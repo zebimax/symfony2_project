@@ -53,6 +53,14 @@ class ProjectType extends AbstractType
                 ]
             )
             ->add(
+                'code',
+                'text',
+                [
+                    'required' => true,
+                    'label'    => $this->translator->trans('projects.code'),
+                ]
+            )
+            ->add(
                 'summary',
                 'textarea',
                 [

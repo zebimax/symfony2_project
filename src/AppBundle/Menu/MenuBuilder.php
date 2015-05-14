@@ -10,13 +10,13 @@ use Symfony\Component\Translation\TranslatorInterface;
 class MenuBuilder
 {
     /** @var FactoryInterface */
-    private $factory;
+    protected $factory;
 
     /** @var TranslatorInterface */
-    private $translator;
+    protected $translator;
 
     /** @var AuthorizationCheckerInterface */
-    private $authorizationChecker;
+    protected $authorizationChecker;
 
     /**
      * @param FactoryInterface              $factory
@@ -61,7 +61,7 @@ class MenuBuilder
      * @param ItemInterface           $menuBuilder
      * @param MainMenuItemInterface[] $menuItems
      */
-    private function addItems(ItemInterface $menuBuilder, array $menuItems)
+    protected function addItems(ItemInterface $menuBuilder, array $menuItems)
     {
         foreach ($menuItems as $item) {
             if ($this->authorizationChecker->isGranted($item->getName())) {

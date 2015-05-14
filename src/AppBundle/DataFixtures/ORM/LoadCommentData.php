@@ -12,7 +12,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 class LoadCommentData extends AbstractOrderedContainerAwareFixture
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function load(ObjectManager $manager)
     {

@@ -25,42 +25,42 @@ class User implements UserInterface, \Serializable
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(type="string", length=255, unique=true)
      */
-    private $email;
+    protected $email;
 
     /**
      * @var string
      *
      * @ORM\Column(type="string", length=255, unique=true)
      */
-    private $username;
+    protected $username;
 
     /**
      * @var string
      *
      * @ORM\Column(type="string", length=255)
      */
-    private $fullname;
+    protected $fullname;
 
     /**
      * @var string
      *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $avatar;
+    protected $avatar;
 
     /**
      * @var string
      *
      * @ORM\Column(type="string", length=64)
      */
-    private $password;
+    protected $password;
 
     /**
      * @var ArrayCollection Role[]
@@ -68,45 +68,52 @@ class User implements UserInterface, \Serializable
      * @ORM\ManyToMany(targetEntity="Role", inversedBy="users")
      * @ORM\JoinTable(name="bt_user_to_role")
      */
-    private $roles;
+    protected $roles;
 
     /**
      * @var ArrayCollection Project[]
      *
      * @ORM\ManyToMany(targetEntity="Project", mappedBy="users")
      */
-    private $projects;
+    protected $projects;
 
     /**
      * @var ArrayCollection Issue[]
      *
      * @ORM\ManyToMany(targetEntity="Issue", mappedBy="collaborators")
      */
-    private $issues;
+    protected $issues;
 
     /**
      * @var bool
      *
      * @ORM\Column(name="is_active", type="boolean")
      */
-    private $isActive;
+    protected $isActive;
 
     /**
      * @ORM\Column(type="string", length=50, nullable = true)
      */
-    private $timezone;
+    protected $timezone;
 
     /**
      * @var UploadedFile
      */
-    private $file;
+    protected $file;
 
     /**
      * store the old name of avatar file to delete after the update.
      *
      * @var null|string
      */
-    private $tempFile;
+    protected $tempFile;
+
+    /**
+     * store old extension to use it if new will be not valid
+     *
+     * @var null|string
+     */
+    protected $tempExtension;
 
     /**
      *  Constructor.
@@ -382,7 +389,7 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function getSalt()
     {
@@ -390,7 +397,7 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function eraseCredentials()
     {
@@ -478,6 +485,7 @@ class User implements UserInterface, \Serializable
         if (is_file($this->getAbsolutePath())) {
             // store the old name to delete after the update
             $this->tempFile = $this->getAbsolutePath();
+            $this->tempExtension = $this->avatar;
             $this->avatar   = null;
         } else {
             $this->avatar = 'initial';
@@ -543,16 +551,6 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @return null|string
-     */
-    public function getAbsolutePath()
-    {
-        return null === $this->avatar
-            ? null
-            : $this->getUploadRootDir() . '/' . $this->id . '.' . $this->avatar;
-    }
-
-    /**
      * Get file.
      *
      * @return UploadedFile
@@ -567,9 +565,10 @@ class User implements UserInterface, \Serializable
      */
     public function getWebPath()
     {
-        return null === $this->avatar
+        $extension = $this->avatar ?: $this->tempExtension;
+        return  null === $extension
             ? null
-            : $this->getUploadDir() . '/' . $this->id . '.' . $this->avatar;
+            : $this->getUploadDir() . '/' . $this->id . '.' . $extension;
     }
 
     /**
@@ -626,5 +625,15 @@ class User implements UserInterface, \Serializable
         // get rid of the __DIR__ so it doesn't screw up
         // when displaying uploaded doc/image in the view.
         return 'uploads/avatars';
+    }
+
+    /**
+     * @return null|string
+     */
+    protected function getAbsolutePath()
+    {
+        return null === $this->avatar
+            ? null
+            : $this->getUploadRootDir() . '/' . $this->id . '.' . $this->avatar;
     }
 }

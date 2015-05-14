@@ -9,7 +9,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 class LoadProjectData extends AbstractOrderedContainerAwareFixture
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function load(ObjectManager $manager)
     {

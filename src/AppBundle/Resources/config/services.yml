@@ -1,41 +1,3 @@
-parameters:
-    app.main_menu_items.issue: 'main_menu.issues'
-    app.main_menu_items.project: 'main_menu.projects'
-    app.main_menu_items.user: 'main_menu.users'
-    app.main_menu_items.profile: 'main_menu.profile'
-    app.main_menu_items_labels.home: 'app.main_menu.home'
-    app.main_menu_items_labels.issue: 'app.main_menu.issues.root'
-    app.main_menu_items_labels.project: 'app.main_menu.projects.root'
-    app.main_menu_items_labels.user: 'app.main_menu.users.root'
-    app.main_menu_items_labels.profile: 'app.main_menu.profile.root'
-    app.main_menu_items_labels.issue.list: 'app.main_menu.issues.list'
-    app.main_menu_items_labels.issue.add: 'app.main_menu.issues.add'
-    app.main_menu_items_labels.user.list: 'app.main_menu.users.list'
-    app.main_menu_items_labels.user.add: 'app.main_menu.users.add'
-    app.main_menu_items_labels.project.list: 'app.main_menu.projects.list'
-    app.main_menu_items_labels.project.add: 'app.main_menu.projects.add'
-    app.main_menu_items_labels.profile.edit: 'app.main_menu.profile.edit'
-    app.main_menu_items_labels.profile.view: 'app.main_menu.profile.view'
-    app.main_menu_items_names.home: 'home'
-    app.main_menu_items_names.issue: 'issues'
-    app.main_menu_items_names.project: 'projects'
-    app.main_menu_items_names.user: 'users'
-    app.main_menu_items_names.profile: 'profile'
-    app.main_menu_items_names.issue.list: 'issues_list'
-    app.main_menu_items_names.issue.add: 'issues_add'
-    app.main_menu_items_names.user.list: 'users_list'
-    app.main_menu_items_names.user.add: 'users_add'
-    app.main_menu_items_names.project.list: 'projects_list'
-    app.main_menu_items_names.project.add: 'projects_add'
-    app.main_menu_items_names.profile.edit: 'profile_edit'
-    app.main_menu_items_names.profile.view: 'profile_view'
-    app.services.user.list_limit: 10
-    app.services.project.list_limit: 10
-    app.services.project.members_list_limit: 10
-    app.services.issue.list_limit: 10
-    app.page_name: 'page'
-    app.user_password_length: 10
-    app.mail.default_email: s2bugtracker@gmail.com
 services:
     app.form.type.login_type:
         class: AppBundle\Form\Type\LoginType
@@ -43,34 +5,40 @@ services:
             - @translator.default
         tags:
             - { name: form.type, alias: app_login }
+
     app.form.type.user_type:
         class: AppBundle\Form\Type\UserType
         arguments:
             - @translator.default
         tags:
             - { name: form.type, alias: app_user }
+
     app.form.type.project_member:
         class: AppBundle\Form\Type\ProjectMemberType
         tags:
             - { name: form.type, alias: app_project_member }
+
     app.form.type.project:
         class: AppBundle\Form\Type\ProjectType
         arguments:
             - @translator.default
         tags:
             - { name: form.type, alias: app_project }
+
     app.form.type.issue:
         class: AppBundle\Form\Type\IssueType
         arguments:
             - @translator.default
         tags:
             - { name: form.type, alias: app_issue }
+
     app.form.type.comment:
         class: AppBundle\Form\Type\CommentType
         arguments:
             - @translator.default
         tags:
             - { name: form.type, alias: app_comment }
+
     app.menu_builder:
         class: AppBundle\Menu\MenuBuilder
         arguments: ["@knp_menu.factory", "@translator.default", "@security.authorization_checker"]
@@ -91,239 +59,108 @@ services:
         arguments: ["@request_stack"]
         tags:
             - { name: knp_menu.menu, alias: logout } # The alias is what is used to retrieve the menu
+
     app.twig.abtract_extension:
         class:      AppBundle\Twig\AbstractExtension
         abstract: true
         public: false
         arguments:
             - @translator.default
+
     app.security.access.role_voter:
         class:      AppBundle\Security\Authorization\Voter\AbstractRoleVoter
         abstract: true
         public:     false
         arguments:
             - @security.role_hierarchy
+
     app.security.access.supported_role_voter:
         class:      AppBundle\Security\Authorization\Voter\AbstractSupportedRoleVoter
         parent: app.security.access.role_voter
+
     app.security.access.user_voter:
         class:      AppBundle\Security\Authorization\Voter\UserVoter
         parent: app.security.access.role_voter
         tags:
            - { name: security.voter }
+
     app.security.access.issue_voter:
         class:      AppBundle\Security\Authorization\Voter\IssueVoter
         parent: app.security.access.role_voter
         tags:
            - { name: security.voter }
+
     app.security.access.project_voter:
         class:      AppBundle\Security\Authorization\Voter\ProjectVoter
         parent: app.security.access.role_voter
         tags:
            - { name: security.voter }
+
     app.security.access.comment_voter:
         class:      AppBundle\Security\Authorization\Voter\CommentVoter
         parent: app.security.access.role_voter
         tags:
            - { name: security.voter }
+
     app.security.access.issues_role_voter:
        class:      AppBundle\Security\Authorization\Voter\IssuesRoleVoter
        parent: app.security.access.supported_role_voter
        tags:
            - { name: security.voter }
+
     app.security.access.users_role_voter:
        class:      AppBundle\Security\Authorization\Voter\UsersRoleVoter
        parent: app.security.access.supported_role_voter
        tags:
            - { name: security.voter }
+
     app.security.access.projects_role_voter:
        class:      AppBundle\Security\Authorization\Voter\ProjectsRoleVoter
        parent: app.security.access.supported_role_voter
        tags:
            - { name: security.voter }
+
     app.security.access.profile_role_voter:
        class:      AppBundle\Security\Authorization\Voter\ProfileRoleVoter
        parent: app.security.access.supported_role_voter
        tags:
            - { name: security.voter }
-    app.main_menu_item.factory:
-        class: AppBundle\Menu\MainMenuItemFactory
-    app.main_menu_manager:
-        class:      AppBundle\Menu\MainMenuManager
-        public:     true
-        arguments:
-            - [@app.main_menu_home_item, @app.main_menu_issue_item, @app.main_menu_project_item, @app.main_menu_user_item, @app.main_menu_profile_item]
-    app.main_menu_home_item:
-        class:      AppBundle\Menu\MainMenuItem
-        factory: [@app.main_menu_item.factory, createMainMenuItem]
-        arguments:
-            config:
-                name: %app.main_menu_items_names.home%
-                label: %app.main_menu_items_labels.home%
-                route: 'app_home'
-    app.main_menu_issue_item:
-        class:      AppBundle\Menu\MainMenuItem
-        factory: [@app.main_menu_item.factory, createMainMenuItem]
-        arguments:
-            config:
-                name: %app.main_menu_items_names.issue%
-                label: %app.main_menu_items_labels.issue%
-            sub_items:
-                - @app.main_menu_issue_list_item
-                - @app.main_menu_issue_add_item
-    app.main_menu_project_item:
-        class:      AppBundle\Menu\MainMenuItem
-        factory: [@app.main_menu_item.factory, createMainMenuItem]
-        arguments:
-            config:
-                name: %app.main_menu_items_names.project%
-                label: %app.main_menu_items_labels.project%
-            sub_items:
-                - @app.main_menu_project_list_item
-                - @app.main_menu_project_add_item
-    app.main_menu_profile_item:
-        class:      AppBundle\Menu\MainMenuItem
-        factory: [@app.main_menu_item.factory, createMainMenuItem]
-        arguments:
-            config:
-                name: %app.main_menu_items_names.profile%
-                label: %app.main_menu_items_labels.profile%
-            sub_items:
-                - @app.main_menu_profile_edit_item
-                - @app.main_menu_profile_view_item
-    app.main_menu_user_item:
-        class:      AppBundle\Menu\MainMenuItem
-        factory: [@app.main_menu_item.factory, createMainMenuItem]
-        arguments:
-            config:
-                name: %app.main_menu_items_names.user%
-                label: %app.main_menu_items_labels.user%
-            sub_items:
-                - @app.main_menu_user_list_item
-                - @app.main_menu_user_add_item
-    app.main_menu_issue_list_item:
-        class:      AppBundle\Menu\MainMenuItem
-        factory: [@app.main_menu_item.factory, createMainMenuItem]
-        arguments:
-            config:
-                name: %app.main_menu_items_names.issue.list%
-                label: %app.main_menu_items_labels.issue.list%
-                route: 'app_issue_list'
-    app.main_menu_issue_add_item:
-        class:      AppBundle\Menu\MainMenuItem
-        factory: [@app.main_menu_item.factory, createMainMenuItem]
-        arguments:
-            config:
-                name: %app.main_menu_items_names.issue.add%
-                label: %app.main_menu_items_labels.issue.add%
-                route: 'app_issue_add'
-    app.main_menu_user_list_item:
-        class:      AppBundle\Menu\MainMenuItem
-        factory: [@app.main_menu_item.factory, createMainMenuItem]
-        arguments:
-            config:
-                name: %app.main_menu_items_names.user.list%
-                label: %app.main_menu_items_labels.user.list%
-                route: 'app_user_list'
-    app.main_menu_user_add_item:
-        class:      AppBundle\Menu\MainMenuItem
-        factory: [@app.main_menu_item.factory, createMainMenuItem]
-        arguments:
-            config:
-                name: %app.main_menu_items_names.user.add%
-                label: %app.main_menu_items_labels.user.add%
-                route: 'app_user_add'
-    app.main_menu_project_list_item:
-        class:      AppBundle\Menu\MainMenuItem
-        factory: [@app.main_menu_item.factory, createMainMenuItem]
-        arguments:
-            config:
-                name: %app.main_menu_items_names.project.list%
-                label: %app.main_menu_items_labels.project.list%
-                route: 'app_project_list'
-    app.main_menu_project_add_item:
-        class:      AppBundle\Menu\MainMenuItem
-        factory: [@app.main_menu_item.factory, createMainMenuItem]
-        arguments:
-            config:
-                name: %app.main_menu_items_names.project.add%
-                label: %app.main_menu_items_labels.project.add%
-                route: 'app_project_add'
-    app.main_menu_profile_edit_item:
-        class:      AppBundle\Menu\MainMenuItem
-        factory: [@app.main_menu_item.factory, createMainMenuItem]
-        arguments:
-            config:
-                name: %app.main_menu_items_names.profile.edit%
-                label: %app.main_menu_items_labels.profile.edit%
-                route: 'app_user_edit'
-                route_parameters:
-                    - @app.main_menu.user_id_parameter_provider
-    app.main_menu_profile_view_item:
-        class:      AppBundle\Menu\MainMenuItem
-        factory: [@app.main_menu_item.factory, createMainMenuItem]
-        arguments:
-            config:
-                name: %app.main_menu_items_names.profile.view%
-                label: %app.main_menu_items_labels.profile.view%
-                route: 'app_user_view'
-                route_parameters:
-                    - @app.main_menu.user_id_parameter_provider
-    app.main_menu.user_id_parameter_provider:
-        class:      AppBundle\Menu\Route\UserIdParameterProvider
-        arguments:
-            - @security.token_storage
-    app.twig.user_extension:
-        class: AppBundle\Twig\UserExtension
-        parent: app.twig.abtract_extension
-        arguments:
-            - @translator.default
-        tags:
-            - { name: twig.extension }
-    app.twig.activity_extension:
-        class: AppBundle\Twig\ActivityExtension
-        parent: app.twig.abtract_extension
-        arguments:
-            - @translator.default
-        tags:
-            - { name: twig.extension }
-    app.twig.issue_extension:
-        class: AppBundle\Twig\IssueExtension
-        parent: app.twig.abtract_extension
-        arguments:
-            - @translator.default
-        tags:
-            - { name: twig.extension }
+
     app.services.user:
         class: AppBundle\Service\UserService
         arguments:
             - @doctrine.orm.default_entity_manager
             - @translator.default
             - @knp_paginator
+
     app.services.user_form:
         class: AppBundle\Service\UserFormService
         arguments:
             - @doctrine.orm.default_entity_manager
             - @translator.default
             - @form.factory
+
     app.services.project:
         class: AppBundle\Service\ProjectService
         arguments:
             - @doctrine.orm.default_entity_manager
             - @knp_paginator
             - @translator.default
+
     app.services.issue:
         class: AppBundle\Service\IssueService
         arguments:
             - @doctrine.orm.default_entity_manager
             - @knp_paginator
             - @translator.default
+
     app.services.project_forms:
         class: AppBundle\Service\ProjectFormsService
         arguments:
             - @doctrine.orm.default_entity_manager
             - @translator.default
             - @form.factory
+
     app.services.issue_form:
         class: AppBundle\Service\IssueFormService
         arguments:
@@ -332,6 +169,7 @@ services:
             - @form.factory
         calls:
             - [setEventDispatcher, ["@event_dispatcher"]]
+
     app.services.comment:
         class: AppBundle\Service\CommentService
         arguments:
@@ -340,6 +178,7 @@ services:
             - @form.factory
         calls:
             - [setEventDispatcher, ["@event_dispatcher"]]
+
     app.services.user_password_service:
         class: AppBundle\Service\UserPasswordService
         arguments:
@@ -347,6 +186,7 @@ services:
             - @hackzilla.password_generator.computer
         calls:
             - [setEventDispatcher, ["@event_dispatcher"]]
+
     app.services.mail_service:
         class: AppBundle\Service\MailService
         arguments:
@@ -354,18 +194,46 @@ services:
             - @mailer
             - @templating
             - "%app.mail.default_email%"
+
     app.twig.subscriber:
       class: AppBundle\EventListener\KernelRequestSubscriber
       arguments: [@twig, @security.token_storage]
       tags:
           - { name: kernel.event_listener, event: kernel.request }
+
     app.create_user_event.listener:
       class: AppBundle\EventListener\CreateUserEventListener
       arguments: [@app.services.mail_service]
       tags:
           - { name: kernel.event_listener, event: app.create_user_event }
+
     app.issue_activity.listener:
       class: AppBundle\EventListener\IssueActivityListener
       arguments: [@app.services.mail_service]
       tags:
           - { name: kernel.event_listener, event: app.issue_activity }
+
+    app.twig.user_extension:
+        class: AppBundle\Twig\UserExtension
+        parent: app.twig.abtract_extension
+        arguments:
+            - @translator.default
+        tags:
+            - { name: twig.extension }
+
+    app.twig.activity_extension:
+        class: AppBundle\Twig\ActivityExtension
+        parent: app.twig.abtract_extension
+        arguments:
+            - @translator.default
+        tags:
+            - { name: twig.extension }
+
+    app.twig.issue_extension:
+        class: AppBundle\Twig\IssueExtension
+        parent: app.twig.abtract_extension
+        arguments:
+            - @translator.default
+        tags:
+            - { name: twig.extension }
+

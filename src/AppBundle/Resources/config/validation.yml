@@ -30,11 +30,17 @@ AppBundle\Entity\Role:
 AppBundle\Entity\Project:
     constraints:
         - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: label
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: code
     properties:
         label:
             - NotBlank: ~
             - Length:
                   max: 255
+                  min: 2
+        code:
+            - NotBlank: ~
+            - Length:
+                  max: 10
                   min: 2
         created:
             - DateTime: ~

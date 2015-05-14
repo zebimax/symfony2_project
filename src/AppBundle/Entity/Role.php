@@ -23,28 +23,28 @@ class Role implements RoleInterface
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=64)
      */
-    private $name;
+    protected $name;
 
     /**
      * @var int
      *
      * @ORM\Column(name="role", type="string", length=64, unique=true)
      */
-    private $role;
+    protected $role;
 
     /**
      * @var ArrayCollection User[]
      *
      * @ORM\ManyToMany(targetEntity="User", mappedBy="roles")
      */
-    private $users;
+    protected $users;
 
     public function __construct()
     {
@@ -52,7 +52,7 @@ class Role implements RoleInterface
     }
 
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function getRole()
     {

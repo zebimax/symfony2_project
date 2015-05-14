@@ -74,7 +74,7 @@ class MainMenuItem implements MainMenuItemInterface
     /**
      * @param array $subItems
      */
-    final private function setSubItems(array $subItems = [])
+    protected function setSubItems(array $subItems = [])
     {
         foreach ($subItems as $subItem) {
             if ($subItem instanceof MainMenuItemInterface) {
@@ -86,7 +86,7 @@ class MainMenuItem implements MainMenuItemInterface
     /**
      * @param array $configs
      */
-    final private function setConfigs(array $configs)
+    protected function setConfigs(array $configs)
     {
         if (!array_key_exists('name', $configs)) {
             throw new \InvalidArgumentException('MainMenuItem must have "name" config');

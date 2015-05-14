@@ -123,9 +123,9 @@ braincrafted_bootstrap:
         bootstrap_output: %kernel.root_dir%/Resources/less/bootstrap.less
         bootstrap_template: BraincraftedBootstrapBundle:Bootstrap:bootstrap.less.twig
 knp_paginator:
-    page_range: 5                      # default page range used in pagination control
+    page_range: %app.page_range%                   # default page range used in pagination control
     default_options:
         page_name: "%app.page_name%"               # page query parameter name
-        distinct: true                 # ensure distinct results, useful when ORM queries are using GROUP BY statements
+        distinct: %app.group_by_distinct%          # ensure distinct results, useful when ORM queries are using GROUP BY statements
     template:
-        pagination: KnpPaginatorBundle:Pagination:sliding.html.twig     # sliding pagination controls template
+        pagination: %app.pagination_template%      # sliding pagination controls template

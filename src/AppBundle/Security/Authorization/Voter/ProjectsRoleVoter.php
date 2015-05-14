@@ -68,7 +68,7 @@ class ProjectsRoleVoter extends AbstractSupportedRoleVoter
      *
      * @return bool
      */
-    private function isManagerAttributeAndNotManager(User $user, $attribute)
+    protected function isManagerAttributeAndNotManager(User $user, $attribute)
     {
         return in_array(
             $attribute,

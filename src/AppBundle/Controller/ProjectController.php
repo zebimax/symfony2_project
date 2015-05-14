@@ -201,7 +201,7 @@ class ProjectController extends Controller
      * @Security("is_granted('projects_members_remove')")
      * @ParamConverter("user", class="AppBundle:User", options={"id": "user_id"})
      *
-     * @return array|RedirectResponse
+     * @return RedirectResponse
      */
     public function removeMember(Project $project, User $user)
     {

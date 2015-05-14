@@ -5,7 +5,7 @@ namespace AppBundle\Menu;
 class MainMenuManager
 {
     /** @var MainMenuItemInterface[] */
-    private $menuItems = [];
+    protected $menuItems = [];
 
     /**
      * @param MainMenuItemInterface[] $menuItems
@@ -26,7 +26,7 @@ class MainMenuManager
     /**
      * @param array $menuItems
      */
-    private function setMenuItems($menuItems)
+    protected function setMenuItems($menuItems)
     {
         foreach ($menuItems as $item) {
             if ($item instanceof MainMenuItemInterface) {
