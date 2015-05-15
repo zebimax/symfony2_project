@@ -17,10 +17,6 @@ class IssuePriorityEnumTypeTest extends \PHPUnit_Framework_TestCase
         $this->object = Type::getType(IssuePriorityEnumType::TYPE_NAME);
     }
 
-    protected function tearDown()
-    {
-    }
-
     /**
      * @covers AppBundle\DBAL\IssuePriorityEnumType::getName
      */

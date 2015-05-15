@@ -23,8 +23,6 @@ class UserService extends AbstractService
      * @param EntityManager       $manager
      * @param TranslatorInterface $translator
      * @param PaginatorInterface  $paginatorInterface
-     *
-     * @internal param PaginatorInterface $paginationInterface
      */
     public function __construct(
         EntityManager $manager,

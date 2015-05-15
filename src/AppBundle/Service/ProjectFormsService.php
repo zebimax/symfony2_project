@@ -56,8 +56,7 @@ class ProjectFormsService extends AbstractFormService
         $id   = $form->get('users')->getData();
         $user = $this->getUsersRepository()->find($id);
         $project->addUser($user);
-        $this->manager->persist($project);
-        $this->manager->flush();
+        $this->saveProject($project);
     }
 
     /**

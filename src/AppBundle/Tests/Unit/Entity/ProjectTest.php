@@ -39,6 +39,9 @@ class ProjectTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @covers AppBundle\Entity\Project::prePersist
+     */
     public function testPrePersist()
     {
         $code = 'code';

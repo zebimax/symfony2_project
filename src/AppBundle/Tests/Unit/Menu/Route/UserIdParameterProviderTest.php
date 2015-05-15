@@ -9,6 +9,9 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 class UserIdParameterProviderTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @covers AppBundle\Menu\Route\UserIdParameterProvider::getRouteParameters
+     */
     public function testGetRouteParameters()
     {
         $storage = new TokenStorage();

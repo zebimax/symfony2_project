@@ -17,10 +17,6 @@ class IssueResolutionEnumTypeTest extends \PHPUnit_Framework_TestCase
         $this->object = Type::getType(IssueResolutionEnumType::TYPE_NAME);
     }
 
-    protected function tearDown()
-    {
-    }
-
     /**
      * @covers AppBundle\DBAL\IssueResolutionEnumType::getName
      */

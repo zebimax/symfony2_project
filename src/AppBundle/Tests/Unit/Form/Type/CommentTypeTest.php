@@ -12,24 +12,12 @@ class CommentTypeTest extends TypeTestCase
      */
     protected $object;
 
-    /**
-     * Sets up the fixture, for example, opens a network connection.
-     * This method is called before a test is executed.
-     */
     protected function setUp()
     {
         $this->object = new CommentType(
             $this->translator = $this->getMockBuilder('Symfony\Component\Translation\TranslatorInterface')->getMock()
         );
         parent::setUp();
-    }
-
-    /**
-     * Tears down the fixture, for example, closes a network connection.
-     * This method is called after a test is executed.
-     */
-    protected function tearDown()
-    {
     }
 
     /**
@@ -40,6 +28,9 @@ class CommentTypeTest extends TypeTestCase
         $this->assertEquals('app_comment', $this->object->getName());
     }
 
+    /**
+     * @covers AppBundle\Form\Type\CommentType::setDefaultOptions
+     */
     public function testSetDefaultOptions()
     {
         $resolver = $this->getMock('Symfony\Component\OptionsResolver\OptionsResolverInterface');
@@ -49,11 +40,14 @@ class CommentTypeTest extends TypeTestCase
         $this->object->setDefaultOptions($resolver);
     }
 
+    /**
+     * @covers AppBundle\Form\Type\CommentType::buildForm
+     */
     public function testBuildForm()
     {
-        $expectedFields = array(
+        $expectedFields = [
             'body' => 'textarea',
-        );
+        ];
         $builder = $this->getMockBuilder('Symfony\Component\Form\FormBuilder')
             ->disableOriginalConstructor()
             ->getMock();

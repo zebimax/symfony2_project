@@ -31,6 +31,19 @@ class UserTest extends \PHPUnit_Framework_TestCase
      * @param string $value
      * @param string $expected
      * @dataProvider getSetDataProvider
+     * @covers AppBundle\Entity\User::getAvatar
+     * @covers AppBundle\Entity\User::setAvatar
+     * @covers AppBundle\Entity\User::getEmail
+     * @covers AppBundle\Entity\User::setEmail
+     * @covers AppBundle\Entity\User::getFullname
+     * @covers AppBundle\Entity\User::setFullname
+     * @covers AppBundle\Entity\User::getIsActive
+     * @covers AppBundle\Entity\User::setIsActive
+     * @covers AppBundle\Entity\User::getPassword
+     * @covers AppBundle\Entity\User::setPassword
+     * @covers AppBundle\Entity\User::getUsername
+     * @covers AppBundle\Entity\User::ыetUsername
+     *
      */
     public function testGetSet($property, $value, $expected)
     {
@@ -58,6 +71,11 @@ class UserTest extends \PHPUnit_Framework_TestCase
         ];
     }
 
+    /**
+     * @covers AppBundle\Entity\User::removeProject
+     * @covers AppBundle\Entity\User::removeRole
+     * @covers AppBundle\Entity\User::removeIssue
+     */
     public function testRemoveFromCollections()
     {
         $project = new Project();
@@ -82,12 +100,90 @@ class UserTest extends \PHPUnit_Framework_TestCase
      * @param $property
      * @param $addValue
      * @dataProvider addToCollectionsDataProvider
+     *
+     * @covers AppBundle\Entity\User::addProject
+     * @covers AppBundle\Entity\User::addRole
+     * @covers AppBundle\Entity\User::addIssue
      */
     public function testAddToCollections($property, $addValue)
     {
         $ucFirstProperty = ucfirst($property);
         call_user_func([$this->entity, 'add'.$ucFirstProperty], $addValue);
         $this->assertGreaterThan(0, count(call_user_func([$this->entity, 'get'.$ucFirstProperty.'s'])));
+    }
+
+    /**
+     * @covers AppBundle\Entity\User::getPrimaryRole
+     */
+    public function testGetPrimaryRole()
+    {
+        $roleOperator = (new Role())->setRole(Role::OPERATOR);
+        $roleManager = (new Role())->setRole(Role::MANAGER);
+        $roleAdmin = (new Role())->setRole(Role::ADMINISTRATOR);
+        $this->entity
+            ->addRole($roleOperator)
+            ->addRole($roleManager)
+            ->addRole($roleAdmin);
+        $this->assertEquals(Role::ADMINISTRATOR, $this->entity->getPrimaryRole());
+
+        $this->entity->removeRole($roleAdmin);
+        $this->assertEquals(Role::MANAGER, $this->entity->getPrimaryRole());
+
+        $this->entity->removeRole($roleManager);
+        $this->assertEquals(Role::OPERATOR, $this->entity->getPrimaryRole());
+    }
+
+    /**
+     * @covers AppBundle\Entity\User::serialize
+     */
+    public function testSerialize()
+    {
+        $this->entity
+            ->setUsername('testUsername')
+            ->setPassword('testPass');
+
+        $this->assertEquals([
+                null,
+                'testUsername',
+                'testPass'
+            ],
+            unserialize($this->entity->serialize())
+        );
+    }
+
+    /**
+     * @covers AppBundle\Entity\User::unserialize
+     */
+    public function testUnserialize()
+    {
+        $data = [
+            1,
+            'testUsername',
+            'testPass'
+        ];
+        $this->entity->unserialize(serialize($data));
+        $this->assertEquals($data[0], $this->entity->getId());
+        $this->assertEquals($data[1], $this->entity->getUsername());
+        $this->assertEquals($data[2], $this->entity->getPassword());
+    }
+
+    /**
+     * @covers AppBundle\Entity\User::getRolesArray
+     */
+    public function testGetRolesArray()
+    {
+        $roleOperator = (new Role())->setRole(Role::OPERATOR);
+        $roleManager = (new Role())->setRole(Role::MANAGER);
+        $roleAdmin = (new Role())->setRole(Role::ADMINISTRATOR);
+        $this->entity
+            ->addRole($roleOperator)
+            ->addRole($roleManager)
+            ->addRole($roleAdmin);
+        $rolesArray = $this->entity->getRolesArray();
+
+        $this->assertArrayHasKey(Role::OPERATOR, $rolesArray);
+        $this->assertArrayHasKey(Role::MANAGER, $rolesArray);
+        $this->assertArrayHasKey(Role::ADMINISTRATOR, $rolesArray);
     }
 
     /**

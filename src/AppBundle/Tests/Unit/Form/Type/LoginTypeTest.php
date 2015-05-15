@@ -20,6 +20,9 @@ class LoginTypeTest extends \PHPUnit_Framework_TestCase
         $this->formType = new LoginType($this->translator);
     }
 
+    /**
+     * @covers AppBundle\Form\Type\LoginType::buildForm
+     */
     public function testBuildForm()
     {
         $builder = $this->getMockBuilder('Symfony\Component\Form\FormBuilder')
@@ -64,9 +67,12 @@ class LoginTypeTest extends \PHPUnit_Framework_TestCase
             ]
         );
 
-        $this->formType->buildForm($builder, array());
+        $this->formType->buildForm($builder, []);
     }
 
+    /**
+     * @covers AppBundle\Form\Type\LoginType::getName
+     */
     public function testGetName()
     {
         $this->assertEquals('app_login', $this->formType->getName());

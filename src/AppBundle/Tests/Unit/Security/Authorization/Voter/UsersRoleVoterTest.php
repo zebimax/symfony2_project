@@ -13,6 +13,7 @@ class UsersRoleVoterTest extends \PHPUnit_Framework_TestCase
      * @var UsersRoleVoter
      */
     protected $object;
+
     /**
      * @var array
      */
@@ -78,10 +79,6 @@ class UsersRoleVoterTest extends \PHPUnit_Framework_TestCase
         return $data;
     }
 
-    /**
-     * Sets up the fixture, for example, opens a network connection.
-     * This method is called before a test is executed.
-     */
     protected function setUp()
     {
         $operatorRole = $this->getMock('AppBundle\Entity\Role');
@@ -113,13 +110,5 @@ class UsersRoleVoterTest extends \PHPUnit_Framework_TestCase
                 )
             );
         $this->object = new UsersRoleVoter($roleHierarchy);
-    }
-
-    /**
-     * Tears down the fixture, for example, closes a network connection.
-     * This method is called after a test is executed.
-     */
-    protected function tearDown()
-    {
     }
 }
