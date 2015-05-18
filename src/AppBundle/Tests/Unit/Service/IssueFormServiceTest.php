@@ -59,10 +59,12 @@ class IssueFormServiceTest extends \PHPUnit_Framework_TestCase
             ->getMock();
         $projectBuilderMock->expects($this->once())
             ->method('addEventListener')
-            ->withConsecutive([
-                FormEvents::POST_SUBMIT,
-                $isCallableConstraint
-            ]);
+            ->withConsecutive(
+                [
+                    FormEvents::POST_SUBMIT,
+                    $isCallableConstraint
+                ]
+            );
 
         $builderMock = $this
             ->getMockBuilder('Symfony\Component\Form\FormBuilderInterface')

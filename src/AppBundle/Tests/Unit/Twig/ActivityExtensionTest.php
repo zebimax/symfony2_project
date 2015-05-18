@@ -104,7 +104,11 @@ class ActivityExtensionTest extends \PHPUnit_Framework_TestCase
                     ->setType(IssueActivity::CHANGE_ISSUE_STATUS)
                     ->setDetails(['new' => ['status' => IssueStatusEnumType::OPEN]]),
                 'message'             => 'app.messages.activities.templates.change_issue_activity',
-                'values'              => ['%user%' => $username, '%issue%' => '-', '%status%' => '"app.issue.statuses.open"'],
+                'values'              => [
+                    '%user%' => $username,
+                    '%issue%' => '-',
+                    '%status%' => '"app.issue.statuses.open"'
+                ],
                 'willTranslateStatus' => true
             ],
             IssueActivity::CHANGE_ISSUE_STATUS . '_status_' . IssueStatusEnumType::IN_PROGRESS => [
@@ -122,7 +126,11 @@ class ActivityExtensionTest extends \PHPUnit_Framework_TestCase
                     ->setType(IssueActivity::CHANGE_ISSUE_STATUS)
                     ->setDetails(['new' => ['status' => IssueStatusEnumType::CLOSED]]),
                 'message'             => 'app.messages.activities.templates.change_issue_activity',
-                'values'              => ['%user%' => $username, '%issue%' => '-', '%status%' => '"app.issue.statuses.closed"'],
+                'values'              => [
+                    '%user%' => $username,
+                    '%issue%' => '-',
+                    '%status%' => '"app.issue.statuses.closed"'
+                ],
                 'willTranslateStatus' => true
             ],
             'status_undefined'                                                                 => [
@@ -130,7 +138,11 @@ class ActivityExtensionTest extends \PHPUnit_Framework_TestCase
                     ->setType(IssueActivity::CHANGE_ISSUE_STATUS)
                     ->setDetails(['new' => ['status' => 'status_undefined']]),
                 'message'             => 'app.messages.activities.templates.change_issue_activity',
-                'values'              => ['%user%' => $username, '%issue%' => '-', '%status%' => '"app.statuses.undefined"'],
+                'values'              => [
+                    '%user%' => $username,
+                    '%issue%' => '-',
+                    '%status%' => '"app.statuses.undefined"'
+                ],
                 'willTranslateStatus' => true
             ],
             'incorrect_type'                                                                   => [

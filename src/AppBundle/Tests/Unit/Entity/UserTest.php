@@ -142,7 +142,8 @@ class UserTest extends \PHPUnit_Framework_TestCase
             ->setUsername('testUsername')
             ->setPassword('testPass');
 
-        $this->assertEquals([
+        $this->assertEquals(
+            [
                 null,
                 'testUsername',
                 'testPass'

@@ -107,6 +107,7 @@ app:
             issue_activity: 'Issue activity'
         error: '%code% - %text%'
         issue_create: 'Create issue'
+        issue_add: 'New issue'
     password: 'Password'
     password_will_be_generated: 'password, If leave empty will be generated'
     tooltip:

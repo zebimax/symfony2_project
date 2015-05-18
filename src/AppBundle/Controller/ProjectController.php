@@ -241,15 +241,20 @@ class ProjectController extends Controller
                 try {
                     $issueFormService->addIssue($issue, $user);
                     $message = 'app.messages.project.add_issue.success';
+                    $generateUrl = $this->generateUrl('app_issue_view', ['id' => $issue->getId()]);
                 } catch (\Exception $e) {
                     $message = 'app.messages.project.add_issue.fail';
+                    $generateUrl = $this->get('request')->headers->get('referer');
+                    if (!$generateUrl) {
+                        $generateUrl = $this->generateUrl('app_home');
+                    }
                 }
                 $this->addFlash(
                     'flash_issue_actions',
                     $this->get('translator.default')->trans($message)
                 );
 
-                return $this->redirect($this->generateUrl('app_issue_view', ['id' => $issue->getId()]));
+                return $this->redirect($generateUrl);
             }
         }
 
