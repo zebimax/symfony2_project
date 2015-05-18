@@ -13,7 +13,9 @@ class LoadProjectData extends AbstractOrderedContainerAwareFixture
      */
     public function load(ObjectManager $manager)
     {
-        $project = (new Project())->setLabel('test_project');
+        $project = (new Project())
+            ->setLabel('test_project')
+            ->setCode('test');
 
         /** @var User $userOperator */
         $userOperator = $this->getReference('user_operator');

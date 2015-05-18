@@ -165,7 +165,9 @@ class Project
     public function prePersist()
     {
         $this->updated = new \DateTime('now', new \DateTimeZone('UTC'));
-        $this->code = strtoupper($this->code);
+        if (null !== $this->code) {
+            $this->code = strtoupper($this->code);
+        }
     }
 
     /**
