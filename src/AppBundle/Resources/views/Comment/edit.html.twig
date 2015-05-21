@@ -6,7 +6,7 @@
 {% block page_content %}
     <form method="post" {{ form_enctype(form) }}>
         {{ form_widget(form) }}
-        <input type="submit" class="btn btn-primary" value="{{ 'app.button.edit' | trans }}"/>
+        <input type="submit" class="btn btn-primary" value="{{ 'app.button.save' | trans }}"/>
         <a class="btn btn-danger" href="{{ path('app_issue_view', {'id': issue.id}) }}">{{ 'app.button.cancel' | trans }}</a>
     </form>
 {%  endblock %}
