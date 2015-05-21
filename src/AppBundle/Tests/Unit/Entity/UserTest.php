@@ -42,7 +42,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
      * @covers AppBundle\Entity\User::getPassword
      * @covers AppBundle\Entity\User::setPassword
      * @covers AppBundle\Entity\User::getUsername
-     * @covers AppBundle\Entity\User::ыetUsername
+     * @covers AppBundle\Entity\User::setUsername
      *
      */
     public function testGetSet($property, $value, $expected)
